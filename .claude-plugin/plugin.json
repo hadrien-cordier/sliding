@@ -1,0 +1,8 @@
+{
+  "name": "deck-conseil",
+  "version": "0.1.0",
+  "description": "Équipe d'agents qui construit des decks de conseil à partir des priorités du lecteur : cadrage, takeaways des sources, recherche, ghost deck, storyboard visuel, revues Minto et logical writing, génération .pptx sur fond blanc et boxes grises.",
+  "author": { "name": "Hadrien Cordier" },
+  "license": "MIT",
+  "keywords": ["powerpoint", "consulting", "minto", "ghost-deck", "storyline", "pptx"]
+}
