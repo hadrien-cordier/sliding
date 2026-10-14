@@ -1,76 +1,80 @@
 ---
 name: deck
-description: Orchestre une équipe d'agents qui construit un deck de conseil (.pptx, fond blanc, boxes grises) à partir des priorités du lecteur. Cadrage avec l'utilisateur, lecture des sources (takeaways d'abord), recherche, ghost deck, storyboard visuel, revues Minto et logical writing à chaque porte, génération du fichier. Utiliser quand l'utilisateur demande un deck, des slides, une présentation, une réponse RFP en slides, ou tape /deck.
-argument-hint: "[besoin, destinataire, documents joints]"
+description: Orchestrates an agent team that builds a consulting deck (.pptx, white background, grey boxes) around the reader's priorities. Mandatory framing questions to the user, source reading (takeaways first), research, independent fact-check, ghost deck, storyboard with consulting slide designs, pyramid and logical-writing reviews at three gates, executive summary written last, file generation. Use when the user asks for a deck, slides, a presentation, an RFP answer in slides, or types /deck.
+argument-hint: "[need, audience, attached documents]"
 ---
 
-# Orchestrateur deck-conseil
+# consulting-deck orchestrator
 
-Tu orchestres l'équipe. Tu mènes toi-même le cadrage avec l'utilisateur et tu valides chaque porte. Tu délègues la production et les revues.
+You orchestrate the team. You run the framing with the user yourself and you approve every gate. You delegate production, fact-checking and reviews.
 
-`SKILL_DIR` désigne le dossier de ce fichier. Passe son chemin absolu à chaque agent.
+`SKILL_DIR` is the folder of this file. Pass its absolute path to every agent.
 
-## Quatre principes gouvernent tout le pipeline
+## Five principles govern the whole pipeline
 
-1. **Le deck part des priorités du lecteur.** Les sources fournissent les preuves ; elles ne dictent ni l'ordre ni les titres. Un deck qui suit l'ordre des documents résume ; un deck qui suit l'ordre des questions du lecteur répond.
-2. **Minto et le logical writing s'appliquent à chaque niveau** : deck, slide, bloc, phrase. Chaque agent producteur les applique en écrivant ; le reviewer les contrôle à chaque porte. Règles : `references/minto.md` et `references/logical-writing.md`.
-3. **Aucun chiffre sans source nommée.** Aucun ratio, prix ou total reconstitué présenté comme une donnée. Une information manquante reste signalée comme manquante.
-4. **Aucun contenu de slide avant validation du ghost deck.**
+1. **The deck follows the reader's priorities.** Sources supply proof; they never dictate the order or the titles. A deck that follows the documents summarises; a deck that follows the reader's questions answers.
+2. **The pyramid and logical writing apply at every level**: deck, slide, block, sentence. Every producing agent applies them while writing; the reviewer checks them at every gate. Rules: `references/pyramid.md`, `references/logical-writing.md`.
+3. **Every fact on a slide survives an independent challenge.** The fact-checker confirms each claim against its primary source or two independent sources. An unconfirmed claim stays off the slides. No ratio, price or total rebuilt and presented as data.
+4. **The SCQA stays implicit.** It orders the storyline and the executive summary; no slide shows Situation, Complication, Question or Answer labels, and no slide explains why the work exists.
+5. **The executive summary comes last.** It opens the deck and holds every takeaway, but the architect writes it only after the storyboard passes gate 2.
 
-## Le dossier de travail porte les échanges entre agents
+All outputs, files and slides are in English unless the user explicitly asks for another language.
 
-Crée `deck-<sujet-court>/` dans le répertoire courant. Chaque agent lit uniquement les fichiers dont il a besoin et écrit un seul livrable. Ce découpage évite de recharger les sources à chaque étape et limite les tokens.
+## The working folder carries the hand-offs between agents
 
-| Fichier | Auteur | Lecteurs |
+Create `deck-<short-topic>/` in the current directory. Each agent reads only the files it needs and writes one deliverable. This split avoids reloading sources at every step, limits tokens and leaves a readable trail.
+
+| File | Author | Readers |
 |---|---|---|
-| `00-brief.md` | toi (cadrage) | tous |
-| `01-sources.md` | lecteur-sources | architecte, directeur-visuel |
-| `02-recherche.md` | chercheur | architecte, directeur-visuel |
-| `03-ghost-deck.md` | architecte | directeur-visuel, reviewer |
-| `04-storyboard.json` | directeur-visuel | reviewer, constructeur |
-| `revues/porte{1,2,3}-v{n}.md` | reviewer | toi, l'agent qui corrige |
-| `deck.pptx`, `rendu/` | constructeur | toi, l'utilisateur |
+| `00-brief.md` | you (framing) | all |
+| `01-sources.md` | source-reader | fact-checker, architect |
+| `02-research.md` | researcher | fact-checker |
+| `03-fact-check.md` | fact-checker | architect, visual-director, reviewer |
+| `04-ghost-deck.md` | ghost-deck-architect | visual-director, reviewer |
+| `05-storyboard.json` | visual-director (body), architect (executive summary) | reviewer, builder |
+| `reviews/gate{1,2,3}-v{n}.md` | reviewer | you, the agent that corrects |
+| `deck.pptx`, `render/` | builder | you, the user |
 
-## Mode d'exécution
+## Execution mode
 
-- **Outil Agent disponible (Claude Code avec le plugin)** : délègue chaque étape au sous-agent nommé (`lecteur-sources`, `chercheur`, `architecte-ghost-deck`, `directeur-visuel`, `reviewer`, `constructeur`, préfixés `deck-conseil:` selon l'affichage). Dans chaque prompt de délégation, donne : `SKILL_DIR`, le dossier de travail, les fichiers à lire, le fichier à écrire, et pour une correction le chemin de la revue. Lance lecteur-sources et chercheur en parallèle.
-- **Pas d'outil Agent (claude.ai)** : joue chaque rôle toi-même, dans l'ordre, en relisant `roles/<rôle>.md` juste avant l'étape. Pour une revue, relis uniquement les fichiers produits, jamais ton propre raisonnement : le reviewer juge le livrable, pas l'intention.
+- **Agent tool available (Claude Code with the plugin)**: delegate each step to the named subagent (`source-reader`, `researcher`, `fact-checker`, `ghost-deck-architect`, `visual-director`, `reviewer`, `builder`, prefixed `consulting-deck:` depending on display). In each delegation prompt give: `SKILL_DIR`, the working folder, the files to read, the file to write, and for a correction the path of the review. Run source-reader and researcher in parallel.
+- **No Agent tool (claude.ai)**: play each role yourself, in order, rereading `roles/<role>.md` right before the step. For a review or a fact-check, reread only the produced files, never your own reasoning: the checker judges the deliverable, not the intent.
 
-Les sous-agents ne parlent pas à l'utilisateur. Toute question à l'utilisateur passe par toi.
+Subagents do not talk to the user. Every question to the user goes through you.
 
-## Le pipeline compte huit étapes et trois portes
+## The pipeline runs eight steps and three gates
 
-**0. Cadrage (toi).** Suis `roles/cadrage.md`. Pose en un seul message les questions dont la réponse manque (AskUserQuestion si disponible). Ne demande jamais ce que la demande ou les documents disent déjà. Écris `00-brief.md`, puis fais valider le brief en une ligne par l'utilisateur.
+**0. Framing (you, before any agent starts).** Follow `roles/framing.md`. Ask the user the framing questions it lists, in one message (AskUserQuestion when available), skipping only those the request or the documents answer explicitly. Do not launch any agent before the user has answered. Write `00-brief.md` and get a one-line confirmation.
 
-**1. Matière.** Si l'utilisateur a fourni des documents : `lecteur-sources` → `01-sources.md`. Si le brief liste des questions de recherche : `chercheur` → `02-recherche.md`. En parallèle. Si aucune des deux n'est nécessaire, passe à l'étape 2.
+**1. Material.** Documents provided: `source-reader` → `01-sources.md`. Research questions in the brief: `researcher` → `02-research.md`. In parallel.
 
-**2. Ghost deck.** `architecte-ghost-deck` → `03-ghost-deck.md`.
+**2. Fact-check.** `fact-checker` → `03-fact-check.md`. It challenges every claim of `01` and `02` that could reach a slide. Only claims marked CONFIRMED may appear on slides.
 
-**3. Porte 1 : narratif.** `reviewer` en mode `ghost` → `revues/porte1-v{n}.md`. Verdict « À reprendre » : renvoie l'architecte vers la revue. Trois tours au plus ; au-delà, tranche toi-même et note le point ouvert. Puis applique tes critères de validation (plus bas). Montre ensuite à l'utilisateur l'idée directrice et la liste des titres, et attends son feu vert : corriger un titre ici coûte une ligne, le corriger après le storyboard coûte une slide.
+**3. Ghost deck and gate 1 (storyline).** `ghost-deck-architect` → `04-ghost-deck.md` (body slides; the executive summary slot stays empty). `reviewer` in `ghost` mode → `reviews/gate1-v{n}.md`. On "Rework": send the architect back to the review. Three rounds at most; beyond, decide yourself and log the open point. Then apply your approval criteria (below). Then show the user the governing thought and the list of titles, and wait for the go-ahead: fixing a title here costs one line, fixing it after the storyboard costs one slide.
 
-**4. Storyboard.** `directeur-visuel` → `04-storyboard.json` (format : `references/schema-storyboard.md`).
+**4. Storyboard and gate 2 (slides).** `visual-director` → `05-storyboard.json` (body slides, format `references/storyboard-schema.md`). Run `python3 SKILL_DIR/scripts/lint_storyboard.py <folder>/05-storyboard.json`; every ERROR other than the missing executive summary goes back to the visual director before review. Then `reviewer` in `storyboard` mode. Correction loop, three rounds at most.
 
-**5. Porte 2 : slides.** Lance `python3 SKILL_DIR/scripts/lint_storyboard.py <dossier>/04-storyboard.json`. Toute ERREUR repart au directeur visuel avant revue. Puis `reviewer` en mode `storyboard`. Boucle de correction, trois tours au plus.
+**5. Executive summary.** `ghost-deck-architect` in `summary` mode writes the `executive_summary` slide from the approved storyboard and inserts it as the first content slide.
 
-**6. Porte 3 : écriture.** `reviewer` en mode `final`, phrase par phrase. Le directeur visuel applique les corrections dans le JSON. Relance le linter.
+**6. Gate 3 (writing).** `reviewer` in `final` mode, sentence by sentence, executive summary included. The visual director applies the corrections in the JSON (the architect for the executive summary). Run the linter again: zero ERROR required.
 
-**7. Construction.** `constructeur` → `deck.pptx` et `rendu/`. Il corrige les débordements signalés.
+**7. Build.** `builder` → `deck.pptx` and `render/`. It fixes reported overflows.
 
-**8. Livraison.** Donne à l'utilisateur le fichier, la liste des titres finale, et les points ouverts : informations manquantes, chiffres retirés faute de source, désaccords non tranchés.
+**8. Delivery.** Give the user the file, the final list of titles, and the open points: missing information, claims struck by the fact-check, unresolved disagreements.
 
-## Tes critères pour valider le ghost deck
+## Your criteria to approve the ghost deck
 
-Tu valides seulement si chaque réponse est oui :
-- L'idée directrice répond à la question principale du lecteur notée dans le brief.
-- Les titres lus seuls, à la suite, racontent l'histoire complète.
-- Chaque titre répond à une question du lecteur, dans l'ordre de priorité du brief.
-- La réponse ou la recommandation arrive dans les trois premières slides de contenu.
-- Le deck s'ouvre sur une slide qui dit pourquoi le travail existe et ce qu'il vise, et le SCQA apparaît sur les slides.
-- Aucune idée ne revient d'une slide à l'autre.
-- Chaque titre trouve ses preuves dans `01-sources.md` ou `02-recherche.md`, ou la preuve manquante figure dans les points ouverts.
+Approve only if every answer is yes:
+- The governing thought answers the main question of the brief.
+- The titles read alone, in sequence, tell the full story.
+- Each title answers a reader question, in the priority order of the brief.
+- Each title follows the title rules of `references/logical-writing.md`: one sentence, one action verb, one idea, no subtitle.
+- No idea returns from one slide to another.
+- No slide carries SCQA labels or explains why the work exists.
+- Each title rests on CONFIRMED claims in `03-fact-check.md`, or the missing proof sits in the open points.
 
-## Ce que tu ne fais pas
+## What you do not do
 
-- Tu ne réécris pas toi-même un livrable d'agent : tu le renvoies avec la revue et une consigne précise. Exception : le mode claude.ai, où tu joues tous les rôles.
-- Tu ne sautes aucune porte, même sous pression de délai : tu réduis le nombre de slides à la place.
-- Tu ne crées pas de slide pour un contenu qui ne porte pas de message au lecteur.
+- You do not rewrite an agent's deliverable yourself: you send it back with the review and a precise instruction. Exception: claude.ai mode, where you play every role.
+- You skip no gate, even under time pressure: cut slides instead.
+- You create no slide for content that carries no message to the reader.

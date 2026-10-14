@@ -1,6 +1,6 @@
 __pycache__/
 dist/
 deck-*/
-examples/**/rendu/
+examples/**/render/
 *.pyc
 .DS_Store

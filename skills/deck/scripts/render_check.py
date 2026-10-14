@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Rend un .pptx en images PNG (une par slide) pour le contrôle visuel.
+"""Render a .pptx to PNG images (one per slide) for visual checking.
 
-Nécessite LibreOffice (soffice) et poppler (pdftoppm).
-Usage : python3 render_check.py deck.pptx [dossier_sortie]
-Le rendu LibreOffice diffère légèrement de PowerPoint (polices, ajustement du texte) :
-il sert à repérer les débordements et chevauchements, pas à valider la typographie fine.
+Requires LibreOffice (soffice) and poppler (pdftoppm).
+Usage: python3 render_check.py deck.pptx [output_dir]
+LibreOffice renders slightly differently from PowerPoint (fonts, text fitting):
+use it to spot overflow and overlap, not to sign off fine typography.
 """
 import shutil
 import subprocess
@@ -18,7 +18,7 @@ def main(pptx, out=None):
     out.mkdir(parents=True, exist_ok=True)
     soffice = shutil.which("soffice") or shutil.which("libreoffice")
     if not soffice or not shutil.which("pdftoppm"):
-        sys.exit("soffice et pdftoppm sont requis pour le rendu")
+        sys.exit("soffice and pdftoppm are required for rendering")
     subprocess.run([soffice, "--headless", "--convert-to", "pdf", "--outdir", str(out), str(pptx)],
                    check=True, capture_output=True)
     pdf = out / (pptx.stem + ".pdf")

@@ -1,12 +1,12 @@
 {
-  "name": "deck-conseil",
-  "description": "Plugin deck-conseil : équipe d'agents pour decks de conseil",
+  "name": "consulting-deck",
+  "description": "consulting-deck plugin: an agent team for consulting decks",
   "owner": { "name": "Hadrien Cordier" },
   "plugins": [
     {
-      "name": "deck-conseil",
+      "name": "consulting-deck",
       "source": "./",
-      "description": "Équipe d'agents qui construit des decks de conseil à partir des priorités du lecteur"
+      "description": "Agent team that builds consulting decks around the reader's priorities"
     }
   ]
 }

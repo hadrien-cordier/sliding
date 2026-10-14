@@ -1,40 +1,46 @@
-# Logical writing : règles d'écriture appliquées à chaque phrase
+# Logical writing: rules for every sentence
 
-Ces règles codifient la pratique de rédaction de conseil de l'auteur du projet. Aucune méthode publiée ne porte ce nom ; le socle sourcé reste Minto (`minto.md`). Elles s'appliquent à tout texte produit par l'équipe : titres, blocs, notes, livrables intermédiaires.
+These rules codify the consulting writing practice of the project's author. No published method carries this name; the sourced foundation is Minto (`pyramid.md`), with practitioner guidance in `consulting-practices.md`. They apply to every text the team produces: titles, blocks, notes, intermediate deliverables.
 
 ## Structure
-1. **Chaque paragraphe, bloc ou section répond à une question.** Si on ne peut pas formuler la question, le bloc n'a pas de raison d'être.
-2. **Chaque titre de paragraphe, de bloc ou de graphique contient l'idée principale de ce qu'il surmonte.** Le texte dessous détaille cette idée. « Coûts » est une étiquette ; « Les coûts de conformité doublent en trois ans » est une idée.
-3. **Idée, analyse, conclusion.** Une phrase porte une seule affirmation.
-4. **Réponse d'abord.** La conclusion précède les arguments, à chaque niveau.
+1. **Every paragraph, block or section answers a question.** If you cannot phrase the question, the block has no reason to exist.
+2. **Every paragraph, block or chart title holds the main idea of what sits below it.** The text below details that idea. "Costs" is a label; "Compliance costs double in three years" is an idea.
+3. **Idea, analysis, conclusion.** One sentence carries one claim.
+4. **Answer first.** The conclusion comes before the arguments, at every level.
 
-## Phrase
-5. **Voix active, toujours.** Le sujet fait l'action. « La banque réduit ses délais » et non « Les délais sont réduits ». Si l'acteur est inconnu, cherche-le ; s'il reste inconnu, dis-le.
-6. **Chaque mot sert.** Retire ce qui ne change pas le sens.
-7. **Pas d'adverbe de modulation** : seulement, uniquement, déjà, désormais, maintenant, plus de, juste, vraiment, très, et leurs équivalents anglais (only, now, already, more than). Ils affaiblissent l'affirmation. Un chiffre précis remplace « plus de ».
-8. **Pas de tournure « ne pas X mais Y » ni « non pas X mais Y ».** Affirme Y.
-9. **Pas de tiret long ni de demi-cadratin.** Une virgule, un point ou deux phrases.
-10. **Pas d'échafaudage rhétorique** ni d'intensif creux (« il est essentiel de noter que », « véritable », « clé »).
-11. **Vocabulaire simple, dans le registre du lecteur.** Pas de jargon qu'il n'emploie pas.
+## Slide titles
+5. **One sentence, affirmative, complete.** No question, no semicolon, no aside, no parenthesis.
+6. **One action verb.** The title has one main verb that carries the message: "Automation cuts onboarding time by 40%". A second conjugated verb ("..., which drives...", "... while ...", "... and reduces ...") means a second idea: split the slide.
+7. **One idea.** "And" may join items of one kind; it never joins two claims.
+8. **Ternary rhythm is welcome.** Three parallel items of one kind under the single verb give weight and stay one idea: "The new process cuts cost, delay and error rate".
+9. **No subtitle, no overline, no tagline.** If a title needs a subtitle, the title is wrong. Hierarchy stops at three levels: slide title, block title, text or list.
+10. **The title carries the conclusion or the tension, never the topic.** It is specific and, when a confirmed figure allows, quantified.
+11. **Aim for two lines at most.** A longer title is acceptable only if it still carries one idea with one verb.
+12. **Consistent across the deck**: same tense (present by default), same syntax, same final punctuation (none).
 
-## Titres de slides
-12. Une phrase affirmative, complète, éventuellement longue. Pas de point-virgule, pas d'incise, pas de question, pas de sous-titre : s'il faut un sous-titre, le titre n'est pas bon.
-13. Le titre porte la conclusion ou la tension, jamais le sujet.
-14. Hiérarchie limitée à trois niveaux : titre de slide, titre de bloc, texte ou liste.
+## Sentences
+13. **Active voice, always.** The subject acts. "The bank cuts its delays", not "Delays are cut". If the actor is unknown, find it; if it stays unknown, say so.
+14. **Every word earns its place.** Remove what does not change the meaning.
+15. **No hedging adverbs**: only, now, already, more than, just, really, very, still, currently, significantly. They weaken the claim. A precise figure replaces "more than".
+16. **No "not X but Y" or "rather than"**: state Y.
+17. **No em or en dash.** Use a comma, a full stop or two sentences.
+18. **No rhetorical scaffolding or hollow intensifiers** ("it is important to note that", "key", "critical", "robust").
+19. **Plain vocabulary in the reader's register.** No jargon the reader does not use.
 
-## Chiffres
-15. Tout chiffre renvoie à une source nommée, avec son unité, son périmètre et sa date.
-16. Aucun ratio, prix ou total reconstitué présenté comme une donnée.
+## Figures
+20. Every figure points to a named origin, with unit, scope and date, and appears in `03-fact-check.md` as CONFIRMED or CORRECTED.
+21. No ratio, price or total rebuilt and presented as data.
 
-## Exemples de réécriture
+## Rewrite examples
 
-| Avant | Après | Règle |
+| Before | After | Rule |
 |---|---|---|
-| Une refonte du processus KYC a été engagée | La banque refond son processus KYC | 5 |
-| Ce n'est pas un sujet technique mais un sujet d'organisation | Le sujet relève de l'organisation | 8 |
-| Synthèse des enjeux | Trois enjeux réglementaires imposent une décision avant juin | 2, 13 |
-| Les coûts représentent déjà plus de 20 % du budget | Les coûts représentent 23 % du budget (source, 2025) | 7, 15 |
-| Contexte : forte croissance ; risques multiples | Le marché croît de 12 % par an et expose la banque à trois risques | 12 |
+| A review of the KYC process was launched | The bank redesigns its KYC process | 13 |
+| Market overview | Three regulatory deadlines force a decision before June | 2, 10 |
+| Automation reduces cost and the bank gains market share | Automation cuts cost by 30% (second slide: the cost gain funds market-share growth) | 6, 7 |
+| Context: strong growth; multiple risks | The market grows 12% a year and exposes the bank to three risks | 5, 9 (two verbs: split if both matter) |
+| Costs already exceed 20% of the budget | Costs reach 23% of the budget (origin, year) | 15, 20 |
+| This is not a technology issue but an organisational one | The issue sits in the organisation | 16 |
 
-## Contrôle automatique
-`scripts/lint_storyboard.py` détecte une partie de ces défauts (voix passive probable, adverbes, tirets, points-virgules, titres de blocs réduits à une étiquette, chiffres sans source). Il ne remplace pas la relecture : le passif français prend des formes qu'une expression régulière manque, et un titre peut respecter toutes les règles sans porter d'idée.
+## Automatic check
+`scripts/lint_storyboard.py` detects part of these defects: likely passive voice, hedging adverbs, dashes, semicolons, question titles, likely second verbs, visible SCQA labels, subtitle fields, label-like block titles, figures without source. It does not replace review: a regular expression misses some passives and flags some false ones, and a title can pass every rule without carrying an idea.

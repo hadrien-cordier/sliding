@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Génère agents/*.md (sous-agents Claude Code) à partir de skills/deck/roles/*.md.
+"""Generate agents/*.md (Claude Code subagents) from skills/deck/roles/*.md.
 
-Les rôles restent la source unique : le skill les lit en mode séquentiel (claude.ai),
-le plugin les expose comme sous-agents (Claude Code). Relancer après toute modification d'un rôle :
+Roles stay the single source: the skill reads them in sequential mode (claude.ai),
+the plugin exposes them as subagents (Claude Code). Rerun after editing any role:
     python3 tools/sync_agents.py
 """
 import re
@@ -12,9 +12,9 @@ ROOT = Path(__file__).resolve().parent.parent
 ROLES = ROOT / "skills" / "deck" / "roles"
 AGENTS = ROOT / "agents"
 
-PREAMBULE = """> Fichier généré depuis `skills/deck/roles/{src}` par `tools/sync_agents.py`. Modifier le rôle, pas ce fichier.
+PREAMBLE = """> Generated from `skills/deck/roles/{src}` by `tools/sync_agents.py`. Edit the role, not this file.
 
-L'orchestrateur te donne dans sa consigne : `SKILL_DIR` (dossier du skill deck), le dossier de travail, les fichiers à lire et le fichier à écrire. Tous les chemins `SKILL_DIR/...` ci-dessous s'y rapportent. Tu ne parles pas à l'utilisateur : tu rends ton livrable et un compte rendu court à l'orchestrateur.
+The orchestrator gives you in its instruction: `SKILL_DIR` (folder of the deck skill), the working folder, the files to read and the file to write. Every `SKILL_DIR/...` path below refers to it. You do not talk to the user: you return your deliverable and a short report to the orchestrator. You write in English.
 
 """
 
@@ -38,8 +38,8 @@ def main():
             continue
         fm = "\n".join(f"{k}: {meta[k]}" for k in ("name", "description", "tools", "model") if k in meta)
         out = AGENTS / f"{meta['name']}.md"
-        out.write_text(f"---\n{fm}\n---\n\n{PREAMBULE.format(src=role.name)}{body}", encoding="utf-8")
-        print("écrit", out.relative_to(ROOT))
+        out.write_text(f"---\n{fm}\n---\n\n{PREAMBLE.format(src=role.name)}{body}", encoding="utf-8")
+        print("wrote", out.relative_to(ROOT))
 
 
 if __name__ == "__main__":

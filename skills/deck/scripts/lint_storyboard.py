@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Contrôle mécanique d'un storyboard avant la revue humaine ou par le reviewer.
+"""Mechanical check of a storyboard before the reviewer reads it.
 
-Le linter attrape ce qu'une règle peut détecter sans comprendre le sens :
-structure du JSON, chiffres sans source, tirets longs, points-virgules et questions dans
-les titres, adverbes de modulation, tournures « ne pas X mais Y », voix passive probable,
-titres de blocs réduits à une étiquette, titres de slides en double.
+The linter catches what a rule can detect without understanding meaning: JSON structure,
+numbers without a source, subtitles, visible SCQA labels, a missing executive summary,
+dashes and semicolons, question titles, likely second verbs in titles, hedging adverbs,
+"not X but Y", likely passive voice, block titles reduced to labels, duplicate titles.
 
-Il ne juge ni le narratif ni la couverture du titre par le corps : ces contrôles
-reviennent au reviewer. Un AVERTISSEMENT demande un regard ; une ERREUR bloque la construction.
+It does not judge the storyline or whether the body covers the title: the reviewer does.
+A WARNING asks for a look; an ERROR blocks the build.
 
-Usage : python3 lint_storyboard.py storyboard.json   (code de sortie 1 si erreur)
+Usage: python3 lint_storyboard.py storyboard.json   (exit code 1 on error)
 """
 import json
 import re
@@ -19,121 +19,128 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from layouts_spec import HARVEY, IDEA_TITLE_FIELDS, LAYOUTS  # noqa: E402
 
-ADVERBES = [
-    # français
-    "seulement", "uniquement", "déjà", "désormais", "dorénavant", "maintenant", "à peine",
-    "vraiment", "très", "extrêmement", "particulièrement", "plus de", "moins de", "juste",
-    "même", "simplement", "clairement", "fortement", "réellement",
-    # anglais
-    "only", "now", "already", "more than", "less than", "just", "even", "really", "very",
-    "clearly", "simply",
-]
-PASSIF_FR = re.compile(
-    r"\b(est|sont|était|étaient|sera|seront|serait|seraient|a été|ont été|avait été|avaient été|"
-    r"être|été|soit|soient|fut|furent)\s+(\w+(?:é|ée|és|ées|is|ise|ises|it|ite|its|ites|u|ue|us|ues|"
-    r"ert|erte|erts|ertes))\b",
-    re.IGNORECASE,
-)
-PASSIF_EN = re.compile(r"\b(is|are|was|were|been|be|being)\s+(\w+ed|\w+en)\b", re.IGNORECASE)
-PAS_MAIS = re.compile(r"\b(ne|n')\s?[^.;]{0,50}\bpas\b[^.;]{0,80}\bmais\b|\bnot\b[^.;]{0,60}\bbut\b",
-                      re.IGNORECASE)
-CHIFFRE = re.compile(r"\d")
-TIRETS = re.compile(r"[—–]")
-# participes passés qui sont en pratique des adjectifs ou des attributs fréquents
-FAUX_PASSIFS = {"prêt", "prête", "nécessaire", "connu", "connue", "lié", "liée", "liés", "liées",
-                "exposé", "exposée", "exposés", "exposées", "dû", "due", "dus", "dues"}
+HEDGES = ["only", "now", "already", "more than", "less than", "just", "even", "really", "very",
+          "clearly", "simply", "currently", "still", "merely", "quite", "rather", "somewhat",
+          "significantly", "extremely", "highly", "truly", "basically"]
+IRREGULAR_PP = ("done|made|taken|given|seen|known|shown|driven|held|built|set|put|paid|sold|led|kept|"
+                "brought|found|lost|met|spent|won|written|chosen|grown|drawn|left|cut|bought|thought|"
+                "told|sent|run|begun|broken|spoken|undertaken|overtaken|withdrawn|hidden")
+PASSIVE = re.compile(rf"\b(am|is|are|was|were|be|been|being)\s+(\w+ly\s+)?(\w+ed|{IRREGULAR_PP})\b",
+                     re.IGNORECASE)
+NOT_BUT = re.compile(r"\bnot\b[^.;]{0,60}\bbut\b|\brather than\b", re.IGNORECASE)
+CLAUSE = re.compile(r",\s*which\b|\bwhile\b|\bwhereas\b|\bbut\b|\bbecause\b|\balthough\b|\bso that\b|"
+                    r"\band then\b|\bthereby\b|\bwhich\b", re.IGNORECASE)
+AUX = re.compile(r"\b(is|are|was|were|has|have|had|will|would|can|could|should|must|may|might|does|do)\b",
+                 re.IGNORECASE)
+SCQA = re.compile(r"\b(situation|complication|question|resolution)\s*:", re.IGNORECASE)
+DIGIT = re.compile(r"\d")
+DASHES = re.compile(r"[—–]")
+SUBTITLE_KEYS = {"subtitle", "sub_title", "kicker", "tagline", "overline"}
+SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end"}
 
 
-def textes(obj, path=""):
-    """Parcourt le JSON et rend (chemin, texte) pour chaque chaîne."""
+def texts(obj, path=""):
+    """Yield (path, text) for every string in the JSON."""
     if isinstance(obj, str):
         yield path, obj
     elif isinstance(obj, dict):
         for k, v in obj.items():
-            if k in ("layout", "accent", "police", "format", "unite", "type", "id"):
-                continue
-            yield from textes(v, f"{path}.{k}" if path else k)
+            if k not in SKIP_KEYS:
+                yield from texts(v, f"{path}.{k}" if path else k)
     elif isinstance(obj, list):
         for i, v in enumerate(obj):
-            yield from textes(v, f"{path}[{i}]")
+            yield from texts(v, f"{path}[{i}]")
 
 
 def main(fp):
     story = json.loads(Path(fp).read_text(encoding="utf-8"))
     err, warn = [], []
-    titres = {}
-    for i, s in enumerate(story.get("slides", []), start=1):
+    seen = {}
+    slides = story.get("slides", [])
+    content = [s for s in slides if s.get("layout") != "cover"]
+    if not content or content[0].get("layout") != "executive_summary":
+        err.append("deck: the first content slide must be the executive_summary, written last")
+    for i, s in enumerate(slides, start=1):
         lay = s.get("layout")
         tag = f"slide {i}"
         if lay not in LAYOUTS:
-            err.append(f"{tag} : gabarit inconnu « {lay} »")
+            err.append(f"{tag}: unknown layout '{lay}'")
             continue
         for f in LAYOUTS[lay][0]:
             if f not in s:
-                err.append(f"{tag} ({lay}) : champ obligatoire manquant « {f} »")
-        t = s.get("titre", "")
+                err.append(f"{tag} ({lay}): missing required field '{f}'")
+        for k in SUBTITLE_KEYS & set(s):
+            err.append(f"{tag}: '{k}' field found; slides carry no subtitle")
+        t = s.get("title", "")
         if not t:
-            err.append(f"{tag} : titre manquant")
-        if lay != "couverture":
+            err.append(f"{tag}: missing title")
+        if lay != "cover":
+            words = len(t.split())
             if t.strip().endswith("?"):
-                err.append(f"{tag} : le titre pose une question ; il doit affirmer le message")
+                err.append(f"{tag}: the title asks a question; it must state the message")
             if ";" in t:
-                err.append(f"{tag} : point-virgule dans le titre (une seule phrase, une seule idée)")
+                err.append(f"{tag}: semicolon in title (one sentence, one idea)")
             if ":" in t:
-                warn.append(f"{tag} : deux-points dans le titre ; vérifier qu'il reste une phrase unique")
-            if t.count(",") >= 2 or "(" in t:
-                warn.append(f"{tag} : incise probable dans le titre")
-            if len(t.split()) < 6:
-                warn.append(f"{tag} : titre court ({len(t.split())} mots) ; porte-t-il le message entier ?")
-            if len(t.split()) > 32:
-                warn.append(f"{tag} : titre de {len(t.split())} mots ; vérifier qu'il porte une seule idée")
+                warn.append(f"{tag}: colon in title; check it stays one sentence with one idea")
+            if "(" in t:
+                warn.append(f"{tag}: parenthesis in title; remove the aside")
+            m = CLAUSE.search(t)
+            if m or len(AUX.findall(t)) > 1:
+                warn.append(f"{tag}: title may carry a second verb ('{m.group(0) if m else 'two auxiliaries'}');"
+                            " keep one action verb")
+            if words < 6:
+                warn.append(f"{tag}: short title ({words} words); does it carry the whole message?")
+            if words > 30:
+                warn.append(f"{tag}: {words}-word title; check it carries one idea")
             key = t.strip().lower()
-            if key in titres:
-                err.append(f"{tag} : titre identique à la slide {titres[key]}")
-            titres[key] = i
-        # titres de blocs : ils énoncent une idée
+            if key in seen:
+                err.append(f"{tag}: same title as slide {seen[key]}")
+            seen[key] = i
+        if lay == "executive_summary":
+            n = len(s.get("items", []))
+            if not 3 <= n <= 6:
+                warn.append(f"{tag}: executive summary with {n} takeaways (3 to 6 expected)")
+            for k, it in enumerate(s.get("items", [])):
+                if not it.get("takeaway"):
+                    err.append(f"{tag}: items[{k}] without takeaway")
         for field in IDEA_TITLE_FIELDS.get(lay, []):
             items = s.get(field)
             items = [items] if isinstance(items, dict) else (items or [])
             for k, b in enumerate(items):
-                bt = (b or {}).get("titre", "")
+                bt = (b or {}).get("title", "")
                 if not bt:
-                    err.append(f"{tag} : {field}[{k}] sans titre ; chaque bloc répond à une question par une idée")
+                    err.append(f"{tag}: {field}[{k}] has no title; each block answers a question with an idea")
                 elif len(bt.split()) < 4:
-                    warn.append(f"{tag} : titre de bloc « {bt} » ressemble à une étiquette ; écrire l'idée")
-        graph = s.get("graphique") or {}
-        if lay in ("graphique_texte",) and not graph.get("titre"):
-            warn.append(f"{tag} : graphique sans titre ; son titre énonce ce que montre la donnée")
-        if lay == "waterfall" and not s.get("titre_graphique"):
-            warn.append(f"{tag} : waterfall sans titre_graphique")
-        # chiffres : toute slide qui en contient cite une source
-        has_digit = any(CHIFFRE.search(txt) for p, txt in textes(s)
-                        if not p.startswith("source") and txt.strip() not in HARVEY)
-        has_digit = has_digit or lay in ("graphique_texte", "waterfall")
-        if has_digit and not s.get("source") and lay != "couverture":
-            err.append(f"{tag} : chiffres présents sans source")
-        # règles d'écriture sur tous les textes
-        for p, txt in textes(s):
+                    warn.append(f"{tag}: block title '{bt}' reads like a label; write the idea")
+        if lay == "chart_text" and not (s.get("chart") or {}).get("title"):
+            warn.append(f"{tag}: chart without title; its title states what the data shows")
+        if lay == "waterfall" and not s.get("chart_title"):
+            warn.append(f"{tag}: waterfall without chart_title")
+        has_digit = any(DIGIT.search(x) for p, x in texts(s)
+                        if not p.startswith(("source", "notes", "periods")) and x.strip() not in HARVEY)
+        has_digit = has_digit or lay in ("chart_text", "waterfall", "big_number")
+        if has_digit and not s.get("source") and lay not in ("cover", "executive_summary"):
+            err.append(f"{tag}: numbers without a source")
+        for p, x in texts(s):
             if p.startswith("notes"):
                 continue
-            low = txt.lower()
-            if TIRETS.search(txt):
-                err.append(f"{tag} [{p}] : tiret long ou demi-cadratin ; reformuler")
-            for a in ADVERBES:
+            low = x.lower()
+            if DASHES.search(x):
+                err.append(f"{tag} [{p}]: em or en dash; rephrase")
+            if SCQA.search(x):
+                err.append(f"{tag} [{p}]: visible SCQA label; the SCQA stays implicit")
+            for a in HEDGES:
                 if re.search(rf"(?<![\w-]){re.escape(a)}(?![\w-])", low):
-                    warn.append(f"{tag} [{p}] : adverbe de modulation « {a} »")
-            for m in PASSIF_FR.finditer(txt):
-                if m.group(2).lower() not in FAUX_PASSIFS:
-                    warn.append(f"{tag} [{p}] : voix passive probable « {m.group(0)} »")
-            for m in PASSIF_EN.finditer(txt):
-                warn.append(f"{tag} [{p}] : passive voice probable « {m.group(0)} »")
-            if PAS_MAIS.search(txt):
-                warn.append(f"{tag} [{p}] : tournure « ne pas X mais Y » ; affirmer Y")
+                    warn.append(f"{tag} [{p}]: hedging adverb '{a}'")
+            for m in PASSIVE.finditer(x):
+                warn.append(f"{tag} [{p}]: likely passive voice '{m.group(0)}'")
+            if NOT_BUT.search(x):
+                warn.append(f"{tag} [{p}]: 'not X but Y' or 'rather than'; state Y")
     for e in err:
-        print("ERREUR", e)
+        print("ERROR", e)
     for w in warn:
-        print("AVERTISSEMENT", w)
-    print(f"\n{len(err)} erreur(s), {len(warn)} avertissement(s)")
+        print("WARNING", w)
+    print(f"\n{len(err)} error(s), {len(warn)} warning(s)")
     return 1 if err else 0
 
 

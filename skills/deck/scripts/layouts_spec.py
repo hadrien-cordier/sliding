@@ -1,36 +1,44 @@
-"""Catalogue des gabarits : champs obligatoires et titres de blocs soumis au logical writing.
+"""Layout catalogue: required fields and the logical relation each layout encodes.
 
-Ce fichier sert de source unique au générateur (build_deck.py) et au linter (lint_storyboard.py).
+Single source of truth for build_deck.py and lint_storyboard.py.
 """
 
-# layout -> (champs obligatoires, relation logique encodée)
+# layout -> (required fields, logical relation it shows)
 LAYOUTS = {
-    "couverture": (["titre"], "Page de garde"),
-    "colonnes": (["blocs"], "Arguments parallèles (2 à 4 piliers)"),
-    "lignes": (["blocs"], "Arguments empilés, chacun avec son détail à droite"),
-    "puces": (["points"], "Simple énumération sans autre relation"),
-    "progression": (["blocs"], "Montée en maturité ou feuille de route, de gauche à droite"),
-    "chevrons": (["etapes"], "Processus séquentiel"),
-    "matrice": (["axe_x", "axe_y", "quadrants"], "Positionnement selon deux critères"),
-    "tableau": (["colonnes", "lignes"], "Comparaison d'options sur plusieurs critères"),
-    "graphique_texte": (["graphique", "blocs"], "Donnée chiffrée et sa lecture"),
-    "waterfall": (["etapes"], "Écart entre deux valeurs, décomposé"),
-    "avant_apres": (["avant", "apres"], "Situation actuelle contre cible"),
-    "timeline": (["phases"], "Calendrier de mise en œuvre"),
-    "arbre": (["racine", "branches"], "Décomposition d'un tout (issue tree)"),
-    "recommandation": (["recommandation", "piliers"], "Recommandation et ses conditions ou raisons"),
+    "cover": (["title"], "Title page"),
+    "executive_summary": (["items"], "The whole argument, one bold takeaway per line, written last"),
+    "columns": (["blocks"], "Parallel arguments (2 to 4 pillars)"),
+    "rows": (["blocks"], "Stacked arguments, each with longer detail on the right"),
+    "bullets": (["points"], "Plain enumeration with no other relation"),
+    "progression": (["blocks"], "Maturity build-up or roadmap, left to right"),
+    "chevrons": (["steps"], "Sequential process"),
+    "matrix": (["x_axis", "y_axis", "quadrants"], "Positioning on two criteria"),
+    "table": (["columns", "rows"], "Options compared on several criteria"),
+    "chart_text": (["chart", "blocks"], "A data point and what it means"),
+    "big_number": (["number", "label"], "One figure carries the message"),
+    "waterfall": (["steps"], "Gap between two values, broken into contributions"),
+    "funnel": (["stages"], "Volume lost from stage to stage"),
+    "before_after": (["before", "after"], "Current state versus target state"),
+    "timeline": (["phases"], "Implementation phases"),
+    "gantt": (["periods", "tasks"], "Workstreams scheduled over time"),
+    "tree": (["root", "branches"], "Breakdown of a question or a whole (issue tree)"),
+    "quotes": (["quotes", "blocks"], "Interview or survey evidence and its reading"),
+    "recommendation": (["recommendation", "pillars"], "A recommendation and its conditions or reasons"),
 }
 
-# Champs dont les éléments portent un "titre" qui doit énoncer une idée (logical writing).
-# Les titres d'étapes, de phases, de quadrants ou d'en-têtes de tableau restent des étiquettes.
+# Fields whose items carry a "title" that must state an idea (logical writing).
+# Step, phase, quadrant, stage and table header titles stay labels.
 IDEA_TITLE_FIELDS = {
-    "colonnes": ["blocs"],
-    "lignes": ["blocs"],
-    "progression": ["blocs"],
-    "graphique_texte": ["blocs"],
-    "waterfall": ["blocs"],
-    "avant_apres": ["avant", "apres"],
-    "recommandation": ["piliers"],
+    "columns": ["blocks"],
+    "rows": ["blocks"],
+    "progression": ["blocks"],
+    "chart_text": ["blocks"],
+    "big_number": ["blocks"],
+    "waterfall": ["blocks"],
+    "funnel": ["blocks"],
+    "quotes": ["blocks"],
+    "before_after": ["before", "after"],
+    "recommendation": ["pillars"],
 }
 
-HARVEY = {"[0]": "○", "[1]": "◔", "[2]": "◑", "[3]": "◕", "[4]": "●"}
+HARVEY = {"[0]": 0, "[1]": 1, "[2]": 2, "[3]": 3, "[4]": 4}

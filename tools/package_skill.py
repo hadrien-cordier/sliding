@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Empaquette skills/deck en dist/deck.zip pour le téléversement dans claude.ai."""
+"""Package skills/deck as dist/deck.zip for upload to claude.ai."""
 import zipfile
 from pathlib import Path
 
@@ -12,4 +12,4 @@ with zipfile.ZipFile(OUT, "w", zipfile.ZIP_DEFLATED) as z:
     for f in sorted(SRC.rglob("*")):
         if f.is_file() and "__pycache__" not in f.parts:
             z.write(f, Path("deck") / f.relative_to(SRC))
-print("écrit", OUT.relative_to(ROOT))
+print("wrote", OUT.relative_to(ROOT))
