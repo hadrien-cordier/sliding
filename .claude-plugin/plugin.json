@@ -1,7 +1,7 @@
 {
   "name": "consulting-deck",
-  "version": "0.2.0",
-  "description": "Agent team that builds consulting decks around the reader's priorities: framing questions, source takeaways, research, independent fact-check, ghost deck, storyboard with consulting slide designs, pyramid and logical-writing review gates, executive summary written last, .pptx on white background with grey boxes.",
+  "version": "0.3.0",
+  "description": "Agent team that builds consulting decks around the reader's priorities: framing questions, a reasoning loop where research and thinking co-evolve, two-pass fact-check, ghost deck, storyboard with consulting slide designs, pyramid and logical-writing review gates, executive summary written last, .pptx on white background with grey boxes.",
   "author": { "name": "Hadrien Cordier" },
   "license": "MIT",
   "keywords": ["powerpoint", "consulting", "pyramid-principle", "ghost-deck", "storyline", "pptx", "fact-check"]

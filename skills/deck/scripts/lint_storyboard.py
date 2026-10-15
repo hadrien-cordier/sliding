@@ -3,6 +3,7 @@
 
 The linter catches what a rule can detect without understanding meaning: JSON structure,
 numbers without a source, subtitles, visible SCQA labels, a missing executive summary,
+a layout used three times in a row, a missing layout rationale,
 dashes and semicolons, question titles, likely second verbs in titles, hedging adverbs,
 "not X but Y", likely passive voice, block titles reduced to labels, duplicate titles.
 
@@ -36,7 +37,7 @@ SCQA = re.compile(r"\b(situation|complication|question|resolution)\s*:", re.IGNO
 DIGIT = re.compile(r"\d")
 DASHES = re.compile(r"[—–]")
 SUBTITLE_KEYS = {"subtitle", "sub_title", "kicker", "tagline", "overline"}
-SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end"}
+SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end", "layout_rationale"}
 
 
 def texts(obj, path=""):
@@ -60,6 +61,14 @@ def main(fp):
     content = [s for s in slides if s.get("layout") != "cover"]
     if not content or content[0].get("layout") != "executive_summary":
         err.append("deck: the first content slide must be the executive_summary, written last")
+    # layout diversity: the same layout never more than twice in a row
+    run, prev = 0, None
+    for i, s in enumerate(slides, start=1):
+        lay = s.get("layout")
+        run = run + 1 if lay == prev else 1
+        prev = lay
+        if run == 3 and lay not in ("cover", "executive_summary"):
+            err.append(f"slide {i}: layout '{lay}' used three times in a row; change the layout or merge slides")
     for i, s in enumerate(slides, start=1):
         lay = s.get("layout")
         tag = f"slide {i}"
@@ -96,6 +105,12 @@ def main(fp):
             if key in seen:
                 err.append(f"{tag}: same title as slide {seen[key]}")
             seen[key] = i
+        if lay not in ("cover", "executive_summary"):
+            r = s.get("layout_rationale") or {}
+            for k in ("relation", "alternative", "why"):
+                if not r.get(k):
+                    err.append(f"{tag}: layout_rationale.{k} missing; name the relation, the second candidate"
+                               " layout and why this one wins")
         if lay == "executive_summary":
             n = len(s.get("items", []))
             if not 3 <= n <= 6:

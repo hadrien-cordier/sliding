@@ -6,37 +6,46 @@ An agent team for Claude that builds consulting decks around the reader's priori
 /consulting-deck:deck Steering-committee deck on the KYC redesign, from the three attached PDFs
 ```
 
-## The pipeline separates thinking from formatting
+## Research and thinking co-evolve until one message is defensible
 
 ```
-Framing questions to the user (orchestrator) ── no agent starts before the answers
-   │  decision, reader, reader's questions by priority, format, material, hypothesis
-   ├──► source-reader ───► takeaways first, facts with page references
-   └──► researcher ──────► facts traced to their origin
-            ▼
-   fact-checker ─────────► every claim CONFIRMED, CORRECTED or REJECTED
-            ▼
-   ghost-deck-architect ─► governing thought, pyramid, titles (SCQA implicit)
-            ▼
-   GATE 1  reviewer (storyline) + orchestrator approval + user go-ahead
-            ▼
-   visual-director ──────► block content + slide design per slide (JSON)
-            ▼
-   GATE 2  linter + reviewer (title coverage, scope, design, data)
-            ▼
-   ghost-deck-architect ─► executive summary, written last, placed first
-            ▼
-   GATE 3  reviewer (logical writing, sentence by sentence)
-            ▼
-   builder ──────────────► deck.pptx, PNG render, overflow fixes
+Framing questions to the user (orchestrator, Sonnet) ── no agent starts before the answers
+   ▼
+source-reader (Haiku) ──► claims, figures and quotes each document explicitly supports
+   ▼
+┌─► reasoning-manager (Opus) ──► reasoning map: decision, problem dimensions,
+│                                competing narratives, evidence and tensions registers,
+│                                open questions with stop conditions
+│      ▼
+│   researcher (Sonnet) ───────► cycle 1 coverage, then discriminant cycles that search
+│                                for evidence against the leading narrative
+│      ▼
+│   claim-screener (Haiku) ────► pass 1: reference, figure, date, quote, duplicate
+│   fact-checker (Sonnet) ─────► pass 2: exact support, scope, year, metric, causality
+│      ▼
+└── new cycle only while a high-impact question stays open
+   ▼
+reasoning-manager ──► falsification test, stabilised reasoning, what the deck cannot claim
+   ▼
+ghost-deck-architect (Opus) ──► governing thought, pyramid, titles, tensions placed
+GATE 1  storyline-reviewer (Opus) + user go-ahead
+   ▼
+visual-director (Sonnet) ──► blocks and layout per slide, two candidates compared
+lint (code) · GATE 2  storyboard-reviewer (Sonnet, high on key slides)
+   ▼
+summary-writer (Opus) ──► executive summary, written last, placed first
+GATE 3  writing-reviewer (Sonnet, high)
+   ▼
+build and render (code) · visual-qa (Haiku) on the PNGs
 ```
 
-Four choices shape the tool:
+Five choices shape the tool:
 
-- **The pyramid and logical writing are no steps.** They are references (`skills/deck/references/`) that every agent applies while writing and that the reviewer checks at every gate, from deck to sentence.
-- **Checkers never judge their own work.** The fact-checker did not collect the facts; the reviewer did not write the deck. Each runs in a separate context.
-- **The SCQA orders the storyline and stays invisible.** No context slide, no labels. The executive summary opens the deck and is written last.
-- **Agents hand off through files** (`00-brief.md` → `05-storyboard.json`). Each agent reads only what it needs, which limits tokens and leaves a trail you can reread.
+- **One agent owns the convergence.** The reasoning-manager decides what can be concluded; the architect decides in which order the reader meets it. Method: `skills/deck/references/reasoning-loop.md`.
+- **Research stops on decision value.** Every research question carries its decision impact and a stop condition; a new cycle starts only while a high-impact question stays open.
+- **Each task gets the cheapest model that does it well.** Haiku handles volume, Sonnet the standard professional work, Opus the decisions that structure the deck, code every rule-based check. The orchestrator escalates per task (policy table in `SKILL.md`).
+- **Checkers never judge their own work.** The fact-checker did not collect the facts; the reviewers did not write the deck.
+- **The pyramid and logical writing apply at every level**, the SCQA stays implicit, and the executive summary comes last.
 
 ## Nineteen slide designs encode the standard consulting relations
 
@@ -46,14 +55,16 @@ Demo: `examples/demo-layouts/` (storyboard JSON and generated deck).
 
 ## Install
 
-**Claude Code (recommended: separate agents)**
+**claude.ai (plugin, recommended)**: Customize > Plugins > Add > Add marketplace > Add from a repository, enter `hadrien-cordier/sliding`, install `consulting-deck`, then type `/` in a chat and pick `deck`.
+
+**Claude Code**
 ```bash
-claude plugin marketplace add <your-account>/consulting-deck
+claude plugin marketplace add hadrien-cordier/sliding
 claude plugin install consulting-deck@consulting-deck
 ```
 Then in a session: `/consulting-deck:deck <your need>`. Requires Python 3.9+ and `pip install python-pptx`. LibreOffice and poppler are optional, for the visual render check.
 
-**claude.ai (sequential mode)**
+**claude.ai (skill zip, sequential mode, no subagents)**
 ```bash
 python3 tools/package_skill.py   # writes dist/deck.zip
 ```
@@ -70,12 +81,12 @@ python3 skills/deck/scripts/render_check.py deck.pptx render/
 
 ```
 .claude-plugin/        plugin and marketplace manifests
-agents/                Claude Code subagents (generated from the roles)
+agents/                subagents with model and effort (generated from the roles)
 skills/deck/
   SKILL.md             orchestrator: pipeline, gates, approval criteria
   roles/               one file per role: single source of the prompts
-  references/          pyramid, logical writing, consulting practices, source quality,
-                       layouts, charts, storyboard schema
+  references/          reasoning loop, pyramid, logical writing, consulting practices,
+                       source quality, layouts, charts, storyboard schema
   scripts/             .pptx generator, linter, PNG render
 tools/                 role → agent sync, claude.ai packaging
 examples/              demo deck

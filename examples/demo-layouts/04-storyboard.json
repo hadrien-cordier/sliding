@@ -1,5 +1,9 @@
 {
-  "meta": {"title": "consulting-deck layout demo", "accent": "1F4E79", "font": "Arial"},
+  "meta": {
+    "title": "consulting-deck layout demo",
+    "accent": "1F4E79",
+    "font": "Arial"
+  },
   "slides": [
     {
       "layout": "cover",
@@ -10,90 +14,327 @@
       "layout": "executive_summary",
       "title": "The agent team turns source documents into decks that answer the reader's questions in priority order",
       "items": [
-        {"takeaway": "The reader's questions set the order of the deck, and the sources supply the proof", "points": ["Framing captures the questions and their priority before any agent starts", "The ghost deck follows that order"]},
-        {"takeaway": "Every fact on a slide survives an independent challenge", "points": ["A fact-checker traces each claim to its primary source", "Unverified facts leave the deck"]},
-        {"takeaway": "Three review gates keep the pyramid intact from deck to sentence", "points": ["A reviewer who did not write the deck judges it", "A linter clears mechanical errors first"], "accent": true},
-        {"takeaway": "The executive summary comes last and states every takeaway of the deck", "points": ["Its bold lines read as the full argument"]}
+        {
+          "takeaway": "The reader's questions set the order of the deck, and the sources supply the proof",
+          "points": [
+            "Framing captures the questions and their priority before any agent starts",
+            "The ghost deck follows that order"
+          ]
+        },
+        {
+          "takeaway": "Every fact on a slide survives an independent challenge",
+          "points": [
+            "A fact-checker traces each claim to its primary source",
+            "Unverified facts leave the deck"
+          ]
+        },
+        {
+          "takeaway": "Three review gates keep the pyramid intact from deck to sentence",
+          "points": [
+            "A reviewer who did not write the deck judges it",
+            "A linter clears mechanical errors first"
+          ],
+          "accent": true
+        },
+        {
+          "takeaway": "The executive summary comes last and states every takeaway of the deck",
+          "points": [
+            "Its bold lines read as the full argument"
+          ]
+        }
       ],
       "notes": "Written after the storyboard passed gate 2."
     },
     {
       "layout": "before_after",
       "title": "The deck shifts from summarising documents to answering the reader's questions",
-      "before": {"title": "Today's deck follows the order of the documents", "points": ["Each slide summarises one source", "The reader searches for what concerns him", "Titles name a topic"]},
-      "after": {"title": "The target deck follows the order of the reader's questions", "points": ["Each slide answers one question", "Sources prove the answer", "Titles alone tell the story"]},
-      "transition": "Ghost deck approved before any slide"
+      "before": {
+        "title": "Today's deck follows the order of the documents",
+        "points": [
+          "Each slide summarises one source",
+          "The reader searches for what concerns him",
+          "Titles name a topic"
+        ]
+      },
+      "after": {
+        "title": "The target deck follows the order of the reader's questions",
+        "points": [
+          "Each slide answers one question",
+          "Sources prove the answer",
+          "Titles alone tell the story"
+        ]
+      },
+      "transition": "Ghost deck approved before any slide",
+      "layout_rationale": {
+        "relation": "Current state versus target",
+        "alternative": "progression",
+        "why": "two states only; a progression implies intermediate steps"
+      }
     },
     {
       "layout": "chevrons",
       "title": "Seven steps separate the request from the final file",
       "steps": [
-        {"title": "Framing", "points": ["Goal and audience", "Reader's questions"]},
-        {"title": "Material", "points": ["Source takeaways", "Targeted research"]},
-        {"title": "Fact-check", "points": ["Primary sources", "Independent confirmation"]},
-        {"title": "Ghost deck", "points": ["Buckets by question", "Linked titles"]},
-        {"title": "Storyboard", "points": ["Block content", "Slide design"]},
-        {"title": "Reviews", "points": ["Pyramid at each level", "Logical writing"]},
-        {"title": "Build", "points": ["Executive summary last", "File and render check"]}
-      ]
+        {
+          "title": "Framing",
+          "points": [
+            "Goal and audience",
+            "Reader's questions"
+          ]
+        },
+        {
+          "title": "Material",
+          "points": [
+            "Source takeaways",
+            "Targeted research"
+          ]
+        },
+        {
+          "title": "Fact-check",
+          "points": [
+            "Primary sources",
+            "Independent confirmation"
+          ]
+        },
+        {
+          "title": "Ghost deck",
+          "points": [
+            "Buckets by question",
+            "Linked titles"
+          ]
+        },
+        {
+          "title": "Storyboard",
+          "points": [
+            "Block content",
+            "Slide design"
+          ]
+        },
+        {
+          "title": "Reviews",
+          "points": [
+            "Pyramid at each level",
+            "Logical writing"
+          ]
+        },
+        {
+          "title": "Build",
+          "points": [
+            "Executive summary last",
+            "File and render check"
+          ]
+        }
+      ],
+      "layout_rationale": {
+        "relation": "Sequential process",
+        "alternative": "timeline",
+        "why": "steps carry no dates; chevrons show order without a calendar"
+      }
     },
     {
       "layout": "tree",
       "title": "The ghost deck sorts information into buckets that each answer one reader question",
       "root": "Should we industrialise deck production?",
       "branches": [
-        {"text": "Does the need exist?", "leaves": ["Volume of decks produced", "Time spent per deck"]},
-        {"text": "Does the solution work?", "leaves": ["Quality of titles", "Respect of the pyramid"]},
-        {"text": "What does it take?", "leaves": ["Prototyping time", "Tool access"]}
-      ]
+        {
+          "text": "Does the need exist?",
+          "leaves": [
+            "Volume of decks produced",
+            "Time spent per deck"
+          ]
+        },
+        {
+          "text": "Does the solution work?",
+          "leaves": [
+            "Quality of titles",
+            "Respect of the pyramid"
+          ]
+        },
+        {
+          "text": "What does it take?",
+          "leaves": [
+            "Prototyping time",
+            "Tool access"
+          ]
+        }
+      ],
+      "layout_rationale": {
+        "relation": "Breakdown of one question into sub-questions",
+        "alternative": "columns",
+        "why": "columns hide that the branches come from one root question"
+      }
     },
     {
       "layout": "columns",
       "title": "Three cross-cutting checks apply the pyramid and logical writing at every level of the deck",
       "blocks": [
-        {"title": "The deck carries one governing thought", "points": ["Titles read in sequence form the storyline", "No idea returns from one slide to the next"]},
-        {"title": "The slide covers its whole title and nothing else", "points": ["Every element of the title finds its proof in the body", "The body stays within the title's scope"]},
-        {"title": "Each block answers one question with one idea", "points": ["Its title states the idea the text details", "Every sentence stays in the active voice"]}
-      ]
+        {
+          "title": "The deck carries one governing thought",
+          "points": [
+            "Titles read in sequence form the storyline",
+            "No idea returns from one slide to the next"
+          ]
+        },
+        {
+          "title": "The slide covers its whole title and nothing else",
+          "points": [
+            "Every element of the title finds its proof in the body",
+            "The body stays within the title's scope"
+          ]
+        },
+        {
+          "title": "Each block answers one question with one idea",
+          "points": [
+            "Its title states the idea the text details",
+            "Every sentence stays in the active voice"
+          ]
+        }
+      ],
+      "layout_rationale": {
+        "relation": "Parallel checks of one kind",
+        "alternative": "rows",
+        "why": "each check has short detail; columns keep the three side by side"
+      }
     },
     {
       "layout": "rows",
       "title": "Each agent delivers one file that the next agent reads without reopening the sources",
       "blocks": [
-        {"title": "The source reader delivers takeaways first", "points": ["It opens with what the reader must retain", "It keeps the page reference of every figure"]},
-        {"title": "The fact-checker delivers verified claims", "points": ["It traces each claim to its origin", "It strikes what it cannot confirm"]},
-        {"title": "The architect delivers the ghost deck", "points": ["It writes the governing thought and the titles", "It links each title to a reader question"]},
-        {"title": "The visual director delivers the storyboard", "points": ["It writes the blocks of each slide", "It picks the design that shows the logical relation"]}
-      ]
+        {
+          "title": "The source reader delivers takeaways first",
+          "points": [
+            "It opens with what the reader must retain",
+            "It keeps the page reference of every figure"
+          ]
+        },
+        {
+          "title": "The fact-checker delivers verified claims",
+          "points": [
+            "It traces each claim to its origin",
+            "It strikes what it cannot confirm"
+          ]
+        },
+        {
+          "title": "The architect delivers the ghost deck",
+          "points": [
+            "It writes the governing thought and the titles",
+            "It links each title to a reader question"
+          ]
+        },
+        {
+          "title": "The visual director delivers the storyboard",
+          "points": [
+            "It writes the blocks of each slide",
+            "It picks the design that shows the logical relation"
+          ]
+        }
+      ],
+      "layout_rationale": {
+        "relation": "Stacked hand-offs, each with longer detail",
+        "alternative": "chevrons",
+        "why": "the detail per agent is too long for chevron boxes"
+      }
     },
     {
       "layout": "matrix",
       "title": "Prompt effort concentrates on high-value steps that scripts handle poorly",
-      "x_axis": {"label": "Ease of automation", "low": "Low", "high": "High"},
-      "y_axis": {"label": "Value to the reader", "low": "Low", "high": "High"},
+      "x_axis": {
+        "label": "Ease of automation",
+        "low": "Low",
+        "high": "High"
+      },
+      "y_axis": {
+        "label": "Value to the reader",
+        "low": "Low",
+        "high": "High"
+      },
       "quadrants": [
-        {"title": "Invest in prompts", "points": ["Ghost deck", "Pyramid review"], "accent": true},
-        {"title": "Automate first", "points": ["Source reading", "Writing linter"]},
-        {"title": "Keep human", "points": ["Final approval"]},
-        {"title": "Script", "points": [".pptx generation", "PNG rendering"]}
+        {
+          "title": "Invest in prompts",
+          "points": [
+            "Ghost deck",
+            "Pyramid review"
+          ],
+          "accent": true
+        },
+        {
+          "title": "Automate first",
+          "points": [
+            "Source reading",
+            "Writing linter"
+          ]
+        },
+        {
+          "title": "Keep human",
+          "points": [
+            "Final approval"
+          ]
+        },
+        {
+          "title": "Script",
+          "points": [
+            ".pptx generation",
+            "PNG rendering"
+          ]
+        }
       ],
       "side_blocks": [
-        {"title": "The ghost deck decides final quality", "points": ["A weak storyline survives any layout"]},
-        {"title": "Layout belongs to the script", "points": ["The generator applies the house style"]}
-      ]
+        {
+          "title": "The ghost deck decides final quality",
+          "points": [
+            "A weak storyline survives any layout"
+          ]
+        },
+        {
+          "title": "Layout belongs to the script",
+          "points": [
+            "The generator applies the house style"
+          ]
+        }
+      ],
+      "layout_rationale": {
+        "relation": "Positioning steps on two criteria",
+        "alternative": "table",
+        "why": "two continuous criteria read faster as quadrants than as a grid"
+      }
     },
     {
       "layout": "table",
       "title": "The Claude Code plugin gives each step its own agent and outscores the sequential claude.ai skill",
-      "columns": ["Criterion", "Claude Code plugin", "claude.ai skill"],
+      "columns": [
+        "Criterion",
+        "Claude Code plugin",
+        "claude.ai skill"
+      ],
       "rows": [
-        ["Separate agents", "[4]", "[1]"],
-        ["Independent reviewer", "[4]", "[2]"],
-        [".pptx generation", "[4]", "[3]"],
-        ["Ease of setup", "[2]", "[4]"]
+        [
+          "Separate agents",
+          "[4]",
+          "[1]"
+        ],
+        [
+          "Independent reviewer",
+          "[4]",
+          "[2]"
+        ],
+        [
+          ".pptx generation",
+          "[4]",
+          "[3]"
+        ],
+        [
+          "Ease of setup",
+          "[2]",
+          "[4]"
+        ]
       ],
       "accent_column": 1,
-      "legend": "Full circle: full coverage · empty circle: no coverage"
+      "legend": "Full circle: full coverage · empty circle: no coverage",
+      "layout_rationale": {
+        "relation": "Two options compared on several criteria",
+        "alternative": "columns",
+        "why": "criteria must align across options; only a table aligns them"
+      }
     },
     {
       "layout": "chart_text",
@@ -101,16 +342,52 @@
       "chart": {
         "title": "The three review gates account for 40% of tokens",
         "type": "hbars",
-        "categories": ["Reviews", "Storyboard", "Source reading", "Ghost deck", "Research", "Build"],
-        "series": [{"name": "Share of tokens", "values": [40, 20, 15, 12, 8, 5]}],
+        "categories": [
+          "Reviews",
+          "Storyboard",
+          "Source reading",
+          "Ghost deck",
+          "Research",
+          "Build"
+        ],
+        "series": [
+          {
+            "name": "Share of tokens",
+            "values": [
+              40,
+              20,
+              15,
+              12,
+              8,
+              5
+            ]
+          }
+        ],
         "unit": "%",
-        "accent": [0]
+        "accent": [
+          0
+        ]
       },
       "blocks": [
-        {"title": "Reviews reread the whole storyboard", "points": ["Each gate reloads the produced files"]},
-        {"title": "The linter lowers review cost", "points": ["It clears mechanical rules before the reviewer"]}
+        {
+          "title": "Reviews reread the whole storyboard",
+          "points": [
+            "Each gate reloads the produced files"
+          ]
+        },
+        {
+          "title": "The linter lowers review cost",
+          "points": [
+            "It clears mechanical rules before the reviewer"
+          ]
+        }
       ],
-      "source": "Fictitious data illustrating the layout"
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {
+        "relation": "A data series and what it means",
+        "alternative": "big_number",
+        "why": "several values matter, not one figure"
+      }
     },
     {
       "layout": "big_number",
@@ -118,103 +395,306 @@
       "number": "-50%",
       "label": "production time per deck, fictitious example",
       "blocks": [
-        {"title": "Drafting concentrates the gain", "points": ["The ghost deck prevents late rewrites"]},
-        {"title": "Reviews add an accepted cost", "points": ["They replace back-and-forth with the manager"]}
+        {
+          "title": "Drafting concentrates the gain",
+          "points": [
+            "The ghost deck prevents late rewrites"
+          ]
+        },
+        {
+          "title": "Reviews add an accepted cost",
+          "points": [
+            "They replace back-and-forth with the manager"
+          ]
+        }
       ],
-      "source": "Fictitious data illustrating the layout"
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {
+        "relation": "One figure carries the message",
+        "alternative": "chart_text",
+        "why": "the slide has one figure; a chart would add no reading"
+      }
     },
     {
       "layout": "waterfall",
       "title": "In the fictitious example, drafting gains outweigh the time that reviews add",
       "chart_title": "Drafting saves five hours and reviews cost two",
       "steps": [
-        {"label": "Current time", "value": 10, "total": true},
-        {"label": "Drafting", "value": -5},
-        {"label": "Layout", "value": -2},
-        {"label": "Reviews", "value": 2},
-        {"label": "Target time", "value": 5, "total": true}
+        {
+          "label": "Current time",
+          "value": 10,
+          "total": true
+        },
+        {
+          "label": "Drafting",
+          "value": -5
+        },
+        {
+          "label": "Layout",
+          "value": -2
+        },
+        {
+          "label": "Reviews",
+          "value": 2
+        },
+        {
+          "label": "Target time",
+          "value": 5,
+          "total": true
+        }
       ],
       "unit": " h",
       "blocks": [
-        {"title": "Drafting concentrates the gain", "points": ["The ghost deck prevents late rewrites"]},
-        {"title": "Reviews add an accepted cost", "points": ["They replace manager back-and-forth"]}
+        {
+          "title": "Drafting concentrates the gain",
+          "points": [
+            "The ghost deck prevents late rewrites"
+          ]
+        },
+        {
+          "title": "Reviews add an accepted cost",
+          "points": [
+            "They replace manager back-and-forth"
+          ]
+        }
       ],
-      "source": "Fictitious data illustrating the layout"
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {
+        "relation": "Gap between two values split into contributions",
+        "alternative": "chart_text",
+        "why": "contributions add up; a bridge shows how"
+      }
     },
     {
       "layout": "funnel",
       "title": "In the fictitious example, the fact-check removes most unverified claims before the ghost deck",
       "stages": [
-        {"label": "Claims collected", "value": "120"},
-        {"label": "Traced to origin", "value": "85"},
-        {"label": "Independently confirmed", "value": "60"},
-        {"label": "Used on slides", "value": "24"}
+        {
+          "label": "Claims collected",
+          "value": "120"
+        },
+        {
+          "label": "Traced to origin",
+          "value": "85"
+        },
+        {
+          "label": "Independently confirmed",
+          "value": "60"
+        },
+        {
+          "label": "Used on slides",
+          "value": "24"
+        }
       ],
       "accent_stage": 2,
       "blocks": [
-        {"title": "Tracing removes the largest share", "points": ["Many claims rest on a secondary source"]},
-        {"title": "The deck uses a fifth of confirmed facts", "points": ["The ghost deck keeps what answers a reader question"]}
+        {
+          "title": "Tracing removes the largest share",
+          "points": [
+            "Many claims rest on a secondary source"
+          ]
+        },
+        {
+          "title": "The deck uses a fifth of confirmed facts",
+          "points": [
+            "The ghost deck keeps what answers a reader question"
+          ]
+        }
       ],
-      "source": "Fictitious data illustrating the layout"
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {
+        "relation": "Volume lost from stage to stage",
+        "alternative": "waterfall",
+        "why": "stages are nested counts, not signed contributions"
+      }
     },
     {
       "layout": "quotes",
       "title": "Fictitious interviewees expect decks that answer their questions first",
       "quotes": [
-        {"text": "I read the titles and the summary, and I decide from there.", "author": "Fictitious CFO"},
-        {"text": "When a slide summarises a report, I ask what it means for us.", "author": "Fictitious COO"}
+        {
+          "text": "I read the titles and the summary, and I decide from there.",
+          "author": "Fictitious CFO"
+        },
+        {
+          "text": "When a slide summarises a report, I ask what it means for us.",
+          "author": "Fictitious COO"
+        }
       ],
       "blocks": [
-        {"title": "Readers decide from titles and summary", "points": ["The body serves as proof"]},
-        {"title": "Readers want implications for them", "points": ["A summary without a so-what fails"]}
+        {
+          "title": "Readers decide from titles and summary",
+          "points": [
+            "The body serves as proof"
+          ]
+        },
+        {
+          "title": "Readers want implications for them",
+          "points": [
+            "A summary without a so-what fails"
+          ]
+        }
       ],
-      "source": "Fictitious quotes illustrating the layout"
+      "source": "Fictitious quotes illustrating the layout",
+      "layout_rationale": {
+        "relation": "Interview evidence and its reading",
+        "alternative": "columns",
+        "why": "the evidence is verbatim; quotes keep the voice visible"
+      }
     },
     {
       "layout": "progression",
       "title": "The roadmap takes the tool from slide generator to automated partner review",
       "axis_label": "Value to the consultant",
       "blocks": [
-        {"title": "V1 structures the reasoning", "points": ["Brief, takeaways, ghost deck", "Storyboard without file"]},
-        {"title": "V2 produces the file", "points": [".pptx generation", "White background and grey boxes"]},
-        {"title": "V3 critiques the deck", "points": ["Flags useless slides", "Flags unproven claims"]}
+        {
+          "title": "V1 structures the reasoning",
+          "points": [
+            "Brief, takeaways, ghost deck",
+            "Storyboard without file"
+          ]
+        },
+        {
+          "title": "V2 produces the file",
+          "points": [
+            ".pptx generation",
+            "White background and grey boxes"
+          ]
+        },
+        {
+          "title": "V3 critiques the deck",
+          "points": [
+            "Flags useless slides",
+            "Flags unproven claims"
+          ]
+        }
       ],
-      "source": "Project roadmap"
+      "source": "Project roadmap",
+      "layout_rationale": {
+        "relation": "Maturity build-up across versions",
+        "alternative": "chevrons",
+        "why": "each version adds value; growing boxes show the build-up"
+      }
     },
     {
       "layout": "gantt",
       "title": "The prototype takes four weeks from role prompts to the first real deck",
-      "periods": ["Week 1", "Week 2", "Week 3", "Week 4"],
-      "tasks": [
-        {"label": "Role prompts and references", "start": 0, "end": 0},
-        {"label": "Generator and linter", "start": 0, "end": 1},
-        {"label": "Fact-check calibration", "start": 1, "end": 2},
-        {"label": "Review gates calibration", "start": 2, "end": 2},
-        {"label": "First real deck", "start": 3, "end": 3, "accent": true},
-        {"label": "Go or no-go", "start": 3, "end": 3, "milestone": true}
+      "periods": [
+        "Week 1",
+        "Week 2",
+        "Week 3",
+        "Week 4"
       ],
-      "source": "Project planning assumption"
+      "tasks": [
+        {
+          "label": "Role prompts and references",
+          "start": 0,
+          "end": 0
+        },
+        {
+          "label": "Generator and linter",
+          "start": 0,
+          "end": 1
+        },
+        {
+          "label": "Fact-check calibration",
+          "start": 1,
+          "end": 2
+        },
+        {
+          "label": "Review gates calibration",
+          "start": 2,
+          "end": 2
+        },
+        {
+          "label": "First real deck",
+          "start": 3,
+          "end": 3,
+          "accent": true
+        },
+        {
+          "label": "Go or no-go",
+          "start": 3,
+          "end": 3,
+          "milestone": true
+        }
+      ],
+      "source": "Project planning assumption",
+      "layout_rationale": {
+        "relation": "Workstreams scheduled over weeks",
+        "alternative": "timeline",
+        "why": "workstreams overlap across weeks"
+      }
     },
     {
       "layout": "timeline",
       "title": "Each prototype week closes on one deliverable that the next week builds on",
       "phases": [
-        {"period": "Week 1", "title": "Role prompts", "points": ["Roles and references written"]},
-        {"period": "Week 2", "title": "Generator", "points": ["Layouts and linter tested"]},
-        {"period": "Week 3", "title": "Reviews", "points": ["Gates calibrated on three decks"]},
-        {"period": "Week 4", "title": "First real deck", "points": ["Test on a live topic"]}
+        {
+          "period": "Week 1",
+          "title": "Role prompts",
+          "points": [
+            "Roles and references written"
+          ]
+        },
+        {
+          "period": "Week 2",
+          "title": "Generator",
+          "points": [
+            "Layouts and linter tested"
+          ]
+        },
+        {
+          "period": "Week 3",
+          "title": "Reviews",
+          "points": [
+            "Gates calibrated on three decks"
+          ]
+        },
+        {
+          "period": "Week 4",
+          "title": "First real deck",
+          "points": [
+            "Test on a live topic"
+          ]
+        }
       ],
-      "source": "Project planning assumption"
+      "source": "Project planning assumption",
+      "layout_rationale": {
+        "relation": "Phases with one deliverable each",
+        "alternative": "gantt",
+        "why": "phases do not overlap; one deliverable per phase"
+      }
     },
     {
       "layout": "recommendation",
       "title": "Building every deck from the reader's questions secures decks that decision makers act on",
       "recommendation": "Run every deck through framing, fact-check and the three review gates before any slide reaches a client",
       "pillars": [
-        {"title": "Framing fixes the order of ideas", "points": ["The reader's questions come first"]},
-        {"title": "The fact-check secures every claim", "points": ["Primary sources or two independent ones"]},
-        {"title": "Gates protect the pyramid", "points": ["A separate reviewer judges each level"]}
-      ]
+        {
+          "title": "Framing fixes the order of ideas",
+          "points": [
+            "The reader's questions come first"
+          ]
+        },
+        {
+          "title": "The fact-check secures every claim",
+          "points": [
+            "Primary sources or two independent ones"
+          ]
+        },
+        {
+          "title": "Gates protect the pyramid",
+          "points": [
+            "A separate reviewer judges each level"
+          ]
+        }
+      ],
+      "layout_rationale": {
+        "relation": "Recommendation and its conditions",
+        "alternative": "columns",
+        "why": "the pillars hang from one recommendation"
+      }
     },
     {
       "layout": "bullets",
@@ -224,7 +704,12 @@
         "Framing obtains the reader's real questions before any drafting",
         "The sources provided contain the proof the deck asserts",
         "The reviewer keeps the right to block a slide without a message"
-      ]
+      ],
+      "layout_rationale": {
+        "relation": "Plain list of conditions",
+        "alternative": "columns",
+        "why": "the conditions have no common structure to split into boxes"
+      }
     }
   ]
 }

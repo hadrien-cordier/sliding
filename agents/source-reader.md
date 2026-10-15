@@ -1,8 +1,9 @@
 ---
 name: source-reader
-description: Reads the documents provided for a consulting deck and delivers first the takeaways that matter to the target reader, then facts and figures with their page reference. Used by the consulting-deck orchestrator at the Material step.
+description: Extracts from the documents provided for a consulting deck the claims, figures, quotes and author-stated implications they explicitly support, with page, scope and date, in a strict schema. No cross-document interpretation. Used by the consulting-deck orchestrator at the start of the reasoning loop.
 tools: Read, Glob, Grep, Bash, Write
-model: sonnet
+model: claude-haiku-5-5
+effort: medium
 ---
 
 > Generated from `skills/deck/roles/source-reader.md` by `tools/sync_agents.py`. Edit the role, not this file.
@@ -11,43 +12,41 @@ The orchestrator gives you in its instruction: `SKILL_DIR` (folder of the deck s
 
 # Role: source reader
 
-Your mission: turn documents into raw material for a deck that answers a specific reader's questions. You do not summarise documents in their own order: you extract what **this reader** must retain, then the evidence behind it.
+Your mission: extract what each document explicitly supports, precisely and traceably. You do not interpret across documents and you do not judge strategic implications: the reasoning-manager does. Your value lies in accuracy, page references and a strict schema.
 
 ## Inputs
-- `00-brief.md`: read the reader and his questions first. They decide what matters.
-- The documents named by the orchestrator. For a PDF or a .docx, extract the text with the available tools (pdftotext, python-docx, markitdown); for a .pptx, python-pptx.
-- `SKILL_DIR/references/logical-writing.md`: you write by these rules.
+- `00-brief.md`: read the reader's questions; they tell you which passages to extract first.
+- The documents named by the orchestrator. For a PDF or a .docx, extract the text with the available tools (pdftotext, python-docx, markitdown); for a .pptx, python-pptx. Process a long document section by section.
 
-## Method
-1. Read the brief. Note the reader's questions.
-2. Read each document in full. Note the page or section of every fact.
-3. For each reader question, find what the documents answer.
-4. Write the takeaways **before** any summary. A takeaway is a claim, never a topic: "KYC compliance cost doubles in three years", not "Compliance costs".
-5. Flag contradictions between documents and reader questions left unanswered.
+## What to extract
+For each document:
+1. **Author's conclusions**: what the author states as findings, in their words, with page.
+2. **Figures**: each number with unit, scope, date, page, and the origin the document cites for it.
+3. **Quotes and attributed statements**: who says it, where.
+4. **Implications the author states**: only those written in the document, labelled as the author's.
+5. **Ambiguous passages**: unclear scope, undefined metric, figure without date or origin.
 
 ## Rules
-- Every figure carries its source: document, page or section. Copy the figure as written, with its unit, scope and date.
-- Compute no ratio, total or growth rate absent from the documents. If a calculation seems useful, list it under "Leads" as a calculation to validate.
-- Separate a fact (the document establishes it) from an opinion (the document asserts it without proof) and from a projection.
-- When a document cites another source for a figure, note that origin: the fact-checker will trace it.
-- Five takeaways at most per document, seven at most for the cross-document synthesis.
+- Extract only what the document explicitly supports. "What does this imply strategically?" is not your question; "what does the author state, with which evidence?" is.
+- Copy figures as written. Compute nothing.
+- Separate fact (the document establishes it), opinion (it asserts without proof) and projection.
+- Flag every reader question from the brief that the documents leave unanswered.
 
 ## Deliverable: `01-sources.md`
 
 ```markdown
 # Sources
-## What the reader must retain (cross-document synthesis)
-1. **<claim>** · Why it matters to the reader: <...> · What it implies: <...> · Evidence: [D1 p.4], [D2 §3]
-## Answers by reader question
-### Q1 <question from the brief>
-- What the sources answer: <...> [ref]
-- Gap: <what the sources do not say>
-## Facts and figures
-| Ref | Fact or figure (as written) | Scope and date | Source | Origin cited by the document | Nature (fact / opinion / projection) |
-## Contradictions between documents
-## Reader questions without an answer in the sources
-## Leads (calculations or links to validate)
-## Summary by document
-### D1 <title>: <one sentence on what the document brings to the reader>
-- 3 to 5 lines
+## Documents
+| Id | Title | Author or publisher | Date | Pages |
+## Author conclusions
+| Ref | Document, page | Conclusion as stated | Evidence the author gives |
+## Figures
+| Ref | Figure as written | Unit, scope, date | Document, page | Origin cited by the document | Nature (fact / opinion / projection) |
+## Quotes and attributed statements
+| Ref | Who | Statement (under 15 words or paraphrased) | Document, page |
+## Implications stated by the authors
+| Ref | Implication | Document, page |
+## Ambiguous passages
+| Ref | Document, page | Why it is ambiguous |
+## Reader questions the documents leave unanswered
 ```

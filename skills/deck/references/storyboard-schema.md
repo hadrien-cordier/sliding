@@ -1,6 +1,6 @@
-# Storyboard format (`05-storyboard.json`)
+# Storyboard format (`04-storyboard.json`)
 
-Full example: `examples/demo-layouts/04-storyboard.json` in the repo.
+Full example: `examples/demo-layouts/04-storyboard.json` in the repo. File name in a working folder: `04-storyboard.json`.
 
 ```json
 {
@@ -18,6 +18,7 @@ Slide order: `cover`, then `executive_summary` (written last), then the body sli
 | `title` | yes | The title approved in the ghost deck, word for word |
 | `source` | when the slide holds a figure | Footer, prefixed "Source:". Name the origin and year |
 | `notes` | no | Speaker notes: what the presenter adds, open points |
+| `layout_rationale` | yes on body slides | `{"relation": "...", "alternative": "second candidate layout", "why": "why this layout wins"}`. Not rendered |
 
 No `subtitle` field exists: the linter rejects it.
 

@@ -24,6 +24,11 @@ Pick the layout from the relation between the blocks of the slide, never from a 
 | Plain list with no other relation | `bullets` | The points have an order or hierarchy another layout shows better |
 | Title page | `cover` | |
 
+## Choosing and varying layouts
+- Name the logical relation first, then compare at least two candidate layouts for it, and record the choice in `layout_rationale` (relation, alternative, why).
+- Never use the same layout more than twice in a row; the linter blocks it.
+- Useful diversity follows a change of relation. Decorative variety (changing the look while the relation stays the same) is a defect: when the rule above forces a change, take the second-best layout for the same relation.
+
 ## Shared rules
 - White background, grey boxes, one accent colour for the element the title points to.
 - The key element sits top left or at the end of the reading path (last box of a progression, highlighted quadrant, accent bar): the eye starts top left.

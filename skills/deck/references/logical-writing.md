@@ -26,10 +26,17 @@ These rules codify the consulting writing practice of the project's author. No p
 17. **No em or en dash.** Use a comma, a full stop or two sentences.
 18. **No rhetorical scaffolding or hollow intensifiers** ("it is important to note that", "key", "critical", "robust").
 19. **Plain vocabulary in the reader's register.** No jargon the reader does not use.
+20. **Explicit logical relations.** Say whether the next sentence is a cause, a consequence, a condition or a contrast.
+21. **Known before new.** Each sentence starts from what the reader already has and ends on the new information.
+22. **Main message before nuance.** State the claim, then its limit.
+23. **Parallel lists.** Items of one list share one grammatical form.
+24. **Stable vocabulary.** One term per concept across the whole deck; a new word suggests a new concept.
+25. **Negation test.** If the negation of a sentence is absurd ("banks do not want to reduce risk"), the sentence says nothing: replace it with a claim someone could dispute.
+26. **Certainty matches evidence.** A sentence claims no more than its proof and the confidence the reasoning map grants. Calibrate with scope ("in the five markets studied") rather than hedging adverbs.
 
 ## Figures
-20. Every figure points to a named origin, with unit, scope and date, and appears in `03-fact-check.md` as CONFIRMED or CORRECTED.
-21. No ratio, price or total rebuilt and presented as data.
+27. Every figure points to a named origin, with unit, scope and date, and appears in `02-fact-register.md` as CONFIRMED, CORRECTED or USER DOCUMENT.
+28. No ratio, price or total rebuilt and presented as data.
 
 ## Rewrite examples
 
@@ -39,7 +46,7 @@ These rules codify the consulting writing practice of the project's author. No p
 | Market overview | Three regulatory deadlines force a decision before June | 2, 10 |
 | Automation reduces cost and the bank gains market share | Automation cuts cost by 30% (second slide: the cost gain funds market-share growth) | 6, 7 |
 | Context: strong growth; multiple risks | The market grows 12% a year and exposes the bank to three risks | 5, 9 (two verbs: split if both matter) |
-| Costs already exceed 20% of the budget | Costs reach 23% of the budget (origin, year) | 15, 20 |
+| Costs already exceed 20% of the budget | Costs reach 23% of the budget (origin, year) | 15, 27 |
 | This is not a technology issue but an organisational one | The issue sits in the organisation | 16 |
 
 ## Automatic check
