@@ -1,4 +1,4 @@
-# Slide design catalogue: the form follows the logical relation
+# Slide design catalogue: the form follows the logical relation and the number of arguments in the title.
 
 Pick the layout from the relation between the blocks of the slide, never from a wish to vary. Two consecutive slides may share a layout if their blocks share a relation. Practitioner sources for these designs: `consulting-practices.md`.
 
@@ -32,6 +32,6 @@ Pick the layout from the relation between the blocks of the slide, never from a 
 ## Shared rules
 - White background, grey boxes, one accent colour for the element the title points to.
 - The key element sits top left or at the end of the reading path (last box of a progression, highlighted quadrant, accent bar): the eye starts top left.
-- 2 to 4 blocks, 2 to 4 points per block, 15 words at most per point.
+- 2 to 4 blocks, 2 to 6 points per block, 25 words at most per point.
 - One block per question the title raises; a block that answers none leaves the slide.
 - A chart or block next to a chart adds information; it never restates what the chart shows.
