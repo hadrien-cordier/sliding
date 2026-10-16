@@ -1,6 +1,6 @@
 # The reasoning loop: hypothesis-driven, evidence-led, iterative
 
-This reference codifies the author's method for how a consulting team builds the substance of a deck. It is the author's practice, not a published framework.
+This reference codifies the method for how to build the substance of a deck.
 
 ## Neither thesis-first nor research-first
 - **Thesis first, then proof** turns agents into a machine that confirms an initial intuition.
