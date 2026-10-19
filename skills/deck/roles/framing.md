@@ -29,9 +29,8 @@ Ask them in one message (AskUserQuestion when available). Propose a default for 
 - What must research cover; which sources do you trust or exclude?
 - What do you know that no document says? What is confidential?
 
-**5. Format and depth**
+**5. Format**
 - Live or read alone? Maximum slides? Deadline? House template or accent colour?
-- **Depth**: fast (few agents, the orchestrator writes the storyline and slides, one targeted fact-check) or standard (full agent team within its call ceiling)? Default: fast for internal, short or low-stakes decks.
 
 **6. Answer hypothesis** (argument decks)
 - If you had to answer today, in one sentence, what would you say?
@@ -40,9 +39,8 @@ Ask them in one message (AskUserQuestion when available). Propose a default for 
 
 ```markdown
 # Brief
-## Kind and depth
+## Kind
 - Kind: argument | benchmark | mixed (which sections)
-- Depth: fast | standard · Call ceiling: 6 | 18
 ## Structure (the deck fills this; edit in place, never append contradictions)
 - Expected slides and exhibits, in order: <list, with exhibit type per item>
 - Benchmark grid: units (rows) <...> × dimensions (columns) <...>; in scope <...>; out of scope <...>

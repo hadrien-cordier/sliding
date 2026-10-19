@@ -1,54 +1,50 @@
 # consulting-deck
 
-An agent team for Claude that builds consulting decks, argument or benchmark, within a fixed call budget, and fact-checks every figure it displays. Output: an editable .pptx on a white background, grey boxes, one accent colour.
+An agent team for Claude that builds consulting decks, argument or benchmark, around one persistent reasoning context, and fact-checks every figure it displays. Output: an editable .pptx on a white background, grey boxes, one accent colour.
 
 ```
 /consulting-deck:deck Steering-committee deck on the KYC redesign, from the three attached PDFs
 ```
 
-## The pipeline runs within a call budget
+## One context per job, resumed instead of restarted
 
 ```
-Framing (orchestrator) ── kind (argument | benchmark), depth (fast | standard),
-   │                       expected slides and exhibits, benchmark grid
+Framing questions to the user (orchestrator) ── always, before any agent starts:
+   │   deck kind, expected slides and exhibits, benchmark grid, reader, material
    ▼
 source-reader (Haiku) ──► one call per heavy document, relevant sections only
    ▼
-reasoning-manager (Opus) ──► map v0: at most 8 questions in at most 3 topics
+engagement-manager (Opus, one persistent context) ──────────────────────────┐
+   map → spawns researchers (Sonnet, ≤3) → revises hypotheses on their       │
+   compact answers → resumes the same researchers for cycle 2 →             │
+   falsification test → ghost deck with exhibit sketches                     │
+   ▼                                                                         │
+GATE 1  challenger (Opus) → engagement manager fixes → challenger re-checks  │
+        the change list → user sees titles and sketches ── feedback ────────►│
+   ▼                                                                         │
+fact-checker (Sonnet) ──► displayed figures only, once ── results ──────────►│
+   ▼                                                                         │
+visual-director (Sonnet, stays alive) ──► storyboard · lint (code)           │
+GATE 2  slide-reviewer (Sonnet) → visual director fixes → one re-check       │
+   ▼                                                                         │
+executive summary ◄── engagement manager, resumed with the titles outline ◄──┘
    ▼
-researcher × ≤3 (Sonnet) ──► ≤12 page reads each, facts tagged by source tier
-   ▼
-reasoning-manager ──► stabilise, or one discriminant cycle (two cycles at most)
-   ▼
-ghost-deck-architect (Opus) ──► one slide per expected item, exhibit sketches,
-   │                              list of displayed figures
-GATE 1  storyline-reviewer (Opus, one round) + user sees titles and sketches
-   ▼
-fact-checker (Sonnet) ──► displayed figures only, once, incremental
-   ▼
-visual-director (Sonnet) ──► storyboard · lint (code)
-GATE 2  slide-reviewer (Sonnet, one round, on a compact outline)
-   ▼
-summary-writer (Opus) ──► executive summary, written last, placed first
-   ▼
-build and render (code) · visual-qa (Haiku, one round)
+build and render (code) · visual-qa (Haiku) → visual director fixes
 ```
-
-In **fast** mode the orchestrator writes the map, the ghost deck, the storyboard and the summary itself: about six agent calls in total. **Standard** mode stays under eighteen.
 
 What keeps token use down:
 
-- **Fewer cold starts.** Every subagent rereads its inputs before writing; the budget caps calls per step, and every agent has a `maxTurns` limit.
-- **Smaller inputs.** Agents read a one-page rules card instead of the full references, register excerpts instead of registers (`scripts/excerpt.py`), and a compact outline instead of the storyboard (`scripts/extract_outline.py`). Every deliverable opens with a summary of 20 lines.
-- **Checks where they matter.** Facts are tagged by source tier at research time; only the figures that will be displayed are fact-checked, once, and a CONFIRMED row is never checked again.
-- **One review round per gate.** Wording fixes are applied by the orchestrator; doubts become open points, never new research.
-- **Bounded research.** At most three researchers in parallel, twelve page reads each, two cycles, never a full annual report.
+- **Thinking happens in one context.** The engagement manager holds the brief, the map, the research answers and the storyline for the whole run. The hypothesis → research → revision loop runs inside it, with no hand-off and no reread.
+- **Agents are resumed, not restarted.** A resumed subagent keeps its full history and reads it from the prompt cache. Researchers keep their sources for the second cycle; the challenger and the slide-reviewer re-check only the change list; the visual director applies fixes to a storyboard it already holds.
+- **Cache lifetimes match waiting times.** The engagement manager and the challenger, who wait through the user's gate 1 review, keep a one-hour cache; the others keep the five-minute default and are resumed promptly.
+- **One check per fact.** Only displayed figures are fact-checked, once; reviewers never re-verify.
+- **Small inputs.** A one-page rules card, register excerpts (`scripts/excerpt.py`), compact outlines (`scripts/extract_outline.py`), and replies capped at 10 to 25 lines.
 
 What keeps the deck on target:
 
-- **The structure comes from the user.** Framing asks which slides and exhibits the user pictures; every expected item gets a slide, with "n.d." where data is missing, so source availability never decides the plan.
-- **Two kinds of deck.** Argument decks prove a governing thought; benchmark decks fill a grid of units × dimensions.
-- **The pyramid and logical writing apply at every level**, the SCQA stays implicit, and the executive summary comes last.
+- **The structure comes from the user.** Every expected slide and exhibit exists, with "n.d." where data is missing.
+- **Two kinds of deck.** Argument decks prove a governing thought; benchmark decks fill a grid.
+- **An independent challenger** tests the reasoning the engagement manager built.
 
 ## Twenty-two slide designs
 
@@ -59,7 +55,9 @@ Demos: `examples/demo-layouts/` and `examples/demo-benchmark/`.
 
 ## Install
 
-**claude.ai (plugin, recommended)**: Customize > Plugins > Add > Add marketplace > Add from a repository, enter `hadrien-cordier/sliding`, install `consulting-deck`, then type `/` in a chat and pick `deck`.
+**Claude Code in the Claude app (web, desktop or mobile, recommended)**: the agent team needs Claude Code. In a Claude Code session, add the marketplace `hadrien-cordier/sliding`, install `consulting-deck`, then run `/consulting-deck:deck`. The .pptx comes back in the conversation, ready to download.
+
+**claude.ai chat (plugin)**: Customize > Plugins > Add > Add marketplace > Add from a repository, enter `hadrien-cordier/sliding`, install `consulting-deck`, then type `/` and pick `deck`. Chat runs the skill and its scripts; if subagents are unavailable there, the orchestrator plays the roles in sequence.
 
 **Claude Code**
 ```bash

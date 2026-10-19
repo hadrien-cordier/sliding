@@ -36,7 +36,7 @@ def main():
         meta, body = parse(role.read_text(encoding="utf-8"))
         if meta.get("agent") != "true":
             continue
-        fm = "\n".join(f"{k}: {meta[k]}" for k in ("name", "description", "tools", "model", "effort", "maxTurns") if k in meta)
+        fm = "\n".join(f"{k}: {meta[k]}" for k in ("name", "description", "tools", "model", "effort", "maxTurns", "experimental") if k in meta)
         out = AGENTS / f"{meta['name']}.md"
         out.write_text(f"---\n{fm}\n---\n\n{PREAMBLE.format(src=role.name)}{body}", encoding="utf-8")
         print("wrote", out.relative_to(ROOT))

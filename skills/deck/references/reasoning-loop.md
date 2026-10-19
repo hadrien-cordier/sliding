@@ -12,11 +12,11 @@ This reference codifies the method for how to build the substance of a deck.
 
 The scaffold is provisional. Nothing in it is a conclusion to defend.
 
-## One agent owns the convergence
-Separate agents find, check, structure, review and design. That separation protects traceability and prevents self-grading, but it leaves no one owning the intellectual evolution of the problem. The reasoning-manager owns it: the convergence between the decision, the frameworks, the competing narratives, the findings, the contradictions, the new ideas, the emerging recommendation and the proof still needed.
+## One agent owns the convergence, in one context
+Separate agents find, check, design and review. That separation protects traceability and prevents self-grading, but it leaves no one owning the intellectual evolution of the problem, and every hand-off forces a cold reread. The engagement manager owns it in a single persistent context: it builds the map, sends researchers out, reads their answers, revises the hypotheses, and writes the storyline without ever handing the reasoning to another agent.
 
 ## The reasoning map
-The reasoning-manager keeps a living map, versioned after each cycle:
+The engagement manager keeps one living map, updated in place after each cycle:
 1. **Decision**: the decision to support, the reader, the consequences of the decision.
 2. **Problem dimensions**: frameworks used as a coverage checklist, never as a ready-made answer (market attractiveness, customer segments, pain points, regulatory feasibility, competition, delivery feasibility, economics...). Every material dimension gets a minimum level of coverage, even when it does not yet support the leading narrative.
 3. **Competing narratives**: several possible readings, kept open until research can separate them.
@@ -71,5 +71,6 @@ After discovering regulatory limits:
 - Design implication: the deck must separate platform tasks, bank-owned decisions and shared governance.
 
 ## The division of labour that follows
-- The **reasoning-manager** decides what can reasonably be concluded.
-- The **ghost-deck-architect** decides in which order the reader meets the conclusions and their proof.
+- The **engagement manager** decides what can reasonably be concluded and in which order the reader meets it.
+- The **researchers** find and trace facts; the **fact-checker** confirms the displayed ones once.
+- The **challenger**, who did not build the reasoning, tests it at gate 1.

@@ -13,7 +13,7 @@ maxTurns: 40
 Your mission: make sure every figure and factual claim that will appear on a slide is right. You check nothing that will not be displayed.
 
 ## Inputs (read nothing else)
-- The excerpt the orchestrator gives you: the rows behind the displayed figures, and the slide each one feeds.
+- The excerpt the orchestrator gives you (made with `scripts/excerpt.py` from `research/*.md` and `01-sources-*.md`): the rows behind the displayed figures, and the slide each one feeds.
 - `02-fact-register.md` if it exists: skip every ref already CONFIRMED or CORRECTED.
 - `SKILL_DIR/references/rules-card.md`.
 
@@ -35,4 +35,4 @@ At most 3 page reads per claim. A claim you cannot settle in that budget is REJE
 ## Run <date>: <n> checked · <n> CONFIRMED · <n> CORRECTED · <n> REJECTED
 | Ref | Slide | Claim as displayed | Verdict | Origin (publisher, date, URL) | Correction or reason |
 ```
-Append only new rows. Never rewrite earlier runs.
+Append only new rows. Never rewrite earlier runs. Reply to the orchestrator in 10 lines at most: counts, and each CORRECTED or REJECTED ref with its slide.

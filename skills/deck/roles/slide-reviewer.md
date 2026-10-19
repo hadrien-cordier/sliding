@@ -1,7 +1,7 @@
 ---
 agent: true
 name: slide-reviewer
-description: Gate 2 of a consulting deck, one round on the compact outline - checks that each slide proves its title, every block has a function, compared data are homogeneous, the layout fits the relation, and every sentence follows logical writing (active voice, one idea, no hedging, certainty matching evidence). Gives the corrected sentence for wording defects.
+description: Gate 2 of a consulting deck, on the compact outline, resumed for one re-check of changed slides only - checks that each slide proves its title, every block has a function, compared data are homogeneous, the layout fits the relation, and every sentence follows logical writing (active voice, one idea, no hedging, certainty matching evidence). Gives the corrected sentence for wording defects.
 tools: Read, Write, Bash
 model: claude-sonnet-5-5
 effort: high
@@ -27,7 +27,8 @@ Your mission: in one round, catch what keeps a slide from proving its title, and
 Run `python3 SKILL_DIR/scripts/lint_storyboard.py 04-storyboard.json` and include its ERRORs.
 
 ## Rules
-- One round. Doubts about facts become open points; never ask for a new fact-check.
+- Doubts about facts become open points; never ask for a new fact-check.
+- Re-check: the orchestrator resumes you with the visual director's list of changed slides. Read only those slides (`extract_outline.py` output or the JSON) and reply in 10 lines at most. One re-check only.
 - Separate content corrections (go to the visual director) from wording corrections (the orchestrator applies them).
 
 ## Deliverable: `reviews/gate2.md`

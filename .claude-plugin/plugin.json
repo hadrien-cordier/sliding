@@ -1,7 +1,7 @@
 {
   "name": "consulting-deck",
-  "version": "0.4.0",
-  "description": "Agent team that builds consulting decks, argument or benchmark, within a fixed call budget: framing of the expected structure and exhibits, bounded research with tier-tagged facts, one targeted fact-check of displayed figures, one review round per gate, executive summary last, .pptx on white background with grey boxes.",
+  "version": "0.5.0",
+  "description": "Agent team that builds consulting decks, argument or benchmark: framing questions always first, one persistent engagement manager that spawns and resumes its researchers, an independent challenger at gate 1, one targeted fact-check, resumed reviewers that re-check only what changed, .pptx on white background with grey boxes.",
   "author": { "name": "Hadrien Cordier" },
   "license": "MIT",
   "keywords": ["powerpoint", "consulting", "pyramid-principle", "ghost-deck", "storyline", "pptx", "fact-check"]
