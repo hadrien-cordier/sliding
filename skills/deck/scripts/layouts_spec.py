@@ -24,6 +24,9 @@ LAYOUTS = {
     "tree": (["root", "branches"], "Breakdown of a question or a whole (issue tree)"),
     "quotes": (["quotes", "blocks"], "Interview or survey evidence and its reading"),
     "recommendation": (["recommendation", "pillars"], "A recommendation and its conditions or reasons"),
+    "market_map": (["items"], "Market shares as areas, one colour per group (treemap)"),
+    "band_matrix": (["column_bands", "rows"], "Units x attributes grid with banded categories (benchmark)"),
+    "fact_sheet": (["facts"], "Reference card for one unit of a benchmark: key facts and their reading"),
 }
 
 # Fields whose items carry a "title" that must state an idea (logical writing).
@@ -39,6 +42,8 @@ IDEA_TITLE_FIELDS = {
     "quotes": ["blocks"],
     "before_after": ["before", "after"],
     "recommendation": ["pillars"],
+    "fact_sheet": ["blocks"],
+    "market_map": ["blocks"],
 }
 
 HARVEY = {"[0]": 0, "[1]": 1, "[2]": 2, "[3]": 3, "[4]": 4}

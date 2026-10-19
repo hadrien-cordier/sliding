@@ -40,6 +40,10 @@ GREY_DARK = RGBColor(0x7F, 0x7F, 0x7F)
 GREY_LINE = RGBColor(0xBF, 0xBF, 0xBF)
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
 ACCENT = RGBColor(0x1F, 0x4E, 0x79)
+CALC_BLUE = RGBColor(0x00, 0x70, 0xC0)  # values computed by the team, not read in a source
+GROUP_FILLS = [RGBColor(0x1F, 0x4E, 0x79), RGBColor(0x2E, 0x75, 0xB6), RGBColor(0x9D, 0xC3, 0xE6),
+               RGBColor(0x59, 0x59, 0x59), RGBColor(0xA6, 0xA6, 0xA6), RGBColor(0xD9, 0xD9, 0xD9)]
+GROUP_TEXT_DARK = {2, 4, 5}  # light fills take dark text
 FONT = "Arial"
 
 WARNINGS = []
@@ -175,6 +179,9 @@ def line(slide, x1, y1, x2, y2, color=GREY_LINE, width=1.0, arrow=False):
     c = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(x1), Inches(y1), Inches(x2), Inches(y2))
     c.line.color.rgb = color
     c.line.width = Pt(width)
+    sty = c._element.find(qn("p:style"))
+    if sty is not None:  # the theme style adds a shadow to connectors
+        c._element.remove(sty)
     if arrow:
         etree.SubElement(c.line._get_or_add_ln(), qn("a:tailEnd")).set("type", "triangle")
     return c
@@ -722,6 +729,204 @@ def l_recommendation(slide, s):
     for (dx, w), p in zip(geo, pil):
         line(slide, CX + dx + w / 2, CY + rh, CX + dx + w / 2, top, color=ACCENT, width=1.5)
         block(slide, CX + dx, top, w, ph, p.get("title"), p.get("points"), size=sz, fit=False)
+
+
+
+# ---------------------------------------------------------------- benchmark layouts
+def _cell_value(c):
+    """A cell is a string, "[0]".."[4]" for a Harvey ball, or {"text", "calc"}; calc values print in blue."""
+    if isinstance(c, dict):
+        return str(c.get("text", "")), bool(c.get("calc"))
+    return str(c), False
+
+
+def _squarify(vals, x, y, w, h):
+    """Squarified treemap (Bruls et al.): vals sorted descending, sum(vals) == w * h."""
+    def worst(row, side):
+        s = sum(row)
+        return max(max(side * side * r / (s * s), s * s / (side * side * r)) for r in row)
+    out, vals = [], list(vals)
+    while vals:
+        side = min(w, h)
+        row, i = [vals[0]], 1
+        while i < len(vals) and worst(row + [vals[i]], side) <= worst(row, side):
+            row.append(vals[i])
+            i += 1
+        s = sum(row)
+        if w >= h:
+            rw, yy = s / h, y
+            for r in row:
+                out.append((x, yy, rw, r / rw))
+                yy += r / rw
+            x, w = x + rw, w - rw
+        else:
+            rh, xx = s / w, x
+            for r in row:
+                out.append((xx, y, r / rh, rh))
+                xx += r / rh
+            y, h = y + rh, h - rh
+        vals = vals[i:]
+    return out
+
+
+def l_market_map(slide, s):
+    items = [it for it in s["items"] if float(it.get("value", 0)) > 0]
+    blocks = s.get("blocks")
+    mw = CW * (s.get("map_share", 0.68) if blocks else 1.0)
+    lh = 0.35
+    mh = CH - lh - 0.1
+    groups = []
+    for it in items:
+        if it.get("group", "") not in groups:
+            groups.append(it.get("group", ""))
+    if len(groups) > len(GROUP_FILLS):
+        warn(f"{len(groups)} groups; {len(GROUP_FILLS)} colours at most, merge small groups")
+    totals = {g: sum(float(i["value"]) for i in items if i.get("group", "") == g) for g in groups}
+    order = sorted(groups, key=lambda g: -totals[g])
+    total = sum(totals.values())
+    unit = s.get("unit", "")
+    grects = _squarify([totals[g] * mw * mh / total for g in order], CX, CY, mw, mh)
+    for g, (gx, gy, gw, gh) in zip(order, grects):
+        k = groups.index(g) % len(GROUP_FILLS)
+        members = sorted([i for i in items if i.get("group", "") == g], key=lambda i: -float(i["value"]))
+        pad = 0.03
+        ix, iy, iw, ih = gx + pad, gy + pad, max(0.01, gw - 2 * pad), max(0.01, gh - 2 * pad)
+        sub = _squarify([float(m["value"]) * iw * ih / totals[g] for m in members], ix, iy, iw, ih)
+        for m, (rx, ry, rw, rh) in zip(members, sub):
+            r = rect(slide, rx + 0.015, ry + 0.015, max(0.01, rw - 0.03), max(0.01, rh - 0.03),
+                     fill=GROUP_FILLS[k])
+            if rw > 0.55 and rh > 0.32:
+                col = BLACK if k in GROUP_TEXT_DARK else WHITE
+                paras = [{"text": m["label"], "bold": True, "color": col},
+                         {"text": f"{m['value']}{unit}", "color": col, "rel_size": 0.9, "space_before": 1}]
+                sz = fit_size([_para(p) for p in paras], rw - 0.12, rh - 0.1, 12, 7, quiet=True)
+                fill_text(r.text_frame, paras, rw, rh, size=sz, margin=0.05, fit=False)
+    # legend
+    x = CX
+    for k, g in enumerate(groups):
+        if not g:
+            continue
+        rect(slide, x, CY + CH - lh + 0.1, 0.18, 0.18, fill=GROUP_FILLS[k % len(GROUP_FILLS)])
+        w = min(2.6, 0.3 + len(g) * 0.075)
+        textbox(slide, x + 0.22, CY + CH - lh + 0.02, w, 0.34, [g], size=10, color=GREY_TEXT,
+                fit=False, margin=0.02, anchor=MSO_ANCHOR.MIDDLE)
+        x += 0.25 + w
+    if blocks:
+        side_blocks(slide, blocks, CX + mw + 0.3, CW - mw - 0.3)
+
+
+def l_band_matrix(slide, s):
+    bands, rows = s["column_bands"], s["rows"]
+    cols = [c for b in bands for c in b["columns"]]
+    nc = len(cols) + 1
+    data = []  # ("group", label) or ("row", row)
+    last = None
+    for r in rows:
+        g = r.get("group")
+        if g and g != last:
+            data.append(("group", g))
+            last = g
+        data.append(("row", r))
+    nr = 2 + len(data)
+    avail = CH - (0.35 if s.get("legend") else 0)
+    rh = min(0.42, avail / nr)
+    size = max(7.0, min(11.0, rh * 72 * 0.55))
+    first_w = s.get("first_column_width", 2.6)
+    other = (CW - first_w) / len(cols)
+    gf = slide.shapes.add_table(nr, nc, Inches(CX), Inches(CY), Inches(CW), Inches(rh * nr))
+    tbl = gf.table
+    tblPr = tbl._tbl.tblPr
+    for el in tblPr.findall(qn("a:tableStyleId")):
+        tblPr.remove(el)
+    etree.SubElement(tblPr, qn("a:tableStyleId")).text = "{2D5ABB26-0587-4C30-8999-92F81FD0307C}"
+    tblPr.set("firstRow", "0")
+    tblPr.set("bandRow", "0")
+    tbl.columns[0].width = Inches(first_w)
+    for j in range(1, nc):
+        tbl.columns[j].width = Inches(other)
+    for i in range(nr):
+        tbl.rows[i].height = Inches(rh)
+
+    def put(cell, text, bold=False, color=BLACK, align=PP_ALIGN.CENTER, fill=WHITE, border="BFBFBF", sz=size):
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = fill
+        cell.vertical_anchor = MSO_ANCHOR.MIDDLE
+        cell.margin_left = cell.margin_right = Inches(0.05)
+        cell.margin_top = cell.margin_bottom = Inches(0.01)
+        tf = cell.text_frame
+        tf.word_wrap = True
+        p = tf.paragraphs[0]
+        p.alignment = align
+        r = p.add_run()
+        r.text = text
+        r.font.name = FONT
+        r.font.size = Pt(sz)
+        r.font.bold = bold
+        r.font.color.rgb = color
+        _cell_border_bottom(cell, border)
+
+    # band header row (merged cells) and column header row
+    put(tbl.cell(0, 0), s.get("band_header", ""), bold=True, align=PP_ALIGN.LEFT)
+    put(tbl.cell(1, 0), s.get("row_header", ""), bold=True, align=PP_ALIGN.LEFT, fill=GREY_BOX, border="1A1A1A")
+    j = 1
+    for k, b in enumerate(bands):
+        n = len(b["columns"])
+        fill = ACCENT if k % 2 == 0 else GREY_DARK
+        put(tbl.cell(0, j), b["label"], bold=True, color=WHITE, fill=fill)
+        if n > 1:
+            tbl.cell(0, j).merge(tbl.cell(0, j + n - 1))
+        for c in b["columns"]:
+            put(tbl.cell(1, j), c, bold=True, fill=GREY_BOX, border="1A1A1A", sz=max(7.0, size - 0.5))
+            j += 1
+    balls = []
+    for i, (kind, val) in enumerate(data, start=2):
+        if kind == "group":
+            put(tbl.cell(i, 0), val, bold=True, color=ACCENT, align=PP_ALIGN.LEFT, border="1A1A1A")
+            for jj in range(1, nc):
+                put(tbl.cell(i, jj), "", border="1A1A1A")
+            tbl.cell(i, 0).merge(tbl.cell(i, nc - 1))
+            continue
+        acc = val.get("accent")
+        put(tbl.cell(i, 0), val["label"], bold=True, color=ACCENT if acc else BLACK, align=PP_ALIGN.LEFT)
+        cells = val.get("cells", [])
+        for jj in range(1, nc):
+            raw = cells[jj - 1] if jj - 1 < len(cells) else ""
+            text, calc = _cell_value(raw)
+            if text.strip() in HARVEY:
+                balls.append((CX + first_w + (jj - 1) * other + other / 2, CY + i * rh + rh / 2, HARVEY[text.strip()]))
+                text = ""
+            sym = text.strip() in ("●", "○", "◐")
+            put(tbl.cell(i, jj), text, color=CALC_BLUE if calc else BLACK, sz=size + 3 if sym else size)
+    d = min(0.22, rh * 0.7)
+    for cx, cy, v in balls:
+        harvey_ball(slide, cx, cy, v, BLACK, d=d)
+    legend = s.get("legend")
+    if legend or any(_cell_value(c)[1] for r in rows for c in r.get("cells", [])):
+        txt = (legend + " · " if legend else "") + "Blue: computed by the team"
+        textbox(slide, CX, CY + rh * nr + 0.08, CW, 0.3, [txt], size=9, color=GREY_TEXT, fit=False, margin=0.02)
+
+
+def l_fact_sheet(slide, s):
+    facts = s["facts"]
+    blocks = s.get("blocks")
+    fw = CW * (0.42 if blocks else 1.0)
+    n = len(facts)
+    rh = min(0.62, CH / n)
+    lw = fw * 0.5
+    sz = 13 if rh >= 0.5 else 11
+    for i, f in enumerate(facts):
+        y = CY + i * rh
+        textbox(slide, CX, y, lw, rh, [{"text": f["label"], "color": GREY_TEXT}], size=sz,
+                anchor=MSO_ANCHOR.MIDDLE, margin=0.05, min_size=8)
+        text, calc = _cell_value(f.get("value", ""))
+        textbox(slide, CX + lw, y, fw - lw, rh, [{"text": text, "bold": True,
+                "color": CALC_BLUE if calc else BLACK}], size=sz, anchor=MSO_ANCHOR.MIDDLE, margin=0.05, min_size=8)
+        line(slide, CX, y + rh, CX + fw, y + rh, color=GREY_LINE, width=0.75)
+    if any(_cell_value(f.get("value", ""))[1] for f in facts):
+        textbox(slide, CX, CY + n * rh + 0.05, fw, 0.3, ["Blue: computed by the team"], size=9,
+                color=GREY_TEXT, fit=False, margin=0.02)
+    if blocks:
+        side_blocks(slide, blocks, CX + fw + 0.3, CW - fw - 0.3)
 
 
 BUILDERS = {k: globals()[f"l_{k}"] for k in LAYOUTS}

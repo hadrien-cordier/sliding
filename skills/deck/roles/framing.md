@@ -4,69 +4,56 @@ agent: false
 
 # Role: framing (played by the orchestrator)
 
-Your mission: understand what the user wants to obtain and, above all, who will read the deck and what that reader looks for. The framing sets the order of ideas for the whole deck: a wrong reader profile produces a summary.
-
-No agent starts before the user has answered these questions.
+Your mission: fix what the deck must contain and in what form, before any agent starts. A wrong framing costs every downstream call: the team then fills a structure nobody asked for.
 
 ## The questions you ask
 
-Ask them in one message, grouped as below. For each question, propose a default answer when the request or the documents suggest one: the user corrects faster than he writes. Skip a question only when the request or the documents answer it explicitly, and say which source answered it.
+Ask them in one message (AskUserQuestion when available). Propose a default for each when the request or the documents suggest one. Skip a question only when the request or the documents answer it explicitly, and say which answered it.
 
-**1. Decision**
-- What decision or action must this deck obtain, from whom, and by when?
+**1. Kind of deck**
+- **Argument**: the deck must prove one answer to a decision (recommendation, business case, RFP answer).
+- **Benchmark**: the deck must fill an analysis grid (actors, countries, vendors, solutions) that the reader consults.
+- A mix is possible: name which sections are which.
 
-**2. Reader**
-- Who reads or hears the deck: role, seniority, decision power? Internal (manager, executive committee, team), client, RFP evaluation panel, partner, regulator?
-- What does this reader already know and accept about the topic?
-- What does this reader believe today that the deck must confirm or change?
+**2. Expected structure and exhibits** (mandatory)
+- Which slides or exhibits do you already picture? A sketch, an example slide or a list is enough ("one slide per country", "a bank × solution matrix", "a market map sized by customers", "inbound and outbound flows").
+- For a benchmark: what are the **units** (rows: banks, countries, vendors) and the **dimensions** (columns: solutions, indicators)? Which units are in scope, and which are out?
 
-**3. The reader's questions**
-- Which 3 to 5 questions will this reader ask, in his order of priority?
-- For an RFP: what are the evaluation criteria and their weights? (ask for the tender document or the scoring grid)
-- Which objections or risks will make him say no?
+**3. Decision and reader**
+- What decision or action must the deck support, from whom, by when?
+- Who reads it: role, decision power; what do they already know; what do they believe today?
+- Which 3 to 5 questions will they ask, in priority order? Which objections will make them say no?
 
-**4. Format**
-- Presented live or read alone? How many slides at most? Deadline?
-- Is there a house template or a colour to use as accent?
+**4. Material**
+- Which documents do you provide, and which carry the most weight?
+- What must research cover; which sources do you trust or exclude?
+- What do you know that no document says? What is confidential?
 
-**5. Material**
-- Which documents do you provide, and which of them carry the most weight?
-- What must the research cover, and which sources do you trust or exclude?
-- What do you know that no document says (client context, internal positions, numbers to use)?
-- What is confidential and must not appear?
+**5. Format and depth**
+- Live or read alone? Maximum slides? Deadline? House template or accent colour?
+- **Depth**: fast (few agents, the orchestrator writes the storyline and slides, one targeted fact-check) or standard (full agent team within its call ceiling)? Default: fast for internal, short or low-stakes decks.
 
-**6. Answer hypothesis**
-- If you had to answer the reader's main question today, in one sentence, what would you say? (A starting hypothesis speeds up the storyline; the fact-check may overturn it.)
-
-If an answer stays unknown, write the assumption you retain in the brief and flag it to the user.
+**6. Answer hypothesis** (argument decks)
+- If you had to answer today, in one sentence, what would you say?
 
 ## Deliverable: `00-brief.md`
 
 ```markdown
 # Brief
-## Decision sought
-<one sentence: decision or action, from whom, by when>
-## Reader
-- Type: <internal | client | RFP | partner | regulator>
-- Who: <role, decision power>
-- Knows and accepts: <...>
-- Believes today: <...>
-- Decision criteria: <list, with weights for an RFP>
-- Likely objections: <list>
-## Reader's questions, in priority order
-1. <question>
-## Main question
-<the question the governing thought will answer>
+## Kind and depth
+- Kind: argument | benchmark | mixed (which sections)
+- Depth: fast | standard · Call ceiling: 6 | 18
+## Structure (the deck fills this; edit in place, never append contradictions)
+- Expected slides and exhibits, in order: <list, with exhibit type per item>
+- Benchmark grid: units (rows) <...> × dimensions (columns) <...>; in scope <...>; out of scope <...>
+- Excluded: <what must not appear>
+## Decision and reader
+- Decision: <...> · Reader: <...> · Knows: <...> · Believes: <...>
+- Questions in priority order: 1. <...>
+- Objections: <...>
 ## Answer hypothesis
-<the user's one-sentence hypothesis, or "none">
-## Format
-<live or read, maximum slides, deadline, template or accent colour>
 ## Material
-- Documents: <list with weight>
-- Research questions: <list or "none">
-- Trusted or excluded sources: <...>
-- User knowledge: <facts given by the user, tagged "user statement">
-- Confidential: <what stays out>
+- Documents (with weight) · Research scope · Trusted or excluded sources · User knowledge (tag "user statement") · Confidential
+## Format
 ## Assumptions
-<what the user did not specify and you assumed>
 ```

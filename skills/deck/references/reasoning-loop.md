@@ -45,7 +45,7 @@ The system researches neither everything nor only what confirms the favourite hy
 - the information is not publicly available and that limit is established;
 - the marginal cost of research exceeds its potential impact on the reasoning.
 
-A new cycle starts only when a high-impact question remains open.
+A new cycle starts only when a high-impact question remains open. The loop is bounded: a coverage cycle, then at most one discriminant cycle. Beyond, residual uncertainty is stated as a limit of the deck, never researched further.
 
 ## Falsification test before the storyline
 Before the leading narrative becomes the storyline:

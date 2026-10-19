@@ -61,13 +61,18 @@ def main(fp):
     content = [s for s in slides if s.get("layout") != "cover"]
     if not content or content[0].get("layout") != "executive_summary":
         err.append("deck: the first content slide must be the executive_summary, written last")
-    # layout diversity: the same layout never more than twice in a row
+    # layout diversity: the same layout never more than twice in a row (argument mode only;
+    # a benchmark repeats one exhibit per unit of its grid by design)
+    benchmark = story.get("meta", {}).get("mode") == "benchmark"
     run, prev = 0, None
+    first_of_run = set()
     for i, s in enumerate(slides, start=1):
         lay = s.get("layout")
         run = run + 1 if lay == prev else 1
+        if run == 1:
+            first_of_run.add(i)
         prev = lay
-        if run == 3 and lay not in ("cover", "executive_summary"):
+        if run == 3 and not benchmark and lay not in ("cover", "executive_summary"):
             err.append(f"slide {i}: layout '{lay}' used three times in a row; change the layout or merge slides")
     for i, s in enumerate(slides, start=1):
         lay = s.get("layout")
@@ -105,7 +110,7 @@ def main(fp):
             if key in seen:
                 err.append(f"{tag}: same title as slide {seen[key]}")
             seen[key] = i
-        if lay not in ("cover", "executive_summary"):
+        if lay not in ("cover", "executive_summary") and (not benchmark or i in first_of_run):
             r = s.get("layout_rationale") or {}
             for k in ("relation", "alternative", "why"):
                 if not r.get(k):

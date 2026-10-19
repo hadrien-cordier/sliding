@@ -1,57 +1,61 @@
 # consulting-deck
 
-An agent team for Claude that builds consulting decks around the reader's priorities and proves every answer with fact-checked sources. Output: an editable .pptx on a white background, grey boxes, one accent colour.
+An agent team for Claude that builds consulting decks, argument or benchmark, within a fixed call budget, and fact-checks every figure it displays. Output: an editable .pptx on a white background, grey boxes, one accent colour.
 
 ```
 /consulting-deck:deck Steering-committee deck on the KYC redesign, from the three attached PDFs
 ```
 
-## Research and thinking co-evolve until one message is defensible
+## The pipeline runs within a call budget
 
 ```
-Framing questions to the user (orchestrator, Sonnet) ── no agent starts before the answers
+Framing (orchestrator) ── kind (argument | benchmark), depth (fast | standard),
+   │                       expected slides and exhibits, benchmark grid
    ▼
-source-reader (Haiku) ──► claims, figures and quotes each document explicitly supports
+source-reader (Haiku) ──► one call per heavy document, relevant sections only
    ▼
-┌─► reasoning-manager (Opus) ──► reasoning map: decision, problem dimensions,
-│                                competing narratives, evidence and tensions registers,
-│                                open questions with stop conditions
-│      ▼
-│   researcher (Sonnet) ───────► cycle 1 coverage, then discriminant cycles that search
-│                                for evidence against the leading narrative
-│      ▼
-│   claim-screener (Haiku) ────► pass 1: reference, figure, date, quote, duplicate
-│   fact-checker (Sonnet) ─────► pass 2: exact support, scope, year, metric, causality
-│      ▼
-└── new cycle only while a high-impact question stays open
+reasoning-manager (Opus) ──► map v0: at most 8 questions in at most 3 topics
    ▼
-reasoning-manager ──► falsification test, stabilised reasoning, what the deck cannot claim
+researcher × ≤3 (Sonnet) ──► ≤12 page reads each, facts tagged by source tier
    ▼
-ghost-deck-architect (Opus) ──► governing thought, pyramid, titles, tensions placed
-GATE 1  storyline-reviewer (Opus) + user go-ahead
+reasoning-manager ──► stabilise, or one discriminant cycle (two cycles at most)
    ▼
-visual-director (Sonnet) ──► blocks and layout per slide, two candidates compared
-lint (code) · GATE 2  storyboard-reviewer (Sonnet, high on key slides)
+ghost-deck-architect (Opus) ──► one slide per expected item, exhibit sketches,
+   │                              list of displayed figures
+GATE 1  storyline-reviewer (Opus, one round) + user sees titles and sketches
+   ▼
+fact-checker (Sonnet) ──► displayed figures only, once, incremental
+   ▼
+visual-director (Sonnet) ──► storyboard · lint (code)
+GATE 2  slide-reviewer (Sonnet, one round, on a compact outline)
    ▼
 summary-writer (Opus) ──► executive summary, written last, placed first
-GATE 3  writing-reviewer (Sonnet, high)
    ▼
-build and render (code) · visual-qa (Haiku) on the PNGs
+build and render (code) · visual-qa (Haiku, one round)
 ```
 
-Five choices shape the tool:
+In **fast** mode the orchestrator writes the map, the ghost deck, the storyboard and the summary itself: about six agent calls in total. **Standard** mode stays under eighteen.
 
-- **One agent owns the convergence.** The reasoning-manager decides what can be concluded; the architect decides in which order the reader meets it. Method: `skills/deck/references/reasoning-loop.md`.
-- **Research stops on decision value.** Every research question carries its decision impact and a stop condition; a new cycle starts only while a high-impact question stays open.
-- **Each task gets the cheapest model that does it well.** Haiku handles volume, Sonnet the standard professional work, Opus the decisions that structure the deck, code every rule-based check. The orchestrator escalates per task (policy table in `SKILL.md`).
-- **Checkers never judge their own work.** The fact-checker did not collect the facts; the reviewers did not write the deck.
+What keeps token use down:
+
+- **Fewer cold starts.** Every subagent rereads its inputs before writing; the budget caps calls per step, and every agent has a `maxTurns` limit.
+- **Smaller inputs.** Agents read a one-page rules card instead of the full references, register excerpts instead of registers (`scripts/excerpt.py`), and a compact outline instead of the storyboard (`scripts/extract_outline.py`). Every deliverable opens with a summary of 20 lines.
+- **Checks where they matter.** Facts are tagged by source tier at research time; only the figures that will be displayed are fact-checked, once, and a CONFIRMED row is never checked again.
+- **One review round per gate.** Wording fixes are applied by the orchestrator; doubts become open points, never new research.
+- **Bounded research.** At most three researchers in parallel, twelve page reads each, two cycles, never a full annual report.
+
+What keeps the deck on target:
+
+- **The structure comes from the user.** Framing asks which slides and exhibits the user pictures; every expected item gets a slide, with "n.d." where data is missing, so source availability never decides the plan.
+- **Two kinds of deck.** Argument decks prove a governing thought; benchmark decks fill a grid of units × dimensions.
 - **The pyramid and logical writing apply at every level**, the SCQA stays implicit, and the executive summary comes last.
 
-## Nineteen slide designs encode the standard consulting relations
+## Twenty-two slide designs
 
-`executive_summary`, `columns`, `rows`, `bullets`, `progression` (growing boxes with arrow), `chevrons`, `matrix` 2x2, `table` with Harvey balls, `chart_text` (chart with callouts), `big_number`, `waterfall`, `funnel`, `before_after`, `timeline`, `gantt`, `tree` (issue tree), `quotes`, `recommendation`, `cover`. The visual director picks the design from the relation between blocks (`references/layouts.md`). Charts are native PowerPoint objects, so they stay editable.
+Argument: `executive_summary`, `columns`, `rows`, `bullets`, `progression`, `chevrons`, `matrix` 2x2, `table` with Harvey balls, `chart_text`, `big_number`, `waterfall`, `funnel`, `before_after`, `timeline`, `gantt`, `tree`, `quotes`, `recommendation`, `cover`.
+Benchmark: `market_map` (treemap sized by value, one colour per group), `band_matrix` (units × banded attributes, ●/○, "n.d.", computed values in blue), `fact_sheet` (one card per unit).
 
-Demo: `examples/demo-layouts/` (storyboard JSON and generated deck).
+Demos: `examples/demo-layouts/` and `examples/demo-benchmark/`.
 
 ## Install
 
@@ -81,15 +85,15 @@ python3 skills/deck/scripts/render_check.py deck.pptx render/
 
 ```
 .claude-plugin/        plugin and marketplace manifests
-agents/                subagents with model and effort (generated from the roles)
+agents/                subagents with model, effort and maxTurns (generated from the roles)
 skills/deck/
   SKILL.md             orchestrator: pipeline, gates, approval criteria
   roles/               one file per role: single source of the prompts
-  references/          reasoning loop, pyramid, logical writing, consulting practices,
+  references/          rules card, reasoning loop, pyramid, logical writing, consulting practices,
                        source quality, layouts, charts, storyboard schema
-  scripts/             .pptx generator, linter, PNG render
+  scripts/             .pptx generator, linter, PNG render, outline and excerpt helpers
 tools/                 role → agent sync, claude.ai packaging
-examples/              demo deck
+examples/              argument and benchmark demo decks
 ```
 
 To change an agent, edit `skills/deck/roles/<role>.md`, then run `python3 tools/sync_agents.py`.
@@ -100,8 +104,8 @@ The house style lives in the constants at the top of `build_deck.py` (colours, f
 
 ## Known limits
 
-- The linter spots likely passive voice and second verbs with regular expressions: it misses some and flags false ones. Gate 3 stays necessary.
-- Text fitting estimates glyph widths. LibreOffice renders slightly differently from PowerPoint; the builder checks overflow on the render.
+- The linter spots likely passive voice and second verbs with regular expressions: it misses some and flags false ones. The slide-reviewer stays necessary.
+- Text fitting estimates glyph widths. LibreOffice renders slightly differently from PowerPoint; visual QA checks overflow on the render.
 - Consulting-practice references come from practitioner accounts, not from the firms' internal manuals (see `references/consulting-practices.md`).
 - Chart figures in the demo are fictitious.
 

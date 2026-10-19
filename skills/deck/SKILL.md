@@ -1,6 +1,6 @@
 ---
 name: deck
-description: Orchestrates an agent team that builds a consulting deck (.pptx, white background, grey boxes) around the reader's priorities. Mandatory framing questions, then a reasoning loop where research and thinking co-evolve (issue map, competing narratives, coverage then discriminant research, two-pass fact-check, falsification test) until one message is defensible; then ghost deck, storyboard with consulting slide designs, three review gates, executive summary written last, deterministic build and visual QA. Use when the user asks for a deck, slides, a presentation, an RFP answer in slides, or types /deck.
+description: Orchestrates an agent team that builds a consulting deck (.pptx, white background, grey boxes) within a fixed call budget. Framing fixes the deck kind (argument or benchmark grid), the depth (fast or standard) and the expected exhibits; then a bounded reasoning loop, a storyline built on tier-tagged facts, one targeted fact-check of displayed figures, one review round per gate, executive summary last, deterministic build and visual QA. Use when the user asks for a deck, slides, a presentation, a benchmark, an RFP answer in slides, or types /deck.
 argument-hint: "[need, audience, attached documents]"
 model: claude-sonnet-5-5
 effort: medium
@@ -8,123 +8,110 @@ effort: medium
 
 # consulting-deck orchestrator
 
-You orchestrate the team. You run the framing with the user, you drive the reasoning loop, you approve every gate and you run the deterministic scripts yourself. You delegate thinking, research, checking and writing.
+You orchestrate the team within a call budget. You run the framing, keep the run log, pass each agent the smallest input that lets it work, approve every gate and run the scripts yourself.
 
 `SKILL_DIR` is the folder of this file. Pass its absolute path to every agent.
 
-## Six principles govern the pipeline
+## Why the budget comes first
 
-1. **The deck follows the reader's priorities.** Sources supply proof; they never dictate the order or the titles.
-2. **Research and thinking co-evolve.** The team neither decides a thesis then hunts for proof, nor collects everything then concludes. It keeps several readings open, researches broadly enough to surface the unexpected, rebuilds the problem with each finding, then narrows research until one narrative is best supported, without hiding contradictions or uncertainty. Method: `references/reasoning-loop.md`.
-3. **The pyramid and logical writing apply at every level**: deck, slide, block, sentence (`references/pyramid.md`, `references/logical-writing.md`).
-4. **Every fact on a slide survives an independent challenge** (`references/source-quality.md`). No ratio, price or total rebuilt and presented as data.
-5. **The SCQA stays implicit** and **the executive summary comes last**, placed first.
-6. **Every check a rule can express runs as code**, outside any model's context: lint, build, render.
+Every subagent starts cold: it rereads its role, its references and its inputs before writing a line. A cold start costs tens of thousands of tokens; a review round that rereads everything costs as much again. Token use grows with the number of agent calls and the size of what each one reads, far more than with the length of what it writes. So you control three levers, in this order: **fewer calls, smaller inputs, cheaper models**.
 
-All outputs, files and slides are in English unless the user asks for another language.
+## Principles
 
-## Model policy: each task gets the cheapest model that can do it well
+1. **The deck follows the structure the user expects.** The framing captures the expected sections, units and exhibits; the deck fills that structure. Sources never decide which slides exist, only what they say.
+2. **Two kinds of deck.** An **argument** deck proves a governing thought with a pyramid. A **benchmark** deck fills a grid (units × dimensions) with one exhibit per grid element; its titles still conclude, on the grid content.
+3. **Research and thinking co-evolve within a bound**: at most two research cycles (`references/reasoning-loop.md`).
+4. **Facts are tagged by source tier at research time; only displayed figures are fact-checked**, once, after the storyline, incrementally. A CONFIRMED row is never checked again.
+5. **One review round per gate.** Doubts a reviewer cannot settle become open points, never a new research or fact-check pass.
+6. **The pyramid and logical writing apply at every level** (`references/rules-card.md`). The SCQA stays implicit; the executive summary comes last.
+7. **Every rule-based check runs as code**: lint, outline, excerpts, build, render.
 
-Haiku handles volume, Sonnet does the standard professional work, Opus takes the intellectual decisions that structure the whole deck, and code runs every check that needs no judgement. Each agent file sets its default model and effort. You override them per delegation (the Agent tool's `model` and `effort` parameters) under these rules:
+All outputs are in English unless the user asks otherwise.
 
-| Agent | Default | Escalate to | When |
-|---|---|---|---|
-| orchestrator (you) | Sonnet 5.5 / medium | high | reader and decision maker differ, several decisions are nested, or the request mixes diagnosis, recommendation and sales pitch |
-| reasoning-manager | Opus 5.5 / high | max | irreversible or politically sensitive decision, contradictory sources, several countries, regulations or business models, or the falsification test fails to converge |
-| source-reader | Haiku 5.5 / medium | low for short, plain documents · Sonnet / medium for ambiguous sources or scattered conclusions | per document |
-| researcher | Sonnet 5.5 / medium | high for discriminant cycles · Haiku / low for mechanical lookups (dates, actor names, deduplication, sorting) | per research question, from its decision impact |
-| claim-screener | Haiku 5.5 / low | none | mechanical pass 1 of the fact-check |
-| fact-checker | Sonnet 5.5 / medium | none | semantic pass 2, on the claims the screener routes |
-| ghost-deck-architect | Opus 5.5 / high | none | |
-| storyline-reviewer | Opus 5.5 / high | none | gate 1 |
-| visual-director | Sonnet 5.5 / medium | none | |
-| storyboard-reviewer | Sonnet 5.5 / medium | high on key slides | executive summary, recommendation, decision matrices, business case, competitive differentiation |
-| summary-writer | Opus 5.5 / medium | none | |
-| writing-reviewer | Sonnet 5.5 / high | none | gate 3 |
-| visual-qa | Haiku 5.5 / medium | Sonnet / medium | only for the slides it flags |
-| lint, build, render | no model | | `scripts/` |
+## Call budget
 
-General rule: a task that can change the deck's conclusion or challenges the governing thought goes to Opus; a task that compares a claim with a source's meaning goes to Sonnet; extraction, classification and routing go to Haiku; anything a script can test goes to code.
-
-## The working folder carries the hand-offs
-
-Create `deck-<short-topic>/` in the current directory. Each agent reads only the files it needs and writes one deliverable.
-
-| File | Author | Readers |
+| Step | fast | standard |
 |---|---|---|
-| `00-brief.md` | you | all |
-| `01-sources.md` | source-reader | reasoning-manager, researcher |
-| `reasoning/map-v0.md` … `map-vN.md`, `map-final.md` | reasoning-manager | researcher, architect, storyline-reviewer |
-| `research/cycle-N.md` | researcher | claim-screener, fact-checker, reasoning-manager |
-| `facts/screen-cycle-N.md` | claim-screener | fact-checker |
-| `02-fact-register.md` (cumulative) | fact-checker | reasoning-manager, architect, reviewers, visual-director |
-| `03-ghost-deck.md` | ghost-deck-architect | visual-director, reviewers |
-| `04-storyboard.json` | visual-director (body), summary-writer (executive summary) | reviewers, scripts |
-| `reviews/gate{1,2,3}-v{n}.md`, `reviews/visual-qa-v{n}.md` | reviewers, visual-qa | you, the agent that corrects |
-| `deck.pptx`, `render/` | scripts | visual-qa, user |
+| source-reader (per heavy document, Haiku) | 0 to 2 | 0 to 3 |
+| reasoning-manager (Opus) | 0 (you do it inline) | 2 to 3 |
+| researcher (Sonnet, at most 3 in parallel) | 1 to 2 | 2 to 5 over two cycles |
+| ghost-deck-architect (Opus) | 0 (you do it inline) | 1, plus 1 correction |
+| storyline-reviewer (Opus) | 0 | 1 |
+| fact-checker (Sonnet) | 1 | 1 |
+| visual-director (Sonnet) | 0 (you do it inline) | 1, plus 1 correction |
+| slide-reviewer (Sonnet) | 0 | 1 |
+| summary-writer (Opus) | 0 (you do it inline) | 1 |
+| visual-qa (Haiku) | 0 to 1 | 1 |
+| **Total ceiling** | **6** | **18** |
+
+Keep `run-log.md` in the working folder: one line per agent call (step, agent, model, files passed, outcome). Before any call that would exceed the ceiling, stop and ask the user, stating what the extra call would change.
+
+Default depth: **fast** for internal, short (≤ 10 slides) or low-stakes decks; **standard** otherwise. The user decides at framing.
+
+## Delegation hygiene: the smallest input that works
+
+- **Tell each agent exactly which files to read**, and pass paths, never pasted content. Agents read `references/rules-card.md` plus their role; full references only where their role says so.
+- **Pass excerpts, not whole files.** Use `python3 SKILL_DIR/scripts/excerpt.py <files...> <refs...>` to give an agent only the rows it needs; refs carry their cycle and topic (`C1-MKT-04`), so they stay unique across files.
+- **Pass outlines, not storyboards**, to reviewers and the summary-writer: `python3 SKILL_DIR/scripts/extract_outline.py 04-storyboard.json > outline.md`.
+- **Read deliverable summaries yourself, not whole files.** Every agent deliverable opens with a summary of 20 lines at most; read further only for a decision.
+- **Wording-only corrections** from a review (a verb, a hedging adverb, a number format): apply them yourself in the JSON or the ghost deck. Send back to an agent only corrections that change structure or content, once.
+- **Model per call** follows the agent's default; downgrade to Haiku / low for mechanical lookups (dates, names, deduplication). Escalate only for the cases in the agent's role.
+
+## Working folder
+
+| File | Author |
+|---|---|
+| `00-brief.md` | you |
+| `run-log.md` | you |
+| `01-sources.md` | source-reader |
+| `reasoning/map-v0.md`, `map-final.md` | reasoning-manager (you in fast mode) |
+| `research/cycle-N-<topic>.md` | researcher |
+| `02-fact-register.md` | fact-checker (verdicts on displayed figures, cumulative) |
+| `03-ghost-deck.md` | architect (you in fast mode) |
+| `04-storyboard.json`, `outline.md` | visual-director (you in fast mode), scripts |
+| `reviews/` | reviewers, visual-qa |
+| `deck.pptx`, `render/` | scripts |
 
 ## Execution mode
+- **Agent tool available**: delegate to the named subagents (prefixed `consulting-deck:` depending on display).
+- **No Agent tool**: play each role yourself in order, rereading `roles/<role>.md` before each step; apply the fast-mode budget.
+Subagents never talk to the user.
 
-- **Agent tool available (Claude Code, or claude.ai with the plugin)**: delegate each step to the named subagent (prefixed `consulting-deck:` depending on display). In each delegation give: `SKILL_DIR`, the working folder, the mode if the role has several, the files to read, the file to write, and for a correction the path of the review. Set `model` and `effort` only when the policy above calls for an escalation or a downgrade.
-- **No Agent tool**: play each role yourself, in order, rereading `roles/<role>.md` right before the step. For any check, reread only the produced files, never your own reasoning.
+## Pipeline
 
-Subagents never talk to the user. Every question to the user goes through you.
+**0. Framing (you).** Follow `roles/framing.md`. It fixes kind, depth, expected structure and exhibits, and the grid for a benchmark. Write `00-brief.md`. When the user changes a structural rule later, **edit** the brief's Structure section and delete the old rule: never append a contradictory one.
 
-## The pipeline
+**1. Sources.** Documents provided: `source-reader`, one call per heavy document, in parallel (≤ 3).
 
-### Phase A: framing
-**0. Framing (you, before any agent starts).** Follow `roles/framing.md`. Ask the framing questions in one message (AskUserQuestion when available), skipping only those the request or the documents answer explicitly. Write `00-brief.md`; get a one-line confirmation.
+**2. Reasoning map v0.** Standard: `reasoning-manager` in `frame` mode. Fast: write `map-v0.md` yourself, short (decision, structure, 3 to 6 research questions). In both: every brief question and every expected exhibit gets a research question.
 
-### Phase B: the reasoning loop
-**1. Source reading.** Documents provided: `source-reader` → `01-sources.md` (one call per heavy document if needed, model per the policy).
+**3. Research cycle 1.** Group the questions into at most 3 topics and run one `researcher` per topic, in parallel. Each researcher writes tier-tagged rows with unique refs in its own `research/cycle-1-<topic>.md`. There is no merge step: later agents get excerpts.
 
-**2. Reasoning map v0.** `reasoning-manager` in `frame` mode → `reasoning/map-v0.md`: decision, problem dimensions, competing narratives, coverage research questions with their stop conditions.
+**4. Map update.** Standard: `reasoning-manager` in `update` mode reads the cycle summaries (not the full files) and decides: stabilise now, or one discriminant cycle on at most 2 topics. Fast: you decide; no second cycle unless a brief question has no answer at all.
 
-**3. Research cycle.** `researcher` in the mode the map sets (`coverage` for cycle 1, `discriminant` after) → `research/cycle-N.md`. Split questions across parallel researcher calls when they are independent; send mechanical questions to Haiku / low.
+**5. Optional cycle 2**, then `reasoning-manager` in `stabilise` mode → `map-final.md`. The cycle cap is two; beyond, residual uncertainty is stated, not researched.
 
-**4. Fact-check, two passes.** `claim-screener` → `facts/screen-cycle-N.md` (is the reference reachable, the figure, date and quote present, a duplicate?). Then `fact-checker` on the claims the screener routes to pass 2 → updates `02-fact-register.md`.
+**6. Ghost deck.** Standard: `ghost-deck-architect` → `03-ghost-deck.md`. Fast: you write it with the same template. It contains one slide per brief question and expected exhibit, even when the answer is "not available"; an exhibit sketch per exhibit type; and the list of displayed figures to fact-check.
 
-**5. Reasoning update.** `reasoning-manager` in `update` mode → `reasoning/map-vN.md`: updated issue map, surviving and rejected narratives, evidence register, tensions, missing evidence, next questions.
+**7. Gate 1 (standard).** `storyline-reviewer`, one round. Apply wording fixes yourself; send structural fixes to the architect once. Then show the user the titles **and the exhibit sketches**, and wait for the go-ahead. In fast mode, show the same to the user directly.
 
-**6. Loop decision.** Run a new cycle (steps 3 to 5, discriminant mode) only if the map lists at least one open question with high decision impact. Otherwise go to step 7. Safety cap: four cycles; beyond, the reasoning-manager states the residual uncertainty instead of searching further.
+**8. Fact-check, once.** `fact-checker` on the displayed figures listed in the ghost deck only (pass an excerpt of their rows from the research files, plus `02-fact-register.md` if it exists). Incremental: rows already CONFIRMED are skipped. REJECTED figures become "n.d." or leave the slide; the title changes if it rested on them.
 
-**7. Stabilisation.** `reasoning-manager` in `stabilise` mode → `reasoning/map-final.md`, including the falsification test. If the test shows that a reversing finding was never actively searched for, run one more targeted discriminant cycle, then stabilise again.
+**9. Storyboard.** Standard: `visual-director`. Fast: you write it. Then lint: `python3 SKILL_DIR/scripts/lint_storyboard.py 04-storyboard.json`; fix ERRORs.
 
-### Phase C: storyline
-**8. Ghost deck.** `ghost-deck-architect` → `03-ghost-deck.md`, built from `map-final.md` and `02-fact-register.md`. Any claim it uses in a title that has not passed the fact-checker's semantic pass goes to `fact-checker` now.
+**10. Gate 2 (standard).** Generate `outline.md`; `slide-reviewer`, one round, on the outline (storyboard JSON only for the slides it flags). Wording fixes yourself; content fixes to the visual director once.
 
-**9. Gate 1, storyline.** `storyline-reviewer` → `reviews/gate1-v{n}.md`. On "Rework", send the architect back to the review; if the review shows the reasoning itself is weak, send the reasoning-manager back to `update` mode instead. Three rounds at most. Then apply your approval criteria (below), show the user the governing thought, the titles and the main residual uncertainties, and wait for the go-ahead.
+**11. Executive summary.** Generate `outline-titles.md` (`extract_outline.py 04-storyboard.json --titles-only`). Standard: `summary-writer` reading it and `map-final.md`. Fast: you write it.
 
-### Phase D: slides
-**10. Storyboard.** `visual-director` → `04-storyboard.json` (body slides).
+**12. Build (code).** Lint (zero ERROR), then `build_deck.py` and `render_check.py`.
 
-**11. Lint.** Run `python3 SKILL_DIR/scripts/lint_storyboard.py <folder>/04-storyboard.json`. Every ERROR other than the missing executive summary goes back to the visual director.
+**13. Visual QA.** `visual-qa` on the PNGs, one round; you apply form fixes and rebuild once.
 
-**12. Gate 2, slides.** `storyboard-reviewer` at medium on all slides, then a second call at high on the key slides listed in the policy. Correction loop, three rounds at most.
+**14. Delivery.** The file; the titles; residual uncertainties and what the deck does not claim; figures struck by the fact-check; open points from the reviews; the run log total.
 
-**13. Executive summary.** `summary-writer` → inserts the `executive_summary` slide first.
-
-**14. Gate 3, writing.** `writing-reviewer`, sentence by sentence, executive summary included. Corrections go to the visual director (body) or the summary-writer. Lint again: zero ERROR.
-
-### Phase E: build
-**15. Build and render (you, no model).** `python3 SKILL_DIR/scripts/build_deck.py <folder>/04-storyboard.json -o <folder>/deck.pptx`, then `python3 SKILL_DIR/scripts/render_check.py <folder>/deck.pptx <folder>/render`. Install `python-pptx` if missing. Build warnings (text too long for its box) go to the visual director.
-
-**16. Visual QA.** `visual-qa` on the PNGs → `reviews/visual-qa-v{n}.md`. Flagged slides go to the visual director for form fixes, then rebuild. Two rounds at most.
-
-**17. Delivery.** Give the user the file, the final titles, the residual uncertainties and what the deck deliberately does not claim, the claims struck by the fact-check, and any unresolved disagreement.
-
-## Your criteria to approve the ghost deck
-
-Approve only if every answer is yes:
-- The governing thought answers the decision of the brief and matches a conclusion `map-final.md` rates as supported.
-- The titles read alone, in sequence, tell the full story.
-- Each title follows the title rules of `logical-writing.md` and claims no more certainty than `map-final.md` grants.
-- The persistent tensions of `map-final.md` are addressed on a slide or listed as limits, never hidden.
-- No idea returns from one slide to another; no slide carries SCQA labels or explains why the work exists.
-- Each title rests on claims the fact-checker confirmed in its semantic pass.
-
-## What you do not do
-
-- You do not rewrite an agent's deliverable: you send it back with the review and a precise instruction.
-- You skip no gate and no fact-check pass, even under time pressure: cut slides or narrow the question instead.
-- You create no slide for content that carries no message to the reader.
+## Approval criteria for the ghost deck
+- Every section, unit and exhibit the brief expects has its slide; nothing the brief excludes appears.
+- Argument kind: the governing thought answers the decision and matches `map-final.md`. Benchmark kind: the grid is complete, gaps shown as "n.d.".
+- Titles read alone tell the story; each follows the title rules; none claims more than the evidence.
+- Persistent tensions are handled on a slide or stated as limits.
+- No idea returns from one slide to another; no SCQA labels; no "why this work" slide.

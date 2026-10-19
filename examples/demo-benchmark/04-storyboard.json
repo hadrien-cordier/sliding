@@ -1,0 +1,118 @@
+{
+  "meta": {"title": "Benchmark exhibits demo", "accent": "1F4E79", "font": "Arial", "mode": "benchmark"},
+  "slides": [
+    {
+      "layout": "cover",
+      "title": "Benchmark exhibits for grid-driven decks",
+      "context": "Layout demonstration · every bank, vendor and figure on these slides is fictitious"
+    },
+    {
+      "layout": "executive_summary",
+      "title": "Fictitious data show a retail market split between national leaders and cross-border groups",
+      "items": [
+        {"takeaway": "National leaders hold the largest share of retail customers in each market", "points": ["The market map sizes each bank by customers"]},
+        {"takeaway": "Cross-border groups use one KYC vendor across all their markets", "points": ["The bank by solution matrix shows the pattern"]},
+        {"takeaway": "Vendor coverage stays unknown for a third of the banks studied", "points": ["Cells marked n.d. show the gaps"], "accent": true}
+      ]
+    },
+    {
+      "layout": "market_map",
+      "title": "Fictitious national leaders hold most retail customers in the sample market",
+      "items": [
+        {"label": "Bank Alpha", "value": 31, "group": "National leaders"},
+        {"label": "Bank Beta", "value": 24, "group": "National leaders"},
+        {"label": "Bank Gamma", "value": 12, "group": "National leaders"},
+        {"label": "Group Delta", "value": 14, "group": "Cross-border groups"},
+        {"label": "Group Epsilon", "value": 9, "group": "Cross-border groups"},
+        {"label": "Mutual Zeta", "value": 11, "group": "Mutual networks"},
+        {"label": "Mutual Eta", "value": 6, "group": "Mutual networks"},
+        {"label": "Neo Theta", "value": 5, "group": "Neobanks"},
+        {"label": "Neo Iota", "value": 3, "group": "Neobanks"},
+        {"label": "Neo Kappa", "value": 2, "group": "Neobanks"}
+      ],
+      "unit": "m",
+      "blocks": [
+        {"title": "Three national leaders hold 67m customers", "points": ["Bank Alpha leads with 31m"]},
+        {"title": "Neobanks remain below 5m each", "points": ["Their combined base reaches 10m"]}
+      ],
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {"relation": "Shares of one market by actor and group", "alternative": "chart_text", "why": "areas show size and group at once for ten actors"}
+    },
+    {
+      "layout": "band_matrix",
+      "title": "Fictitious cross-border groups use one KYC vendor across their markets",
+      "band_header": "Bank",
+      "row_header": "",
+      "column_bands": [
+        {"label": "Onboarding", "columns": ["Vendor A", "Vendor B", "In-house"]},
+        {"label": "Screening", "columns": ["Vendor C", "Vendor D"]},
+        {"label": "Indicators", "columns": ["Countries", "Customers (m)", "Share of sample"]}
+      ],
+      "rows": [
+        {"label": "Bank Alpha", "group": "National leaders", "cells": ["●", "○", "○", "●", "○", "1", "31", {"text": "26%", "calc": true}]},
+        {"label": "Bank Beta", "group": "National leaders", "cells": ["○", "●", "○", "○", "●", "1", "24", {"text": "20%", "calc": true}]},
+        {"label": "Bank Gamma", "group": "National leaders", "cells": ["n.d.", "n.d.", "n.d.", "●", "○", "1", "12", {"text": "10%", "calc": true}]},
+        {"label": "Group Delta", "group": "Cross-border groups", "accent": true, "cells": ["●", "○", "○", "●", "○", "6", "14", {"text": "12%", "calc": true}]},
+        {"label": "Group Epsilon", "group": "Cross-border groups", "cells": ["●", "○", "○", "○", "●", "4", "9", {"text": "8%", "calc": true}]},
+        {"label": "Mutual Zeta", "group": "Mutual networks", "cells": ["○", "○", "●", "n.d.", "n.d.", "1", "11", {"text": "9%", "calc": true}]},
+        {"label": "Mutual Eta", "group": "Mutual networks", "cells": ["○", "○", "●", "○", "●", "1", "6", {"text": "5%", "calc": true}]},
+        {"label": "Neo Theta", "group": "Neobanks", "cells": ["○", "●", "○", "●", "○", "9", "5", {"text": "4%", "calc": true}]},
+        {"label": "Neo Iota", "group": "Neobanks", "cells": ["n.d.", "n.d.", "n.d.", "n.d.", "n.d.", "3", "3", {"text": "3%", "calc": true}]}
+      ],
+      "legend": "● uses the solution · ○ does not · n.d. no public data",
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {"relation": "Banks crossed with solutions and indicators", "alternative": "table", "why": "solutions fall into categories that need bands"}
+    },
+    {
+      "layout": "fact_sheet",
+      "title": "Fictitious Group Delta runs one onboarding vendor in its six markets",
+      "facts": [
+        {"label": "Markets", "value": "6"},
+        {"label": "Retail customers", "value": "14m"},
+        {"label": "Onboarding vendor", "value": "Vendor A"},
+        {"label": "Screening vendor", "value": "Vendor C"},
+        {"label": "Share of sample", "value": {"text": "12%", "calc": true}},
+        {"label": "Last vendor change", "value": "n.d."}
+      ],
+      "blocks": [
+        {"title": "One vendor serves all six markets", "points": ["The group contracts centrally", "Local entities keep their decisions"]},
+        {"title": "The vendor change date stays unknown", "points": ["No public record found"]}
+      ],
+      "source": "Fictitious data illustrating the layout",
+      "layout_rationale": {"relation": "Reference card for one bank of the grid", "alternative": "rows", "why": "key facts read faster as label and value pairs"}
+    },
+    {
+      "layout": "fact_sheet",
+      "title": "Fictitious Group Epsilon splits onboarding and screening between two vendors",
+      "facts": [
+        {"label": "Markets", "value": "4"},
+        {"label": "Retail customers", "value": "9m"},
+        {"label": "Onboarding vendor", "value": "Vendor A"},
+        {"label": "Screening vendor", "value": "Vendor D"},
+        {"label": "Share of sample", "value": {"text": "8%", "calc": true}},
+        {"label": "Last vendor change", "value": "n.d."}
+      ],
+      "blocks": [
+        {"title": "Two vendors split the KYC chain", "points": ["Onboarding and screening run apart"]},
+        {"title": "The split predates the group's expansion", "points": ["Fictitious annual report statement"]}
+      ],
+      "source": "Fictitious data illustrating the layout"
+    },
+    {
+      "layout": "fact_sheet",
+      "title": "Fictitious Neo Theta covers nine markets with a cloud onboarding vendor",
+      "facts": [
+        {"label": "Markets", "value": "9"},
+        {"label": "Retail customers", "value": "5m"},
+        {"label": "Onboarding vendor", "value": "Vendor B"},
+        {"label": "Screening vendor", "value": "Vendor C"},
+        {"label": "Share of sample", "value": {"text": "4%", "calc": true}}
+      ],
+      "blocks": [
+        {"title": "Nine markets run on one cloud stack", "points": ["Onboarding stays fully digital"]},
+        {"title": "Customer base stays below national leaders", "points": ["5m customers across nine markets"]}
+      ],
+      "source": "Fictitious data illustrating the layout"
+    }
+  ]
+}

@@ -22,11 +22,14 @@ Pick the layout from the relation between the blocks of the slide, never from a 
 | Interview or survey evidence and its reading | `quotes` | The quotes are not traceable to a real person or survey |
 | A recommendation and its conditions or reasons | `recommendation` | The body has not yet proven it |
 | Plain list with no other relation | `bullets` | The points have an order or hierarchy another layout shows better |
+| Market shares by actor, grouped (treemap) | `market_map` | Values are not parts of one total |
+| Units × attributes grid with banded column categories (benchmark) | `band_matrix` (●/○, "n.d.", Harvey balls, computed values in blue) | Fewer than 4 units: use `table` |
+| Reference card for one unit of a grid (one country, one bank, one vendor) | `fact_sheet` | The slide must compare units: use `band_matrix` |
 | Title page | `cover` | |
 
 ## Choosing and varying layouts
 - Name the logical relation first, then compare at least two candidate layouts for it, and record the choice in `layout_rationale` (relation, alternative, why).
-- Never use the same layout more than twice in a row; the linter blocks it.
+- In argument decks, never use the same layout more than twice in a row; the linter blocks it. Benchmark decks (`meta.mode: "benchmark"`) repeat one exhibit per unit of the grid by design.
 - Useful diversity follows a change of relation. Decorative variety (changing the look while the relation stays the same) is a defect: when the rule above forces a change, take the second-best layout for the same relation.
 
 ## Shared rules

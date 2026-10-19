@@ -1,10 +1,10 @@
 # Storyboard format (`04-storyboard.json`)
 
-Full example: `examples/demo-layouts/04-storyboard.json` in the repo. File name in a working folder: `04-storyboard.json`.
+Full examples: `examples/demo-layouts/` (argument) and `examples/demo-benchmark/` (benchmark) in the repo. File name in a working folder: `04-storyboard.json`.
 
 ```json
 {
-  "meta": {"title": "Deck name", "accent": "1F4E79", "font": "Arial"},
+  "meta": {"title": "Deck name", "accent": "1F4E79", "font": "Arial", "mode": "argument | benchmark"},
   "slides": [ { "layout": "...", "title": "...", "source": "...", "notes": "...", "...": "layout fields" } ]
 }
 ```
@@ -18,7 +18,7 @@ Slide order: `cover`, then `executive_summary` (written last), then the body sli
 | `title` | yes | The title approved in the ghost deck, word for word |
 | `source` | when the slide holds a figure | Footer, prefixed "Source:". Name the origin and year |
 | `notes` | no | Speaker notes: what the presenter adds, open points |
-| `layout_rationale` | yes on body slides | `{"relation": "...", "alternative": "second candidate layout", "why": "why this layout wins"}`. Not rendered |
+| `layout_rationale` | yes on body slides (benchmark: first slide of each series) | `{"relation": "...", "alternative": "second candidate layout", "why": "why this layout wins"}`. Not rendered |
 
 No `subtitle` field exists: the linter rejects it.
 
@@ -46,5 +46,11 @@ A **block** is `{"title": "idea of the block", "points": ["detail", "detail"], "
 | `tree` | `root` (text), `branches`: `[{text, leaves: []}]` (2 to 4) | |
 | `quotes` | `quotes`: `[{text, author}]` (1 to 3), `blocks` | |
 | `recommendation` | `recommendation` (text), `pillars` (blocks, 2 to 4) | |
+
+| `market_map` | `items`: `[{label, value, group}]`, `unit`, `blocks` (optional), `map_share` (default 0.68) | Area proportional to value, one colour per group (6 groups at most); labels hide in boxes too small |
+| `band_matrix` | `column_bands`: `[{label, columns: []}]`; `rows`: `[{label, group, accent, cells: []}]`; `band_header`, `row_header`, `legend`, `first_column_width` | Cells: text, "●"/"○", "n.d.", `"[0]"`..`"[4]"` Harvey balls, or `{"text": "12%", "calc": true}` printed in blue. Rows with a new `group` get a group header row. Up to about 18 rows |
+| `fact_sheet` | `facts`: `[{label, value}]` (value may be `{"text", "calc"}`), `blocks` (optional) | One card per unit of a benchmark |
+
+Cells or values marked `calc` are figures the team computed from sourced data; they print in blue with a legend line.
 
 `format` follows Excel syntax (`"0"`, `"0.0"`); `unit` follows the number (`"%"`, `" bn€"`).

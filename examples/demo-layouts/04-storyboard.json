@@ -340,7 +340,7 @@
       "layout": "chart_text",
       "title": "In the fictitious example, review gates consume the largest share of pipeline tokens",
       "chart": {
-        "title": "The three review gates account for 40% of tokens",
+        "title": "The two review gates account for 40% of tokens",
         "type": "hbars",
         "categories": [
           "Reviews",
@@ -669,7 +669,7 @@
     {
       "layout": "recommendation",
       "title": "Building every deck from the reader's questions secures decks that decision makers act on",
-      "recommendation": "Run every deck through framing, fact-check and the three review gates before any slide reaches a client",
+      "recommendation": "Run every deck through framing, fact-check and the two review gates before any slide reaches a client",
       "pillars": [
         {
           "title": "Framing fixes the order of ideas",
