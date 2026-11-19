@@ -32,6 +32,10 @@ technology_transformation:
       logic: problem funnel (reframe, zoom in), value bucket by stakeholder at the centre, solution funnel (reframe, zoom in), then conditions
       source: bcg-wholesale-credit-2026
       status: pending
+    - id: layer_by_layer_walkthrough
+      logic: promise and adoption brakes, then one descent through the layers (customer-facing, back office mechanisms), then back up to the organisation, closed by a recap bucket that turns each section into an action
+      source: bcg-openai-retail-agentic-2026
+      status: validated
 
 risks_opportunities:
   reader_question: What should I seize, and what should I watch?

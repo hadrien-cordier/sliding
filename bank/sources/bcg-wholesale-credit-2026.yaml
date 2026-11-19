@@ -4,6 +4,7 @@ reference: https://www.bcg.com/publications/2026/agentic-ai-wholesale-credit-dec
 format: web article organised like a deck (sections + 4 exhibits)
 extracted: 2026-11-19
 status: validated   # analysis validated by the user on 2026-11-19, except where an element says otherwise
+design_system: bcg-reference
 
 context:
   issuer: strategy consulting firm
@@ -60,6 +61,15 @@ exhibits:
       - fewer boxes in the bottom lane = simplification
     typography: three KPI boxes, large number, small label
     slots: {top_steps: 5-7, bottom_steps: 3-5, kpis: 2-3, lane_message_max_words: 15}
+    design:
+      anatomy: serif title, bold scope line, two lanes separated by a thin grey rule, sources and note
+      lane_labels: "all caps bold, state named as {actor} colon {mode}; the lower lane adds one bold message line"
+      top_lane: beige chevrons, two-line centred labels; dashed green arcs with small labels above, pointing backwards
+      time_bar: thin bright-green bar under the top lane, full width; left label regular, unit bold at the right end
+      bottom_lane: chevrons ramping pale mint to dark green, bold label plus one small line each; last box darkest, white text
+      kpis: three white boxes with thin grey outline, bold figure over a small label, aligned under the bottom lane
+      grid: both lanes share the left edge and the full width; the bottom lane stops before the value box
+      verdict: keep; rebuild the title as one sentence
   - id: ex2_grouped_bars_tension
     called_by: nuance sentence (potential varies by segment)
     serves: section 3
@@ -71,6 +81,13 @@ exhibits:
       - value labels at bar ends, axis 0 to 100
     note: a methodology note states the baseline and that values are achievable levels
     slots: {items: 3-5, series: 2}
+    design:
+      anatomy: serif title on two lines, bold scope line naming the measure, chart, legend under the chart, sources and note
+      bars: horizontal, dark green series above bright green series in each group; thick bars, small gap inside a group, larger gap between groups
+      labels: item name bold right-aligned, grey descriptor below it; values bold at bar ends
+      axis: baseline only, 0 to 100 in quarters, no gridlines
+      legend: square markers, one line, under the axis
+      verdict: keep
   - id: ex3_layers_shared_foundation
     called_by: condition sentence (reuse depends on a shared foundation)
     serves: section 4 title
@@ -83,6 +100,13 @@ exhibits:
       - foundation band in neutral colour at the very bottom
     typography: footnotes define jargon instead of loading the boxes
     slots: {stages: 4-7, tiles_per_stage: 1-3, bands: 2}
+    design:
+      anatomy: small caps exhibit label, serif title, bold scope line, body, sources, note, numbered footnotes
+      header_row: dark green chevrons, white bold labels, one per stage, full width
+      tiles: pale mint, rounded, small dark text, one column per stage; an empty cell is allowed
+      bands: medium green band then beige band, full width, bold title over one regular line
+      grid: tiles align under their chevron; bands span every column
+      verdict: keep
   - id: ex4_oversight_two_subsystems_one_record
     called_by: announcement of two subsystems on one record
     serves: section 5 title
@@ -93,6 +117,15 @@ exhibits:
       - two subsystems side by side, arrows to and from the oversight box
       - shared record as a dark full-width bar at the bottom
     slots: {subsystems: 2, components_per_subsystem: 3-4}
+    design:
+      anatomy: serif title, bold scope line, body, sources
+      oversight_box: white with thin dark outline, full width, bold title over one line of duties
+      connectors: bright green circles with down and up chevrons between the oversight box, the panels and the record
+      panels: two pale mint panels side by side, all caps bold headers
+      inside_panel_1: beige input tiles in a row, bright green blocks (bold label, one line), white outlined box for the deterministic layer
+      inside_panel_2: stacked bright green blocks, one outlined box for findings
+      record_bar: dark green, full width, white bold title over one line
+      verdict: keep; the vertical order (person, systems, facts) carries the hierarchy
 
 threads:
   - fractal_intro: the three intro paragraphs preview sections 1 to 3

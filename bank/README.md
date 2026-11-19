@@ -5,6 +5,7 @@ The bank stores what makes a good document work, never its content: genres and t
 ## Files
 - `genres.yaml`: eight genres (reader question, evidence, default arc, typical exhibits) and the arc variants learned from examples. A default arc is a starting point: two examples of the same genre can argue differently, and each validated one adds a variant.
 - `sources/<id>.yaml`: one extraction per reference document, produced with `skills/deck/references/reading-method.md`.
+- `design-systems/<id>.yaml`: the design system of an issuer, recorded once and referenced by its source entries. Roles and rules transfer to decks; colours do not.
 
 ## How an entry gets in
 1. The user sends a reference (article, report, slides).

@@ -37,6 +37,18 @@ For each exhibit:
 - **Title pattern**, abstracted with slots.
 - **Slots**: number of items and text length, so the layout can be rebuilt by code.
 
+## Level 3b: design specification, read in the same pass
+
+Read the design with the claim it serves: a choice (two flows sharing entry and exit nodes, one rectangle among circles) only makes sense against its title. Capture the design from the same screenshots, never in a second pass.
+- **Anatomy**: what sits above and below the body (label, title, scope line, legend, sources, note) and in which style.
+- **Palette by role**: each colour and the meaning it carries (established, new, context, current state, negative). Sample approximate hex codes from the screenshot; mark them approximate.
+- **Shapes and lines**: fills versus outlines, corner radius, shadows, arrow and connector style, what a unique shape singles out.
+- **Typography**: typeface family per role (message, labels, data), relative sizes, case, weight.
+- **Grid**: columns, alignment, which elements share an axis.
+- **Verdict**: keep, adapt or leave, with the reason.
+
+When several documents share an issuer, record its design system once in `bank/design-systems/` and keep only the exhibit-specific choices in each source entry.
+
 ## Level 4: threads between levels
 
 Look for what ties the document together: an introduction that previews the sections (fractal structure), a recurring image or phrase, a figure announced early and explained later, visual rhymes between exhibits (same position, same colour for the same meaning), title rhymes.

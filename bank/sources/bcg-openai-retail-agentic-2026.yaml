@@ -1,0 +1,113 @@
+# Extraction of a reference article, anonymised. Patterns and paraphrases only; no verbatim text, no figures.
+id: bcg-openai-retail-agentic-2026
+reference: https://www.bcg.com/publications/2026/how-retail-banks-can-put-agentic-ai-to-work
+format: web article organised like a deck (sections + 4 exhibits + 2 pull quotes)
+extracted: 2026-11-19
+status: validated   # validated by the user on 2026-11-19
+design_system: bcg-reference
+
+context:
+  issuer: strategy consulting firm, co-signed with an AI model vendor
+  reader: retail bank leadership (operations, technology, risk)
+  intention: drive adoption and set up the organisation for it; showcase the co-author's tooling (our reading)
+  why_now: competitive reset; first movers build advantages that are hard to replicate
+  genre: {primary: technology_transformation}
+  arc_variant: layer_by_layer_walkthrough
+  evidence_regime: one headline study figure in the intro, then illustrative exhibits without data (weaker than bcg-wholesale-credit-2026)
+
+skeleton:
+  - {section: intro, move: frame, zoom: 1, role: "complete SCQA in five paragraphs, then an explicit plan announcement"}
+  - {section: promise, move: frame, zoom: 1, scqa: complication+answer, role: "names the adoption brakes, then answers them with auditable agents"}
+  - {section: front_office, move: zoom_in, zoom: 2, scqa: answer}
+  - {section: back_office, move: zoom_in, zoom: 3, scqa: answer, role: "subheads ladder the reader's objections: accurate? scalable? result?"}
+  - {section: internal_adoption, move: zoom_out, zoom: 1, scqa: answer (conditions)}
+  - {section: leading_the_way, move: decide, zoom: 1, role: "recap bucket of four dimensions mapping to the sections"}
+  - {section: conclusion, move: decide, zoom: 1, role: "urgency, future customer journey, closing question to every bank"}
+zoom_signature: [1, 1, 2, 3, 1, 1]
+lesson: section titles are topic labels and carry no message; the exhibit titles are action sentences and carry it. For slides, model titles on the exhibit titles.
+
+paragraph_shapes:
+  - id: concession_lever_case_rootcause_mechanism_result
+    where: [front_office]
+    pattern: historical concession (digitisation improved access without transforming the institution), technology lever with a customer scenario (exhibit call), choice of the case justified, root cause by reframe, mechanism, result introduced by an explicit marker
+  - id: justify_the_example
+    where: [front_office]
+    pattern: one sentence says why this case represents the whole (most frequent, most costly)
+  - id: reassure_inside_the_mechanism
+    where: [front_office, promise]
+    pattern: the sentence that introduces the solution also answers the reader's main fear (it runs inside existing controls)
+  - id: objection_ladder
+    where: [back_office]
+    pattern: "subheads as the reader's successive objections: {is it accurate?} {does it scale?} {what is the result?}"
+  - id: evaluation_escalation
+    where: [back_office accuracy part]
+    pattern: levels from the component to the system, one concrete failure example per level
+  - id: recap_bucket_to_actions
+    where: [leading_the_way]
+    pattern: announced count, one imperative label per section of the document, one sentence each
+
+pull_quotes:
+  role: restate the two claims that answer the reader's main fear (human control) and main priority (where the impact is)
+
+exhibits:
+  - id: ex1_before_after_same_endpoints
+    called_by: sentence listing what agents can do across the request
+    serves: front_office
+    relation: before_after (process)
+    title_pattern: "{technology} can substantially reduce {effort} in {process}"
+    visual_vectors:
+      - two flowcharts side by side sharing the same entry node and the same exit node, aligned: the change sits in the middle
+      - left flow alternates dark boxes (automated checks) and pale boxes (manual reviews); the count of manual boxes encodes the effort
+      - right flow groups inputs and outputs as tiles inside one bright green container, followed by a single final manual review
+      - column headers coloured like their state (dark for current, bright for agentic)
+    design:
+      boxes: all caps bold labels with a small line icon each
+      connectors: thin arrows downward, branch lines with small arrowheads
+      typography: column headers in green sentence case, larger than box labels
+    slots: {left_steps: 4-6 per track, tracks: 1-2, container_tiles: 4-6}
+    verdict: keep the shared endpoints and the count of manual boxes; add figures when the evidence exists
+  - id: ex2_four_evaluation_dimensions
+    called_by: definition of evaluation-driven development
+    serves: back_office accuracy part
+    relation: dimensions of one whole
+    title_pattern: "{method} is essential to assess {quality} across {factors}"
+    visual_vectors:
+      - four overlapping circles in a 2x2, darkest to palest; name bold, three or four metrics below
+    design:
+      typography: dimension name bold, about 1.4 times the metric size
+    verdict: adapt; the overlaps suggest shared content that does not exist and one dimension is never discussed in the text; use a 2x2 grid of blocks
+  - id: ex3_hub_single_shape
+    called_by: metaphor of a single front door for all AI workloads
+    serves: back_office scalability part
+    relation: hub and spoke
+    title_pattern: "{hub} gathers all {inputs} for {workflow} in one place"
+    visual_vectors:
+      - the hub is the only rectangle among circles; the unique shape marks the centre and echoes "in one place"
+      - governance chain reads left to right from the hub
+      - a framed tag states that the diagram is illustrative and non-exhaustive
+    verdict: keep the unique shape for the hub; leave the node count, the colours without a rule and the vendor names
+  - id: ex4_do_dont_chained
+    called_by: sentence on anticipating known risks with controls
+    serves: internal_adoption
+    relation: do / don't
+    title_pattern: "{projects} should build on {success factors} and avoid {pitfalls}"
+    visual_vectors:
+      - two columns, green for do, coral for don't; headers end with an ellipsis and each item completes the header's sentence
+      - a thumb icon in a solid disc overlaps the left edge of each tinted card
+      - each item opens with a bold coloured imperative, then a regular explanation
+    design:
+      typography: headers large bold coloured all caps; lead phrase bold coloured; body regular dark
+    slots: {items_per_column: 3, words_per_item: 25-45}
+    verdict: keep the grammatical chaining and the coral reserved for the negative
+
+threads:
+  - recurring_phrase: the menus-and-forms image of the front office returns in the conclusion
+  - house_metaphor: humans as connective tissue between systems, also used in bcg-wholesale-credit-2026
+  - recap: the four closing dimensions map onto the sections
+  - plan_announcement: the intro states the order of the report
+
+filtered:
+  - "section titles as topic labels"
+  - "intensifiers without a figure (significantly, critical, crucial, substantial)"
+  - "not just X, but Y constructions"
+  - "exhibit scope line under the title: move it to the note line (house hierarchy rule)"
