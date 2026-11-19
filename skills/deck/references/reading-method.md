@@ -55,6 +55,9 @@ Look for what ties the document together: an introduction that previews the sect
 
 ## Filter and anonymise before writing the entry
 
-- **House rules filter**: any pattern that breaks the rules of `logical-writing.md` and the rules card (semicolons in slide titles, hedging adverbs, "not X but Y" outside a `reframe` title) goes to `filtered`, never to a pattern.
+- **A shared reference is relevant by default.** The bank records several valid ways of arguing and designing, tagged by genre and context; there is no single right way. Extraction looks first for what works.
+- **Tensions with the house rules are recorded, not discarded.** Each goes to `house_rule_tensions` with a handling:
+  - `use_sparingly`: tolerated in moderation ("not X but Y", "not just X", intensifiers such as significantly or dramatically); note how often the source uses it and where it works.
+  - `adapt_for_slides`: kept as an idea, rebuilt to fit the deck rules (semicolon in a slide title, scope line under a title, topic-label section titles, hedging adverbs).
 - **Anonymise**: no client or company name, no figure, no date, no verbatim sentence. Patterns use slots (`{actor}`, `{process}`, `{kpi}`, `{milestone}`); examples are paraphrased in a few words.
 - **Status**: every element starts `pending`. The user sets `validated`, `edited` or `rejected`. Only validated elements are used at generation.

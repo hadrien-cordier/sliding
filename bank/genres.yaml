@@ -36,6 +36,10 @@ technology_transformation:
       logic: promise and adoption brakes, then one descent through the layers (customer-facing, back office mechanisms), then back up to the organisation, closed by a recap bucket that turns each section into an action
       source: bcg-openai-retail-agentic-2026
       status: validated
+    - id: cost_of_delay_proof_first_steps
+      logic: diagnose the adoption gap and its cost, prove with quantified cases (first as successes, then as outliers), close with short imperative first steps
+      source: bcg-genai-compliance-2025
+      status: pending
 
 risks_opportunities:
   reader_question: What should I seize, and what should I watch?

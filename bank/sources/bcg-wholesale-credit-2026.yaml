@@ -51,7 +51,7 @@ exhibits:
     called_by: sentence that extends the shift to the human role
     serves: section 2 title
     relation: before_after (process)
-    title_pattern: "Today {pain}, with {change} {benefit}"   # source uses a semicolon: filtered, rebuild as one sentence
+    title_pattern: "Today {pain}, with {change} {benefit}"   # source uses a semicolon: adapt for slides, rebuild as one sentence
     visual_vectors:
       - two stacked lanes compared step by step
       - top lane in neutral colour, dashed arrows going backwards = rework
@@ -135,7 +135,7 @@ threads:
   - visual_rhyme: shared foundation as a bottom band in ex3 and ex4; dark green = value or foundation, beige = current state
   - title_rhyme: ex3 and ex4 titles count down to one
 
-filtered:
-  - "semicolon in exhibit 1 title (house rule: one sentence, no semicolon)"
-  - hedging adverbs (only, already, more)
-  - 'not X but Y in body text (allowed in a reframe title: pending user decision)'
+house_rule_tensions:
+  - {item: semicolon in exhibit 1 title, handling: adapt_for_slides, note: rebuild as one sentence}
+  - {item: "hedging adverbs (only, already, more)", handling: adapt_for_slides}
+  - {item: "not X but Y in titles and body", handling: use_sparingly, note: works best as a reframe title (sections 1 and 4)}

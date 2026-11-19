@@ -106,8 +106,8 @@ threads:
   - recap: the four closing dimensions map onto the sections
   - plan_announcement: the intro states the order of the report
 
-filtered:
-  - "section titles as topic labels"
-  - "intensifiers without a figure (significantly, critical, crucial, substantial)"
-  - "not just X, but Y constructions"
-  - "exhibit scope line under the title: move it to the note line (house hierarchy rule)"
+house_rule_tensions:
+  - {item: section titles as topic labels, handling: adapt_for_slides, note: model slide titles on the exhibit titles}
+  - {item: "intensifiers (significantly, critical, crucial, substantial)", handling: use_sparingly}
+  - {item: "not just X, but Y", handling: use_sparingly}
+  - {item: exhibit scope line under the title, handling: adapt_for_slides, note: move it to the note line}
