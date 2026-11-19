@@ -1,0 +1,17 @@
+# Exhibit templates
+
+Native PowerPoint slides rebuilt from reference exhibits, with placeholder text and named shapes. No reference image is stored here.
+
+- `catalog.yaml`: one index line per template (read at every generation), then one fiche per template (message pattern, visual vectors, details, slots).
+- `lotA.pptx` to `lotD.pptx`: the templates, four per file. Shapes are named after their slots (`stage_3`, `kpi_2`...): code fills them by name.
+- `build/`: the scripts that draw the templates. `theme.json` holds every colour by role; swap it for a brand and rebuild.
+
+## How a template is rebuilt
+1. **Measure the reference** (`measure.py`): solid regions, sizes, gaps, stroke widths, colours.
+2. **Place shapes on the reference pixels** (`lib2.Frame`): proportions carry over exactly. `Frame2` stretches a tall reference to the 16:9 body.
+3. **Use soft primitives** (`lib2`): rounded corners in inches, chevrons with a point depth, Bezier curves, tapered arrows with a flared head, round line caps, bars with rounded tops.
+4. **Compare at full size** (`compare.py`) and have an independent reviewer list the defects before release.
+
+Rebuild: `cd templates/build && python3 batchA.py ../lotA.pptx` (same for B, C, D).
+
+Icons are placeholders (circles marked "icon"): replace them with PowerPoint icons of the same name and size.
