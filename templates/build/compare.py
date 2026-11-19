@@ -13,7 +13,7 @@ subprocess.run(["pdftoppm", "-r", "110", "-png", pdf, f"{prefix}-r"], check=True
 renders = sorted(glob.glob(f"{prefix}-r-*.png"), key=lambda p: int(p.rsplit("-", 1)[1].split(".")[0]))
 pages = []
 for d, r in zip(ids, renders):
-    o = Image.open(f"" + os.environ.get("REF_DIR", "refs") + "/{d}.png").convert("RGB")
+    o = Image.open(f"{os.environ.get('REF_DIR', 'refs')}/{d}.png").convert("RGB")
     rr = Image.open(r).convert("RGB")
     W = 1300
     o = o.resize((W, int(o.height * W / o.width))) if o.width / o.height > 1.2 else o.resize((int(o.width * 700 / o.height), 700))
