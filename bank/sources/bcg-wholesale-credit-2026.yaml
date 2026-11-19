@@ -1,0 +1,108 @@
+# Extraction of a reference article, anonymised. Patterns and paraphrases only; no verbatim text, no figures.
+id: bcg-wholesale-credit-2026
+reference: https://www.bcg.com/publications/2026/agentic-ai-wholesale-credit-decisions
+format: web article organised like a deck (sections + 4 exhibits)
+extracted: 2026-11-19
+status: validated   # analysis validated by the user on 2026-11-19, except where an element says otherwise
+
+context:
+  issuer: strategy consulting firm
+  reader: heads of risk and credit in wholesale banks
+  intention: establish expertise and frame a redesign mission (our reading)
+  why_now: banks digitised single tasks; agents make a redesign of the whole flow possible
+  genre: {primary: technology_transformation, secondary: market_study (value section)}
+  arc_variant: double_funnel_with_value_pivot   # pending: name and definition to validate
+  evidence_regime: project experience, one bank case, indicative ranges
+
+skeleton:
+  - {section: intro, move: preview, zoom: 1, role: "three paragraphs preview sections 1 to 3 in order"}
+  - {section: 1, move: reframe, zoom: 1, scqa: situation+complication, title_pattern: "The constraint is {real subject}, not {assumed subject}"}
+  - {section: 2, move: zoom_in, zoom: 2, scqa: complication, title_pattern: "From {current mode} to {target mode}"}
+  - {section: 3, move: [zoom_out, split], zoom: 1, scqa: question, title_pattern: "What it is worth, and to whom"}
+  - {section: 4, move: [answer, reframe], zoom: 1, scqa: answer, title_pattern: "Build {right scope}, not {wrong scope}"}
+  - {section: 5, move: zoom_in, zoom: 3, scqa: answer, title_pattern: "Inside {solution}: {component A acts}, {component B checks}"}
+  - {section: 6, move: condition, zoom: 2, scqa: answer, title_pattern: "What it takes"}
+  - {section: conclusion, move: decide, zoom: 1, role: "reverses the reader's expectation and closes on the opening image"}
+
+funnels: [[1, 2], [4, 5]]
+buckets: [3, 6]
+zoom_signature: [1, 2, 1, 1, 3, 2]
+
+paragraph_shapes:
+  - id: concession_then_thesis
+    where: [section 1 opening, section 4 opening (common mistake, then what happens in practice)]
+    pattern: grant what the reader already did, then locate the real constraint elsewhere
+  - id: announced_bucket_return
+    where: [section 1 frictions, section 3 value levers, section 5 principles, section 6 conditions]
+    pattern: announce a count, one sentence or label per item, close by returning to the title
+  - id: bucket_by_severity
+    where: [section 3]
+    pattern: order the items so the last is the one that matters most to the reader named at the start of the section; give it the most space
+  - id: mechanism_human_restate
+    where: [section 2]
+    pattern: define the shift, explain the mechanism, extend to the human role (exhibit call), restate the title as conclusion, link back to the figure announced in the intro
+  - id: defuse_exhibit_misreading
+    where: [section 3 last paragraph]
+    pattern: after an exhibit that could be read against the argument, name that reading and answer it
+
+exhibits:
+  - id: ex1_two_lanes_before_after
+    called_by: sentence that extends the shift to the human role
+    serves: section 2 title
+    relation: before_after (process)
+    title_pattern: "Today {pain}, with {change} {benefit}"   # source uses a semicolon: filtered, rebuild as one sentence
+    visual_vectors:
+      - two stacked lanes compared step by step
+      - top lane in neutral colour, dashed arrows going backwards = rework
+      - full-width bar under the top lane = elapsed time
+      - bottom lane carries its own one-line message
+      - chevrons from light to dark ending in the darkest box = value at the end of the path
+      - fewer boxes in the bottom lane = simplification
+    typography: three KPI boxes, large number, small label
+    slots: {top_steps: 5-7, bottom_steps: 3-5, kpis: 2-3, lane_message_max_words: 15}
+  - id: ex2_grouped_bars_tension
+    called_by: nuance sentence (potential varies by segment)
+    serves: section 3
+    relation: item comparison, two series (Zelazny)
+    title_pattern: "{metric A} falls as {difficulty} rises, while {metric B} stays high"
+    visual_vectors:
+      - horizontal grouped bars, items ordered by complexity, each item with a one-line descriptor explaining the order
+      - dark series shows the decline, light series stays long and carries the counterweight
+      - value labels at bar ends, axis 0 to 100
+    note: a methodology note states the baseline and that values are achievable levels
+    slots: {items: 3-5, series: 2}
+  - id: ex3_layers_shared_foundation
+    called_by: condition sentence (reuse depends on a shared foundation)
+    serves: section 4 title
+    relation: layers / convergence
+    title_pattern: "Many {X}, shared {Y}, one {Z}"
+    visual_vectors:
+      - top row of dark chevrons = lifecycle stages
+      - solution tiles in columns under each stage
+      - two full-width bands at the bottom: width encodes sharing
+      - foundation band in neutral colour at the very bottom
+    typography: footnotes define jargon instead of loading the boxes
+    slots: {stages: 4-7, tiles_per_stage: 1-3, bands: 2}
+  - id: ex4_oversight_two_subsystems_one_record
+    called_by: announcement of two subsystems on one record
+    serves: section 5 title
+    relation: system architecture with oversight
+    title_pattern: "Two {X}, one {Y}, and {actor} above both"
+    visual_vectors:
+      - human oversight box on top: the metaphor becomes a position
+      - two subsystems side by side, arrows to and from the oversight box
+      - shared record as a dark full-width bar at the bottom
+    slots: {subsystems: 2, components_per_subsystem: 3-4}
+
+threads:
+  - fractal_intro: the three intro paragraphs preview sections 1 to 3
+  - recurring_image: the file waiting for a person opens the text, titles exhibit 1 and closes the conclusion
+  - recurring_phrase: the human-above-the-loop idea is introduced (s2), drawn (ex1), made spatial (ex4), made concrete (s5 last principle)
+  - anchored_figure: one figure announced in the intro, explained in s2, displayed in ex1
+  - visual_rhyme: shared foundation as a bottom band in ex3 and ex4; dark green = value or foundation, beige = current state
+  - title_rhyme: ex3 and ex4 titles count down to one
+
+filtered:
+  - "semicolon in exhibit 1 title (house rule: one sentence, no semicolon)"
+  - hedging adverbs (only, already, more)
+  - 'not X but Y in body text (allowed in a reframe title: pending user decision)'
