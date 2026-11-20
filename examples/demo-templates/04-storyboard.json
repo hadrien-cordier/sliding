@@ -10,9 +10,33 @@
    "context": "Test deck, illustrative content"
   },
   {
+   "layout": "executive_summary",
+   "title": "Agents shorten credit decisions and focused models capture the value",
+   "items": [
+    {
+     "takeaway": "Agents keep the credit file current, so the decision no longer waits for a person",
+     "points": [
+      "Illustrative content"
+     ]
+    },
+    {
+     "takeaway": "Focused players earn a valuation premium from fee income",
+     "points": [
+      "Illustrative values"
+     ]
+    },
+    {
+     "takeaway": "Front-to-back redesign replaces local fixes",
+     "points": [
+      "Eight shifts"
+     ]
+    }
+   ]
+  },
+  {
    "layout": "template",
    "template": "two_lanes_before_after",
-   "title": "Today the file waits for a person, while agents keep it current between requests",
+   "title": "Agents keep the credit file current between requests",
    "source": "Illustrative example",
    "layout_rationale": {
     "relation": "before_after_process",
@@ -116,7 +140,7 @@
   {
    "layout": "template",
    "template": "paired_bars_chain",
-   "title": "Focused players trade at a premium because they generate more fee income",
+   "title": "Focused players earn a valuation premium from higher fee income",
    "source": "Illustrative values",
    "layout_rationale": {
     "relation": "paired_comparison_chain",
@@ -124,9 +148,9 @@
     "why": "three comparisons chain into one argument"
    },
    "slots": {
-    "panel_1_title": "Focused players trade higher\u2026",
-    "panel_2_title": "\u2026despite higher cost ratios\u2026",
-    "panel_3_title": "\u2026because they earn more fees",
+    "panel_1_title": "Focused players trade higher…",
+    "panel_2_title": "…despite higher cost ratios…",
+    "panel_3_title": "…because they earn more fees",
     "measure_unit_1": "PRICE TO BOOK",
     "measure_unit_2": "COST/INCOME (%)",
     "measure_unit_3": "FEES/ASSETS (%)",
@@ -418,8 +442,56 @@
        "bold": true
       }
      ]
+    ],
+    "key_levers_1": [
+     [
+      {
+       "text": "Key levers",
+       "bold": true
+      }
+     ]
+    ],
+    "x_axis_start_1": "OFFSHORING",
+    "x_axis_end_1": "MATURITY",
+    "phase_1": "Local at speed",
+    "phase_2": "Value delivery",
+    "phase_3": "Global at scale",
+    "period_1": "1990s",
+    "period_2": "2000s",
+    "period_3": "2015",
+    "period_4": "2020s",
+    "lever_1_text": [
+     [
+      {
+       "text": "What changes",
+       "bold": true
+      }
+     ],
+     "· proof point",
+     "· proof point"
+    ],
+    "lever_2_text": [
+     [
+      {
+       "text": "What changes",
+       "bold": true
+      }
+     ],
+     "· proof point",
+     "· proof point"
+    ],
+    "lever_3_text": [
+     [
+      {
+       "text": "What changes",
+       "bold": true
+      }
+     ],
+     "· proof point",
+     "· proof point"
     ]
-   }
+   },
+   "source": "Illustrative"
   },
   {
    "layout": "template",
@@ -454,7 +526,59 @@
     "cell_7_4": "up to 18",
     "cell_8_4": "up to 16",
     "cell_9_4": "up to 14",
-    "cell_10_4": "up to 12"
+    "cell_10_4": "up to 12",
+    "cell_1_2": "Segment examples",
+    "cell_2_2": "Segment examples",
+    "cell_3_2": "Segment examples",
+    "cell_4_2": "Segment examples",
+    "cell_5_2": "Segment examples",
+    "cell_6_2": "Segment examples",
+    "cell_7_2": "Segment examples",
+    "cell_8_2": "Segment examples",
+    "cell_9_2": "Segment examples",
+    "cell_10_2": "Segment examples",
+    "cell_1_3": "11 to 15",
+    "cell_2_3": "12 to 16",
+    "cell_3_3": "13 to 17",
+    "cell_4_3": "14 to 18",
+    "cell_5_3": "15 to 19",
+    "cell_6_3": "16 to 20",
+    "cell_7_3": "17 to 21",
+    "cell_8_3": "18 to 22",
+    "cell_9_3": "19 to 23",
+    "cell_10_3": "20 to 24",
+    "head_1": [
+     [
+      {
+       "text": "Category",
+       "bold": true
+      }
+     ]
+    ],
+    "head_2": [
+     [
+      {
+       "text": "Key segments",
+       "bold": true
+      }
+     ]
+    ],
+    "head_3": [
+     [
+      {
+       "text": "Market size (bn)",
+       "bold": true
+      }
+     ]
+    ],
+    "head_4": [
+     [
+      {
+       "text": "Growth (CAGR %)",
+       "bold": true
+      }
+     ]
+    ]
    }
   }
  ]

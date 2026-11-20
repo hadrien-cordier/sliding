@@ -105,6 +105,11 @@ def apply_repeat(slide, groups, counts, warn=print):
                         sh.text_frame.paragraphs[0].runs[0].text = str(k)
                     shapes.append(sh)
             for sh, (off, sz) in zip(shapes, geo):
+                if sh.has_text_frame and len(sh.text_frame.text.strip()) <= 3 and f < 0.95:   # numerals shrink with their row
+                    for p_ in sh.text_frame.paragraphs:
+                        for r in p_.runs:
+                            if r.font.size:
+                                r.font.size = int(r.font.size * max(f, 0.6))
                 new_pos = int(start + (k - 1) * pitch * f + off * f)
                 square = abs(sh.width - sh.height) < 0.05 * max(sh.width, sh.height, 1)
                 if square:   # discs and icons keep their shape: shrink both sides around the centre
