@@ -99,6 +99,7 @@ def soft_line(slide, x1, y1, x2, y2, color="grey400", lw=1.0, dash=False, arrow=
 
 def elbow(slide, pts, color="grey400", lw=1.0, dash=False, arrow=None, r=0.06, aw="med", al="med", name=None):
     """Orthogonal path through pts with softly rounded corners."""
+    pts = [p for i, p in enumerate(pts) if i == 0 or math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 1e-6]
     out = [pts[0]]
     for i in range(1, len(pts) - 1):
         (ax, ay), (bx, by), (cx, cy) = pts[i - 1], pts[i], pts[i + 1]
@@ -136,3 +137,12 @@ class Frame2:
 def open_frame(slide, x, y, w, h, r, color="text", lw=2.5, name=None):
     """Device outline: rounded top corners, open bottom."""
     return elbow(slide, [(x, y + h), (x, y), (x + w, y), (x + w, y + h)], color, lw=lw, r=r, name=name)
+
+
+def alpha(shp, pct):
+    """Fill transparency in percent (0 opaque) so overlapping shapes blend."""
+    sf = shp._element.spPr.find(qn("a:solidFill"))
+    clr = sf[0]
+    for e in clr.findall(qn("a:alpha")):
+        clr.remove(e)
+    a = etree.SubElement(clr, qn("a:alpha")); a.set("val", str(int((100 - pct) * 1000)))

@@ -2,200 +2,659 @@
 # Templates: native PowerPoint slides in lot<A-D>.pptx (fields `file` and `slide`). Each was rebuilt from measured
 # proportions of its reference; shapes are named after their slots; colours come from theme.json by role.
 index:
-  - {id: process_variant_map, relation: process_with_variants, use_when: "show the real flow, frequent vs rare paths and exceptions"}
-  - {id: journey_road_kpis, relation: journey_moments_with_impact, use_when: "moments of a customer journey, their KPIs, then why and what it brings"}
-  - {id: zoom_deep_dive_dashboard, relation: whole_part_measures, use_when: "from an end-to-end view to one stage, then its KPIs"}
-  - {id: three_views_designed_assumed_real, relation: three_views_escalating, use_when: "how it was designed, how we think it runs, how it really runs"}
-  - {id: chevron_pain_points, relation: sequence_with_issues, use_when: "issues mapped to process stages, a group may span stages"}
-  - {id: two_lanes_before_after, relation: before_after_process, use_when: "current sequential flow vs target continuous flow, with KPIs"}
-  - {id: layers_shared_foundation, relation: layers_convergence, use_when: "many solutions on lifecycle stages sharing capabilities and a foundation"}
-  - {id: forces_squeeze_solution, relation: convergence_then_resolution, use_when: "several forces create one tension, resolved by levers"}
-  - {id: evidence_ladder_stats, relation: finding_shift_gap, use_when: "survey evidence in three tiers: what is true, what it changes, where the gap remains"}
-  - {id: columns_multiplier_arrows, relation: time_series_acceleration, use_when: "a measure over time whose growth multiplies period after period"}
-  - {id: journey_cards_two_rows, relation: numbered_journey_with_actors, use_when: "8 to 10 steps of a target journey, each with what technology does"}
-  - {id: swimlane_humans_agents, relation: process_by_actor, use_when: "who does each step: people, agents, escalations"}
-  - {id: roadmap_deep_dive_keys, relation: roadmap_with_annotations, use_when: "a timeline of workstreams, a deep dive by segment, lettered callouts"}
-  - {id: small_multiple_bridges, relation: bridge_by_segment, use_when: "the same value bridge repeated for 2 or 3 segments"}
-  - {id: spotlight_line_drivers, relation: case_trend_and_drivers, use_when: "one actor's trajectory and the drivers behind it"}
-  - {id: hub_two_sides, relation: platform_between_two_sides, use_when: "a platform or network connecting two groups of actors"}
-
+- id: process_variant_map
+  relation: process_with_variants
+  use_when: show the real flow, frequent vs rare paths and exceptions
+- id: journey_road_kpis
+  relation: journey_moments_with_impact
+  use_when: moments of a customer journey, their KPIs, then why and what it brings
+- id: zoom_deep_dive_dashboard
+  relation: whole_part_measures
+  use_when: from an end-to-end view to one stage, then its KPIs
+- id: three_views_designed_assumed_real
+  relation: three_views_escalating
+  use_when: how it was designed, how we think it runs, how it really runs
+- id: chevron_pain_points
+  relation: sequence_with_issues
+  use_when: issues mapped to process stages, a group may span stages
+- id: two_lanes_before_after
+  relation: before_after_process
+  use_when: current sequential flow vs target continuous flow, with KPIs
+- id: layers_shared_foundation
+  relation: layers_convergence
+  use_when: many solutions on lifecycle stages sharing capabilities and a foundation
+- id: forces_squeeze_solution
+  relation: convergence_then_resolution
+  use_when: several forces create one tension, resolved by levers
+- id: evidence_ladder_stats
+  relation: finding_shift_gap
+  use_when: 'survey evidence in three tiers: what is true, what it changes, where the gap remains'
+- id: columns_multiplier_arrows
+  relation: time_series_acceleration
+  use_when: a measure over time whose growth multiplies period after period
+- id: journey_cards_two_rows
+  relation: numbered_journey_with_actors
+  use_when: 8 to 10 steps of a target journey, each with what technology does
+- id: swimlane_humans_agents
+  relation: process_by_actor
+  use_when: 'who does each step: people, agents, escalations'
+- id: roadmap_deep_dive_keys
+  relation: roadmap_with_annotations
+  use_when: a timeline of workstreams, a deep dive by segment, lettered callouts
+- id: small_multiple_bridges
+  relation: bridge_by_segment
+  use_when: the same value bridge repeated for 2 or 3 segments
+- id: spotlight_line_drivers
+  relation: case_trend_and_drivers
+  use_when: one actor's trajectory and the drivers behind it
+- id: hub_two_sides
+  relation: platform_between_two_sides
+  use_when: a platform or network connecting two groups of actors
+- id: operating_model_heatmap
+  relation: value_chain_by_automation_level
+  use_when: stages of a value chain by activity, each cell coloured by who does the work
+- id: four_overlapping_dimensions
+  relation: dimensions_of_one_whole
+  use_when: four dimensions that together define one quality
+- id: before_after_same_endpoints
+  relation: before_after_process
+  use_when: current vs target flow sharing the same entry and exit
+- id: maturity_curve_with_crowd
+  relation: maturity_stages_with_distribution
+  use_when: stages of maturity, share of the population at each, and who sits where
+- id: process_container_to_impact
+  relation: process_to_result
+  use_when: a solution in steps that produces measured impacts
+- id: value_migration_bubbles
+  relation: value_migration
+  use_when: a large incumbent pool and the players taking value from it
+- id: radial_ranges
+  relation: ranking_of_ranges
+  use_when: growth ranges by segment, read around a ring
+- id: from_to_shifts
+  relation: from_to
+  use_when: numbered shifts from a current practice to a target practice
+- id: staged_model_tapering_band
+  relation: staged_model_to_end_state
+  use_when: stages of a model whose effect widens towards the end state
+- id: maturity_curve_with_levers
+  relation: evolution_with_levers
+  use_when: phases on a growth curve, then the key levers of each phase
+- id: promise_to_capability_funnel
+  relation: promise_to_requirements
+  use_when: promises to customers that require a funnel of capabilities
+- id: architecture_columns
+  relation: architecture_layers
+  use_when: an architecture from sources to channels, with the operating model beneath
+- id: paired_bars_chain
+  relation: paired_comparison_chain
+  use_when: three paired comparisons whose headers chain into one argument
+- id: technology_waves_steps
+  relation: technology_waves
+  use_when: successive waves of technology stepping up over time
+- id: roof_and_range_bars
+  relation: ranges_by_family
+  use_when: ambition ranges by family, with a highlighted top family
+- id: iceberg_layers
+  relation: visible_vs_hidden_effort
+  use_when: shares of effort where the largest part is hidden
+- id: criteria_matrix_list
+  relation: selection_criteria_and_portfolio
+  use_when: criteria for selection, the selection matrix and the selected list
+- id: connected_networks
+  relation: networks_and_exchange
+  use_when: several hub-and-spoke networks linked through one exchange
+- id: data_table_dashed
+  relation: table_of_segments
+  use_when: a data table by category with a highlighted growth column
+- id: wheel_how_what_why
+  relation: systems_wheel
+  use_when: pillars around areas around a core purpose, read as how, what, why
+- id: units_arched_cards
+  relation: units_with_levers
+  use_when: each unit, its levers and the business lines it covers
+- id: architecture_progressive_fill
+  relation: build_sequence
+  use_when: the same architecture filled step by step
+- id: maturity_steps_cards
+  relation: maturity_stages
+  use_when: stages of maturity as rising cards
+- id: mode_comparison_by_step
+  relation: before_after_by_step
+  use_when: the same steps run in two modes, with the time allocation of each
+- id: flywheel_two_families
+  relation: flywheel_with_evidence
+  use_when: a flywheel between two families, with evidence cards and status
 templates:
-  - id: process_variant_map
-    file: lotA
-    slide: 1
-    message_pattern: "{process} runs through more variants than its design foresees"
-    visual_vectors:
-      - main path in the left column, darker dots; variants in lighter dots to the right
-      - counts on connectors show volume per path
-      - dashed lines are exceptions that jump to the end
-      - grey start and end nodes frame the flow
-    details: [a coloured dot inside each white box encodes frequency, thin grey elbow connectors, small grey count labels]
-    slots: {main_steps: 4-6, variants: 2-4, sub_steps: 0-2, exceptions: 1-3}
-    avoid_when: more than 15 nodes; use a simplified view or three_views_designed_assumed_real
-
-  - id: journey_road_kpis
-    file: lotA
-    slide: 2
-    message_pattern: "{simulating options} shows which {measures} carry the highest impact"
-    visual_vectors:
-      - a winding road in perspective (wider when nearer, side wall under the near edge) is the journey; each moment is pinned to the road by a dotted line from its icon
-      - KPI cards float near the road; a small badge sits on the top edge of each card
-      - bottom panel reads rationale then benefit, joined by chevron-down circles that mean "leads to"
-    details: [road shadow gives depth, dashed outline icon circles, rotated row tabs, dashed column separators, centred panel title between two rules]
-    slots: {moments: 4-6 (title + one sentence), kpis: 3-5 (label, value, delta), columns: 3}
-
-  - id: zoom_deep_dive_dashboard
-    file: lotA
-    slide: 3
-    message_pattern: "{method} gives a fact base to assess {value potential}"
-    visual_vectors:
-      - the selected stage changes colour; a gradient wedge links it to the deep-dive panel (zoom)
-      - vertical spine with ticks for steps; dashed side branches end on small hexagons
-      - a negative outcome takes the negative colour
-      - KPI grid with large numbers, then a native line chart of as-is vs target
-    details: [numbered discs for stages, one panel tint per column (accent, accent, grey), italic labels on branch outcomes]
-    slots: {stages: 5-8, selected: 1, deep_dive_steps: 6-10, branches: 1-3, kpis: 4-6, chart_series: 2}
-
-  - id: three_views_designed_assumed_real
-    file: lotA
-    slide: 4
-    message_pattern: "{organisations} run {process} variants they are not aware of"
-    visual_vectors:
-      - three columns, complexity grows from left to right; the third view becomes a tangle
-      - column headers chain grammatically with ellipses (designed… …assumed… …and real)
-      - each step keeps its colour across views
-      - count tags sit between steps
-    details: [dark count tag at start and end, warm count tags between steps, dashed dividers, legend for the tag]
-    slots: {views: 3, steps: 5-7, branches_in_view_2: 2-3}
-
-  - id: chevron_pain_points
-    file: lotB
-    slide: 1
-    message_pattern: "pain points cluster along the {process}"
-    visual_vectors:
-      - one icon per stage above a full-width chevron band
-      - text groups below may span several stages; dashed lines separate the groups
-      - each pain point opens with a bold coloured category, then the description
-    details: [white separators between chevrons, icons in thin outline circles]
-    slots: {stages: 5-8, groups: 3-6, pains_per_group: 1-3}
-
-  - id: two_lanes_before_after
-    file: lotB
-    slide: 2
-    bank_ref: bank/sources/bcg-wholesale-credit-2026.yaml#ex1_two_lanes_before_after
-    message_pattern: "today {pain}, with {change} {benefit}"   # one sentence, no semicolon
-    slots: {current_steps: 5-7, target_steps: 3-5, kpis: 2-3}
-
-  - id: layers_shared_foundation
-    file: lotB
-    slide: 3
-    bank_ref: bank/sources/bcg-wholesale-credit-2026.yaml#ex3_layers_shared_foundation
-    message_pattern: "many {X}, shared {Y}, one {Z}"
-    slots: {stages: 4-7, solutions_per_stage: 1-3, layers: 2}
-
-  - id: forces_squeeze_solution
-    file: lotB
-    slide: 4
-    message_pattern: "{three forces} create a {squeeze} that {two levers} resolve together"
-    visual_vectors:
-      - forces on top in the lighter header colour, levers below in the darker one; colour separates problem from answer
-      - connectors with junction dots converge on the squeeze
-      - a double frame around the squeeze marks the central tension
-      - the solution pill bridges the two levers
-    details: [icon in the header of each card, white body with a coloured outline, rounded headers]
-    slots: {forces: 2-4, squeeze: 1 (title + one sentence), levers: 2}
-
-  # ---- lot 2 (file: lot2-templates.pptx) ----
-  - id: evidence_ladder_stats
-    file: lotC
-    slide: 1
-    message_pattern: "{structural change} is reshaping {decisions}"
-    visual_vectors:
-      - three stacked panels whose header darkens from finding to shift to gap; each header is a full-sentence message
-      - large values next to filled icon discs; one value per claim
-      - a range rule with the value centred on it shows a share that covers several items
-      - the last panel holds one giant value and one sentence - the gap the reader must act on
-    details: [vertical dividers between stats, pale lead-in band under the second header, footnote marker on a value]
-    slots: {findings: 3, consequences: 3-4, rules: 1-2, gap: 1}
-
-  - id: columns_multiplier_arrows
-    file: lotC
-    slide: 2
-    message_pattern: "{capability} grows {multiple} every {period}"
-    visual_vectors:
-      - columns drawn as shapes with rounded tops, gaps of about 12% of the bar width, value labels on selected bars only
-      - filled curved arrows that taper from a thin tail to a flared head carry the multiplier per period
-      - period brackets under the axis with a pill label
-    details: [unit label above the axis instead of a subtitle, axis line only, no gridlines]
-    slots: {points: 12-30, labelled_points: 6-10, periods: 2-3, multipliers: 1-2}
-
-  - id: journey_cards_two_rows
-    file: lotC
-    slide: 3
-    message_pattern: "{target journey}: {technology} and {people} combine at every step"
-    visual_vectors:
-      - numbered pill headers on a running line, two rows of five; arrows enter and leave each row
-      - pale card under each header with an illustration area and two bullets with a bold accent phrase
-      - a two-part badge at the bottom names the agent that acts (AI | name)
-      - the last step header is the darkest - the end state
-      - a negative-colour callout pinned on the line marks an exception path
-    slots: {steps: 8-10, bullets_per_step: 1-3, badges: 0-10, exceptions: 0-2}
-
-  - id: swimlane_humans_agents
-    file: lotC
-    slide: 4
-    message_pattern: "{agents} run the {process} and escalate to people {when it matters}"
-    visual_vectors:
-      - rotated side bands name the lanes (who does it, process); a timeline arrow runs on top
-      - humans lane with actor icons, agents lane with AI discs and outlined name pills, process lane with numbered boxes
-      - negative-colour escalation bars span the steps they cover, with up arrows from the agent tasks
-      - arrows between AI discs show hand-offs; the last process box is the darkest
-    details: [dashed line across the humans lane, tool badge, legend row with the four symbols]
-    slots: {steps: 8-12, agents: 4-10, escalations: 1-3}
-
-  - id: roadmap_deep_dive_keys
-    file: lotD
-    slide: 1
-    message_pattern: "{acceleration roadmap} for {use cases}: {an example}"
-    visual_vectors:
-      - month chevrons on top, the current months filled darker
-      - pale workstream bars under the months, the open-ended one ends in a point
-      - a curved arrow drops into a deep-dive panel with one lane of phase chevrons per segment
-      - parallel phases stack inside a lane; curved arrows mark iteration loops
-      - lettered discs placed on the plan are explained in a key-callouts row at the bottom
-    details: [reuse badges in a distinct colour, segment lanes in two tints]
-    slots: {months: 12-18, workstreams: 1-3, segments: 2, phases_per_segment: 4-6, callouts: 4-6}
-
-  - id: small_multiple_bridges
-    file: lotD
-    slide: 2
-    message_pattern: "{innovation} lets {institutions} extend {the perimeter of their business}"
-    visual_vectors:
-      - one header card with an icon per segment, then the same bridge repeated for comparison
-      - grey totals, a pale negative block for erosion, the new levers stacked in accent shades
-      - bars drawn as shapes; dashed connectors join the tops; white axis breaks cut the tall start bars
-      - the last segment can drop the bridge and keep two totals when the levers are unknown
-    details: [axis-break marks on tall start bars, legend under each chart, measure label in capitals, thin separators between panels]
-    slots: {segments: 2-3, levers: 2-4}
-
-  - id: spotlight_line_drivers
-    file: lotD
-    slide: 3
-    message_pattern: "{lever} led to a {multiple} of {metric} for {actor}"
-    visual_vectors:
-      - a tinted spotlight panel with a large icon, a spotlight label and a two-sentence intro
-      - line chart with labels on every point; a bracket over the chart carries the multiple in a pill and points at the last value
-      - a darker drivers panel with a triangular notch pointing at the chart - the drivers explain the curve
-      - each driver is a bold claim with proof points below
-    slots: {points: 6-12, drivers: 2-4, proofs_per_driver: 1-2}
-
-  - id: hub_two_sides
-    file: lotD
-    slide: 4
-    message_pattern: "{platform} gives {actors} a role in {ecosystem}"
-    visual_vectors:
-      - a pale central hub with the platform name and one key fact
-      - arcs around the hub send arrows outward to the actors of each side
-      - device mock-ups in the corners show the apps each side uses
-      - services offered sit under the hub
-    slots: {sides: 2, actors_per_side: 2-3, apps: 2-4, services: 1-3}
+- id: process_variant_map
+  file: lotA
+  slide: 1
+  message_pattern: '{process} runs through more variants than its design foresees'
+  visual_vectors:
+  - main path in the left column, darker dots; variants in lighter dots to the right
+  - counts on connectors show volume per path
+  - dashed lines are exceptions that jump to the end
+  - grey start and end nodes frame the flow
+  details:
+  - a coloured dot inside each white box encodes frequency
+  - thin grey elbow connectors
+  - small grey count labels
+  slots:
+    main_steps: 4-6
+    variants: 2-4
+    sub_steps: 0-2
+    exceptions: 1-3
+  avoid_when: more than 15 nodes; use a simplified view or three_views_designed_assumed_real
+- id: journey_road_kpis
+  file: lotA
+  slide: 2
+  message_pattern: '{simulating options} shows which {measures} carry the highest impact'
+  visual_vectors:
+  - a winding road in perspective (wider when nearer, side wall under the near edge) is the journey; each moment is pinned to the road
+    by a dotted line from its icon
+  - KPI cards float near the road; a small badge sits on the top edge of each card
+  - bottom panel reads rationale then benefit, joined by chevron-down circles that mean "leads to"
+  details:
+  - road shadow gives depth
+  - dashed outline icon circles
+  - rotated row tabs
+  - dashed column separators
+  - centred panel title between two rules
+  slots:
+    moments: 4-6 (title + one sentence)
+    kpis: 3-5 (label
+    value: null
+    delta): null
+    columns: 3
+- id: zoom_deep_dive_dashboard
+  file: lotA
+  slide: 3
+  message_pattern: '{method} gives a fact base to assess {value potential}'
+  visual_vectors:
+  - the selected stage changes colour; a gradient wedge links it to the deep-dive panel (zoom)
+  - vertical spine with ticks for steps; dashed side branches end on small hexagons
+  - a negative outcome takes the negative colour
+  - KPI grid with large numbers, then a native line chart of as-is vs target
+  details:
+  - numbered discs for stages
+  - one panel tint per column (accent
+  - accent
+  - grey)
+  - italic labels on branch outcomes
+  slots:
+    stages: 5-8
+    selected: 1
+    deep_dive_steps: 6-10
+    branches: 1-3
+    kpis: 4-6
+    chart_series: 2
+- id: three_views_designed_assumed_real
+  file: lotA
+  slide: 4
+  message_pattern: '{organisations} run {process} variants they are not aware of'
+  visual_vectors:
+  - three columns, complexity grows from left to right; the third view becomes a tangle
+  - column headers chain grammatically with ellipses (designed… …assumed… …and real)
+  - each step keeps its colour across views
+  - count tags sit between steps
+  details:
+  - dark count tag at start and end
+  - warm count tags between steps
+  - dashed dividers
+  - legend for the tag
+  slots:
+    views: 3
+    steps: 5-7
+    branches_in_view_2: 2-3
+- id: chevron_pain_points
+  file: lotB
+  slide: 1
+  message_pattern: pain points cluster along the {process}
+  visual_vectors:
+  - one icon per stage above a full-width chevron band
+  - text groups below may span several stages; dashed lines separate the groups
+  - each pain point opens with a bold coloured category, then the description
+  details:
+  - white separators between chevrons
+  - icons in thin outline circles
+  slots:
+    stages: 5-8
+    groups: 3-6
+    pains_per_group: 1-3
+- id: two_lanes_before_after
+  file: lotB
+  slide: 2
+  bank_ref: bank/sources/bcg-wholesale-credit-2026.yaml#ex1_two_lanes_before_after
+  message_pattern: today {pain}, with {change} {benefit}
+  slots:
+    current_steps: 5-7
+    target_steps: 3-5
+    kpis: 2-3
+- id: layers_shared_foundation
+  file: lotB
+  slide: 3
+  bank_ref: bank/sources/bcg-wholesale-credit-2026.yaml#ex3_layers_shared_foundation
+  message_pattern: many {X}, shared {Y}, one {Z}
+  slots:
+    stages: 4-7
+    solutions_per_stage: 1-3
+    layers: 2
+- id: forces_squeeze_solution
+  file: lotB
+  slide: 4
+  message_pattern: '{three forces} create a {squeeze} that {two levers} resolve together'
+  visual_vectors:
+  - forces on top in the lighter header colour, levers below in the darker one; colour separates problem from answer
+  - connectors with junction dots converge on the squeeze
+  - a double frame around the squeeze marks the central tension
+  - the solution pill bridges the two levers
+  details:
+  - icon in the header of each card
+  - white body with a coloured outline
+  - rounded headers
+  slots:
+    forces: 2-4
+    squeeze: 1 (title + one sentence)
+    levers: 2
+- id: evidence_ladder_stats
+  file: lotC
+  slide: 1
+  message_pattern: '{structural change} is reshaping {decisions}'
+  visual_vectors:
+  - three stacked panels whose header darkens from finding to shift to gap; each header is a full-sentence message
+  - large values next to filled icon discs; one value per claim
+  - a range rule with the value centred on it shows a share that covers several items
+  - the last panel holds one giant value and one sentence - the gap the reader must act on
+  details:
+  - vertical dividers between stats
+  - pale lead-in band under the second header
+  - footnote marker on a value
+  slots:
+    findings: 3
+    consequences: 3-4
+    rules: 1-2
+    gap: 1
+- id: columns_multiplier_arrows
+  file: lotC
+  slide: 2
+  message_pattern: '{capability} grows {multiple} every {period}'
+  visual_vectors:
+  - columns drawn as shapes with rounded tops, gaps of about 12% of the bar width, value labels on selected bars only
+  - filled curved arrows that taper from a thin tail to a flared head carry the multiplier per period
+  - period brackets under the axis with a pill label
+  details:
+  - unit label above the axis instead of a subtitle
+  - axis line only
+  - no gridlines
+  slots:
+    points: 12-30
+    labelled_points: 6-10
+    periods: 2-3
+    multipliers: 1-2
+- id: journey_cards_two_rows
+  file: lotC
+  slide: 3
+  message_pattern: '{target journey}: {technology} and {people} combine at every step'
+  visual_vectors:
+  - numbered pill headers on a running line, two rows of five; arrows enter and leave each row
+  - pale card under each header with an illustration area and two bullets with a bold accent phrase
+  - a two-part badge at the bottom names the agent that acts (AI | name)
+  - the last step header is the darkest - the end state
+  - a negative-colour callout pinned on the line marks an exception path
+  slots:
+    steps: 8-10
+    bullets_per_step: 1-3
+    badges: 0-10
+    exceptions: 0-2
+- id: swimlane_humans_agents
+  file: lotC
+  slide: 4
+  message_pattern: '{agents} run the {process} and escalate to people {when it matters}'
+  visual_vectors:
+  - rotated side bands name the lanes (who does it, process); a timeline arrow runs on top
+  - humans lane with actor icons, agents lane with AI discs and outlined name pills, process lane with numbered boxes
+  - negative-colour escalation bars span the steps they cover, with up arrows from the agent tasks
+  - arrows between AI discs show hand-offs; the last process box is the darkest
+  details:
+  - dashed line across the humans lane
+  - tool badge
+  - legend row with the four symbols
+  slots:
+    steps: 8-12
+    agents: 4-10
+    escalations: 1-3
+- id: roadmap_deep_dive_keys
+  file: lotD
+  slide: 1
+  message_pattern: '{acceleration roadmap} for {use cases}: {an example}'
+  visual_vectors:
+  - month chevrons on top, the current months filled darker
+  - pale workstream bars under the months, the open-ended one ends in a point
+  - a curved arrow drops into a deep-dive panel with one lane of phase chevrons per segment
+  - parallel phases stack inside a lane; curved arrows mark iteration loops
+  - lettered discs placed on the plan are explained in a key-callouts row at the bottom
+  details:
+  - reuse badges in a distinct colour
+  - segment lanes in two tints
+  slots:
+    months: 12-18
+    workstreams: 1-3
+    segments: 2
+    phases_per_segment: 4-6
+    callouts: 4-6
+- id: small_multiple_bridges
+  file: lotD
+  slide: 2
+  message_pattern: '{innovation} lets {institutions} extend {the perimeter of their business}'
+  visual_vectors:
+  - one header card with an icon per segment, then the same bridge repeated for comparison
+  - grey totals, a pale negative block for erosion, the new levers stacked in accent shades
+  - bars drawn as shapes; dashed connectors join the tops; white axis breaks cut the tall start bars
+  - the last segment can drop the bridge and keep two totals when the levers are unknown
+  details:
+  - axis-break marks on tall start bars
+  - legend under each chart
+  - measure label in capitals
+  - thin separators between panels
+  slots:
+    segments: 2-3
+    levers: 2-4
+- id: spotlight_line_drivers
+  file: lotD
+  slide: 3
+  message_pattern: '{lever} led to a {multiple} of {metric} for {actor}'
+  visual_vectors:
+  - a tinted spotlight panel with a large icon, a spotlight label and a two-sentence intro
+  - line chart with labels on every point; a bracket over the chart carries the multiple in a pill and points at the last value
+  - a darker drivers panel with a triangular notch pointing at the chart - the drivers explain the curve
+  - each driver is a bold claim with proof points below
+  slots:
+    points: 6-12
+    drivers: 2-4
+    proofs_per_driver: 1-2
+- id: hub_two_sides
+  file: lotD
+  slide: 4
+  message_pattern: '{platform} gives {actors} a role in {ecosystem}'
+  visual_vectors:
+  - a pale central hub with the platform name and one key fact
+  - arcs around the hub send arrows outward to the actors of each side
+  - device mock-ups in the corners show the apps each side uses
+  - services offered sit under the hub
+  slots:
+    sides: 2
+    actors_per_side: 2-3
+    apps: 2-4
+    services: 1-3
+- id: operating_model_heatmap
+  file: lotE
+  slide: 1
+  message_pattern: in an {operating model}, {AI} executes most tasks while {people} focus on {judgment}
+  visual_vectors:
+  - header chevrons carry the stage and its capacity gain
+  - each cell takes one of three colours, one per level of automation; colour is the data
+  - a support band below runs across all stages
+  - legend with level name and one line of definition
+  slots:
+    stages: 5-8
+    activities_per_stage: 3-5
+    levels: 3
+- id: four_overlapping_dimensions
+  file: lotE
+  slide: 2
+  message_pattern: '{method} is essential to assess {quality} across {factors}'
+  visual_vectors:
+  - four translucent circles in a 2x2, darkest to palest
+  - 'the top lens is the darkest spot: the overlap matters'
+  - title of each dimension 1.4x its metrics
+  slots:
+    dimensions: 4
+    metrics_per_dimension: 2-4
+- id: before_after_same_endpoints
+  file: lotE
+  slide: 3
+  message_pattern: '{technology} can substantially reduce {effort} in {process}'
+  visual_vectors:
+  - 'same entry and exit nodes aligned in both flows: the change sits in the middle'
+  - dark boxes are automated checks, pale boxes manual reviews; their count encodes effort
+  - the target groups inputs and outputs as tiles inside one container, then one final review
+  slots:
+    current_steps: 4-6 per track
+    tiles: 4-6
+- id: maturity_curve_with_crowd
+  file: lotE
+  slide: 4
+  message_pattern: '{actors} lag in {scaling capability}'
+  visual_vectors:
+  - a convex curve, stages at rising heights, discs darkening with maturity
+  - share in brackets under each stage name
+  - player-type tags below in the stage colour; stacked tags show the crowd
+  slots:
+    stages: 4
+    criteria_per_stage: 2-4
+    tags_per_stage: 1-3
+- id: process_container_to_impact
+  file: lotF
+  slide: 1
+  message_pattern: '{automating process} cuts {time} and {effort}'
+  visual_vectors:
+  - 'a chevron-shaped container points at the impact column: the shape states causality'
+  - architecture band on top, steps named by one verb, dashed links with chevrons
+  - KPIs in dark discs, value inside, label below
+  slots:
+    steps: 3
+    kpis: 2
+- id: value_migration_bubbles
+  file: lotF
+  slide: 2
+  message_pattern: '{value migration} to {focused models} is set to accelerate'
+  visual_vectors:
+  - a quarter disc is the incumbent pool; bubbles sized by value escape along its edge
+  - light curved arrows show the migration
+  - gradient on bubbles gives volume
+  slots:
+    players: 4-7
+- id: radial_ranges
+  file: lotF
+  slide: 3
+  message_pattern: '{measure} of {selected top performers} by {segment}'
+  visual_vectors:
+  - concentric ring segments, longer arc = higher value, darker = higher
+  - leader lines to labels on the right; value range bold above the segment name
+  - a pale track shows the full scale
+  slots:
+    segments: 4-7
+- id: from_to_shifts
+  file: lotF
+  slide: 4
+  message_pattern: how is {new approach} different from {traditional approach}?
+  visual_vectors:
+  - large light numerals on the left
+  - grey from-block, coloured to-block cut by a notch that points forward
+  - to-blocks darken by importance; bold lead phrase in each cell
+  slots:
+    shifts: 4-7
+- id: staged_model_tapering_band
+  file: lotG
+  slide: 1
+  message_pattern: '{end state}: {approach} embraced to its full potential'
+  visual_vectors:
+  - numbered stages over a grey header band
+  - a tapering pale band carries the actions and points at the end state
+  - one icon and one bold lever per column
+  slots:
+    stages: 4
+    levers: 4-6
+- id: maturity_curve_with_levers
+  file: lotG
+  slide: 2
+  message_pattern: '{capability} has evolved beyond {first purpose} into {current form}'
+  visual_vectors:
+  - phase bands on the left, curve with dated points in a shaded panel
+  - levers listed on the right, one row per phase, with a bold claim and proof points
+  slots:
+    phases: 3-4
+    levers: 3-5
+- id: promise_to_capability_funnel
+  file: lotG
+  slide: 3
+  message_pattern: '{successful outcome} starts with {approach} that leverages {capability}'
+  visual_vectors:
+  - titles chain with ellipses (promise… …requires)
+  - inverted funnel, darkest on top, edges in one continuous slope
+  slots:
+    promises: 3-5
+    capabilities: 3-5
+- id: architecture_columns
+  file: lotG
+  slide: 4
+  message_pattern: '{architecture} to enable {capability} across every {touchpoint}'
+  visual_vectors:
+  - one grey column per layer with an icon header
+  - rounded grey boxes, white boxes for inner components, thin grey connectors
+  - dashed loop to a measurement bar; principles of the operating model in a row
+  slots:
+    layers: 4
+    channels: 5-8
+    principles: 4
+- id: paired_bars_chain
+  file: lotH
+  slide: 1
+  message_pattern: '{group A} trades at a premium over {group B} because of {driver}'
+  visual_vectors:
+  - 'headers chain with ellipses: claim… …despite… …because'
+  - a bracket arrow carries the multiple between the two bars
+  - the counter-argument panel uses the dark neutral colour
+  slots:
+    panels: 3
+    bars_per_panel: 2
+- id: technology_waves_steps
+  file: lotH
+  slide: 2
+  message_pattern: '{technology} will enable a step change in {process} with {mechanism}'
+  visual_vectors:
+  - step arrows climb from one wave to the next
+  - a mini-diagram per wave; the latest wave has a loop inset
+  - 'bottom row: what each wave leverages and does'
+  slots:
+    waves: 4-6
+- id: roof_and_range_bars
+  file: lotH
+  slide: 3
+  message_pattern: '{leading institutions} are setting big ambitions for {change}'
+  visual_vectors:
+  - a roof with a progress ring for the top family
+  - range bars on a grey track, one colour per family
+  - description beside each bar on white
+  slots:
+    families: 4-6
+- id: iceberg_layers
+  file: lotH
+  slide: 4
+  message_pattern: '{scaling} is the hardest challenge'
+  visual_vectors:
+  - a faceted iceberg cut by a single waterline
+  - large share figures on the left, coloured like their layer
+  - double arrows span each layer; capabilities listed per layer
+  slots:
+    layers: 3
+- id: criteria_matrix_list
+  file: lotI
+  slide: 1
+  message_pattern: '{actor} embraces a {selective approach} to ensure {boldness and focus}'
+  visual_vectors:
+  - criteria stacked as pale cards with a down arrow
+  - value x realisability matrix, the selected quadrant largest and darkest
+  - numbered list of selected items next to the matrix
+  slots:
+    criteria: 3-5
+    quadrants: 5
+    items: 6-12
+- id: connected_networks
+  file: lotI
+  slide: 2
+  message_pattern: should {actors} play a bigger role in {ecosystem}?
+  visual_vectors:
+  - linked networks in the accent, others pale
+  - the exchange is the largest disc
+  - a short bucket of shifts beside the exchange
+  slots:
+    networks: 4-7
+    shifts: 2-4
+- id: data_table_dashed
+  file: lotI
+  slide: 3
+  message_pattern: '{demand} is coming from a variety of {sectors}'
+  visual_vectors:
+  - coloured header cells with rounded tops
+  - category names in the accent, growth column bold
+  - dashed row rules, no vertical rules
+  slots:
+    rows: 5-12
+    columns: 4
+- id: wheel_how_what_why
+  file: lotI
+  slide: 4
+  message_pattern: '{effective action} requires a {cross-sector, systems-based} approach'
+  visual_vectors:
+  - outer arcs are the pillars, an inner ring holds the areas, the core states why
+  - callouts How / What / Why point at each ring
+  - numbered pillar descriptions on the right
+  slots:
+    pillars: 3-4
+    areas: 8-12
+- id: units_arched_cards
+  file: lotJ
+  slide: 1
+  message_pattern: each {unit} can capture the {benefits}
+  visual_vectors:
+  - one card per unit with an arched cap in the unit colour
+  - coverage row of discs on or off at the bottom
+  - a gradient bar beneath orders units by risk
+  slots:
+    units: 4-6
+    levers_per_unit: 2-4
+    coverage_items: 5
+- id: architecture_progressive_fill
+  file: lotJ
+  slide: 2
+  message_pattern: a {four-step} approach to building the {platform}
+  visual_vectors:
+  - the same schematic repeated per step
+  - filled boxes show what exists at each step
+  - step headers on dashed arrows fading from dark to pale
+  slots:
+    steps: 4
+- id: maturity_steps_cards
+  file: lotJ
+  slide: 3
+  message_pattern: '{maturity} progresses from {first stage} to {last stage}'
+  visual_vectors:
+  - cards rise left to right, each with an icon in a ring on its top edge
+  - short accent rule under each title
+  - a dark wedge underneath names the axis
+  slots:
+    stages: 3-5
+- id: mode_comparison_by_step
+  file: lotJ
+  slide: 4
+  message_pattern: '{technology} reshapes {activity} from {old mode} to {new mode}'
+  visual_vectors:
+  - dark step chevrons on top, a pale chevron for the allocation column
+  - two rows labelled by mode in warm tones
+  - a divider with a down-chevron disc between modes; mini bar charts on the right
+  slots:
+    steps: 4-6
+    modes: 2
+- id: flywheel_two_families
+  file: lotJ
+  slide: 5
+  message_pattern: '{momentum}: we are starting to see the {flywheel} spin'
+  visual_vectors:
+  - two half rings in the two family colours around a pale core, dashed outer circle
+  - bracket connectors gather each family's cards
+  - status badges on card headers, explained in a legend
+  slots:
+    left_cards: 2-4
+    right_cards: 3-6
+    statuses: 3
