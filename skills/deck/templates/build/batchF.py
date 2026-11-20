@@ -136,7 +136,8 @@ def d24():
              ("grey600", "white"), ("grey500", "white")]
     for i, (fill, tc) in enumerate(fills):
         y = 185 + i * 125
-        text(s, X(18), Y(y + 10), W(60), H(92), str(i + 1), size=F(62), color="grey500", align="c", anchor="m", margin=0)
+        text(s, X(18), Y(y + 10), W(60), H(92), str(i + 1), size=F(62), color="grey500", align="c", anchor="m", margin=0,
+             name=f"row_{i+1}_number")
         rrect(s, X(83), Y(y), W(490), H(112), 0.08, fill="grey100", name=f"from_{i+1}")
         text(s, X(108), Y(y), W(420), H(112), [[("{Old practice} ", {"bold": True}), ("{and its limit}", {})]],
              size=F(16.5), color="text", anchor="m", margin=0, name=f"from_{i+1}_text")

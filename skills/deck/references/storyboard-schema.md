@@ -49,6 +49,7 @@ A **block** is `{"title": "idea of the block", "points": ["detail", "detail"], "
 
 | `market_map` | `items`: `[{label, value, group}]`, `unit`, `blocks` (optional), `map_share` (default 0.68) | Area proportional to value, one colour per group (6 groups at most); labels hide in boxes too small |
 | `band_matrix` | `column_bands`: `[{label, columns: []}]`; `rows`: `[{label, group, accent, cells: []}]`; `band_header`, `row_header`, `legend`, `first_column_width` | Cells: text, "●"/"○", "n.d.", `"[0]"`..`"[4]"` Harvey balls, or `{"text": "12%", "calc": true}` printed in blue. Rows with a new `group` get a group header row. Up to about 18 rows |
+| `template` | `template` (id from `templates/catalog.yaml`), `slots` (`{shape name: text}`), `drop` (shape names to remove), `bars` (`[{shapes, values, axis, labels}]`) | Slot text: a string, a list of paragraphs, or runs `{text, bold, italic, color}`; each paragraph keeps the template's size and colour. The title and source fill the template's own `title` and `source` shapes |
 | `fact_sheet` | `facts`: `[{label, value}]` (value may be `{"text", "calc"}`), `blocks` (optional) | One card per unit of a benchmark |
 
 Cells or values marked `calc` are figures the team computed from sourced data; they print in blue with a legend line.

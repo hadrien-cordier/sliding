@@ -37,7 +37,7 @@ SCQA = re.compile(r"\b(situation|complication|question|resolution)\s*:", re.IGNO
 DIGIT = re.compile(r"\d")
 DASHES = re.compile(r"[—–]")
 SUBTITLE_KEYS = {"subtitle", "sub_title", "kicker", "tagline", "overline"}
-SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end", "layout_rationale"}
+SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end", "layout_rationale", "template", "drop", "bars"}
 
 
 def texts(obj, path=""):
@@ -68,6 +68,8 @@ def main(fp):
     first_of_run = set()
     for i, s in enumerate(slides, start=1):
         lay = s.get("layout")
+        if lay == "template":
+            lay = f"template:{s.get('template')}"
         run = run + 1 if lay == prev else 1
         if run == 1:
             first_of_run.add(i)
@@ -83,6 +85,23 @@ def main(fp):
         for f in LAYOUTS[lay][0]:
             if f not in s:
                 err.append(f"{tag} ({lay}): missing required field '{f}'")
+        if lay == "template":
+            try:
+                from fill_template import slot_names
+                names = slot_names(s.get("template", ""))
+                for k in list(s.get("slots", {})) + list(s.get("drop", [])):
+                    if k not in names:
+                        err.append(f"{tag}: template '{s.get('template')}' has no slot '{k}'")
+                from fill_template import catalog
+                ds = catalog()[s["template"]].get("data_shapes")
+                if ds == "bars" and not s.get("bars"):
+                    err.append(f"{tag}: template '{s['template']}' draws figures as shapes; pass 'bars' with the values,"
+                               " never keep the template's proportions")
+                if ds == "redraw":
+                    warn.append(f"{tag}: template '{s['template']}' encodes figures in curves or areas; redraw them"
+                                " from the data or mark the exhibit as illustrative")
+            except KeyError as e:
+                err.append(f"{tag}: {e}")
         for k in SUBTITLE_KEYS & set(s):
             err.append(f"{tag}: '{k}' field found; slides carry no subtitle")
         t = s.get("title", "")

@@ -51,7 +51,11 @@ What keeps the deck on target:
 Argument: `executive_summary`, `columns`, `rows`, `bullets`, `progression`, `chevrons`, `matrix` 2x2, `table` with Harvey balls, `chart_text`, `big_number`, `waterfall`, `funnel`, `before_after`, `timeline`, `gantt`, `tree`, `quotes`, `recommendation`, `cover`.
 Benchmark: `market_map` (treemap sized by value, one colour per group), `band_matrix` (units × banded attributes, ●/○, "n.d.", computed values in blue), `fact_sheet` (one card per unit).
 
-Demos: `examples/demo-layouts/` and `examples/demo-benchmark/`.
+## Forty-one exhibit templates
+
+`skills/deck/templates/` holds 41 exhibit templates rebuilt from reference exhibits with measured proportions, as named native shapes. The visual director matches a slide's logical relation against the catalog index, then fills the template by shape name (`layout: "template"`); shapes that encode figures are resized from the data. See `skills/deck/templates/README.md`.
+
+Demos: `examples/demo-layouts/`, `examples/demo-benchmark/` and `examples/demo-templates/`.
 
 ## Install
 
