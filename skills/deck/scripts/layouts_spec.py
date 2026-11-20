@@ -27,6 +27,7 @@ LAYOUTS = {
     "market_map": (["items"], "Market shares as areas, one colour per group (treemap)"),
     "band_matrix": (["column_bands", "rows"], "Units x attributes grid with banded categories (benchmark)"),
     "fact_sheet": (["facts"], "Reference card for one unit of a benchmark: key facts and their reading"),
+    "template": (["template", "slots"], "An exhibit template from templates/catalog.yaml, filled by slot name"),
 }
 
 # Fields whose items carry a "title" that must state an idea (logical writing).

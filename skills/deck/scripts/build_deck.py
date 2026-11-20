@@ -929,7 +929,7 @@ def l_fact_sheet(slide, s):
         side_blocks(slide, blocks, CX + fw + 0.3, CW - fw - 0.3)
 
 
-BUILDERS = {k: globals()[f"l_{k}"] for k in LAYOUTS}
+BUILDERS = {k: globals()[f"l_{k}"] for k in LAYOUTS if k != "template"}
 
 
 # ---------------------------------------------------------------- main
@@ -945,6 +945,12 @@ def build(story, out):
     for i, s in enumerate(story["slides"], start=1):
         _CTX["slide"] = i
         lay = s.get("layout")
+        if lay == "template":
+            from fill_template import add_template_slide
+            slide = add_template_slide(prs, s, warn=warn)
+            if s.get("notes"):
+                slide.notes_slide.notes_text_frame.text = s["notes"]
+            continue
         if lay not in BUILDERS:
             raise SystemExit(f"slide {i}: unknown layout '{lay}' (see layouts_spec.py)")
         missing = [f for f in LAYOUTS[lay][0] if f not in s]

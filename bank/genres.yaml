@@ -1,0 +1,87 @@
+# Document genres. The genre fixes the reader's question, the evidence that convinces and where the document must land.
+# default_arc is a starting point. Each validated example that argues differently adds a variant;
+# at generation, pick the variant closest to the material, or the default arc if none fits.
+
+market_study:
+  reader_question: Where is the value, and who captures it?
+  certainty: assertive
+  evidence: sourced and triangulated market data
+  lands_on: implications for the reader's positioning
+  default_arc: [size, segments, dynamics, players, implications]
+  typical_exhibits: [market_map, ranked_bars, growth_curve]
+  variants: []
+
+market_evolution:
+  reader_question: What is changing, and why now?
+  certainty: assertive on signals, conditional on scenarios
+  evidence: time series, dated signals
+  lands_on: impact by type of player
+  default_arc: [disruption, drivers, signals, scenarios, impact_by_player]
+  typical_exhibits: [line_chart, timeline, before_after]
+  variants: []
+
+technology_transformation:
+  reader_question: What does this change for me, and how do I do it?
+  certainty: assertive, with indicative ranges
+  evidence: project experience, cases, indicative ranges
+  lands_on: conditions for success
+  default_arc: [current_constraint, enabled_shift, value_by_stakeholder, solution_architecture, conditions]
+  typical_exhibits: [process_before_after, layered_architecture, grouped_bars_by_segment]
+  variants:
+    - id: double_funnel_with_value_pivot
+      logic: problem funnel (reframe, zoom in), value bucket by stakeholder at the centre, solution funnel (reframe, zoom in), then conditions
+      source: bcg-wholesale-credit-2026
+      status: pending
+    - id: layer_by_layer_walkthrough
+      logic: promise and adoption brakes, then one descent through the layers (customer-facing, back office mechanisms), then back up to the organisation, closed by a recap bucket that turns each section into an action
+      source: bcg-openai-retail-agentic-2026
+      status: validated
+    - id: cost_of_delay_proof_first_steps
+      logic: diagnose the adoption gap and its cost, prove with quantified cases (first as successes, then as outliers), close with short imperative first steps
+      source: bcg-genai-compliance-2025
+      status: pending
+
+risks_opportunities:
+  reader_question: What should I seize, and what should I watch?
+  certainty: assertive on exposure, conditional on outcomes
+  evidence: probability times impact
+  lands_on: prioritisation and mitigation
+  default_arc: [frame, opportunities, risks, prioritisation, mitigation]
+  typical_exhibits: [matrix_2x2, heatmap, table]
+  variants: []
+
+go_to_market:
+  reader_question: How do we enter and win?
+  certainty: assertive on choices, explicit on conditions
+  evidence: prioritised segments, anchor accounts
+  lands_on: deployment sequence and gates
+  default_arc: [target, value_proposition, channels_partners, sequence, gates]
+  typical_exhibits: [gated_phases, prioritisation_matrix, funnel]
+  variants: []
+
+business_plan:
+  reader_question: How much, when, under which conditions?
+  certainty: explicit assumptions, then calculated figures
+  evidence: stated assumptions and figures calculated in code
+  lands_on: investment decision and funding need
+  default_arc: [opportunity, business_model, assumptions, projections, sensitivities, funding]
+  typical_exhibits: [waterfall, revenue_curve, assumptions_table]
+  variants: []
+
+hypotheses:
+  reader_question: What do we believe, and how do we test it?
+  certainty: openly conditional
+  evidence: test indicators, no conclusion yet
+  lands_on: next steps and tests
+  default_arc: [question, mece_hypotheses, test_per_hypothesis, next_steps]
+  typical_exhibits: [issue_tree, hypothesis_test_table]
+  variants: []
+
+benchmark:
+  reader_question: Who does what, and where do I stand?
+  certainty: factual
+  evidence: comparable facts per unit
+  lands_on: gaps and implications
+  default_arc: [grid, reading_by_criterion, gaps, implications]
+  typical_exhibits: [band_matrix, fact_sheet]
+  variants: []

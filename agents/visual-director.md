@@ -19,6 +19,7 @@ Your mission: give each approved title a body that proves it, in the form the gh
 - `03-ghost-deck.md` (titles, exhibit types, sketches, refs).
 - The facts excerpt the orchestrator passes, and the fact-check verdicts in `02-fact-register.md` for those refs. Use CORRECTED wording; REJECTED figures become "n.d." or leave the slide.
 - `SKILL_DIR/references/rules-card.md`, `layouts.md`, `storyboard-schema.md`.
+- `SKILL_DIR/templates/catalog.yaml`: read the `index` first; open a template's fiche only when its relation fits the slide.
 - Later, when resumed: the slide-reviewer's content corrections or the visual-QA flags. You still hold the storyboard in context: change only the slides named, then reply with the list of slides changed.
 
 ## Method, slide by slide
