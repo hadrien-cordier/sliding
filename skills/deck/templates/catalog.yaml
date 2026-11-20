@@ -3,6 +3,9 @@
 # proportions of its reference; shapes are named after their slots; colours come from theme.json by role.
 # data_shapes: bars = shape sizes encode figures; pass `bars` so the filler resizes them from the data.
 #              redraw = curves, arcs or bubbles encode figures; redraw them from the data before use.
+# repeat: groups of shapes that form one row, column or item. Ask for any count with `repeat: {group: n}`;
+#         the filler adds or removes instances and re-spaces them inside the template's area.
+
 index:
 - id: process_variant_map
   relation: process_with_variants
@@ -22,6 +25,7 @@ index:
 - id: two_lanes_before_after
   relation: before_after_process
   use_when: current sequential flow vs target continuous flow, with KPIs
+  extensible: current_step (up to 8)
 - id: layers_shared_foundation
   relation: layers_convergence
   use_when: many solutions on lifecycle stages sharing capabilities and a foundation
@@ -76,15 +80,18 @@ index:
 - id: from_to_shifts
   relation: from_to
   use_when: numbered shifts from a current practice to a target practice
+  extensible: row (up to 10)
 - id: staged_model_tapering_band
   relation: staged_model_to_end_state
   use_when: stages of a model whose effect widens towards the end state
 - id: maturity_curve_with_levers
   relation: evolution_with_levers
   use_when: phases on a growth curve, then the key levers of each phase
+  extensible: lever (up to 6)
 - id: promise_to_capability_funnel
   relation: promise_to_requirements
   use_when: promises to customers that require a funnel of capabilities
+  extensible: promise (up to 6), capability (up to 6)
 - id: architecture_columns
   relation: architecture_layers
   use_when: an architecture from sources to channels, with the operating model beneath
@@ -97,18 +104,21 @@ index:
 - id: roof_and_range_bars
   relation: ranges_by_family
   use_when: ambition ranges by family, with a highlighted top family
+  extensible: family (up to 8)
 - id: iceberg_layers
   relation: visible_vs_hidden_effort
   use_when: shares of effort where the largest part is hidden
 - id: criteria_matrix_list
   relation: selection_criteria_and_portfolio
   use_when: criteria for selection, the selection matrix and the selected list
+  extensible: criterion (up to 6), opportunity (up to 14)
 - id: connected_networks
   relation: networks_and_exchange
   use_when: several hub-and-spoke networks linked through one exchange
 - id: data_table_dashed
   relation: table_of_segments
   use_when: a data table by category with a highlighted growth column
+  extensible: row (up to 14)
 - id: wheel_how_what_why
   relation: systems_wheel
   use_when: pillars around areas around a core purpose, read as how, what, why
@@ -411,6 +421,12 @@ templates:
   - kpi_2
   - kpi_3
   - source
+  repeat:
+  - group: current_step
+    shapes:
+    - current_step_{k}
+    axis: horizontal
+    max: 8
 - id: layers_shared_foundation
   file: lotB
   slide: 3
@@ -1101,6 +1117,16 @@ templates:
   - from_6_text
   - to_6_text
   - source
+  repeat:
+  - group: row
+    shapes:
+    - row_{k}_number
+    - from_{k}
+    - from_{k}_text
+    - to_{k}
+    - to_{k}_text
+    axis: vertical
+    max: 10
 - id: staged_model_tapering_band
   file: lotG
   slide: 1
@@ -1160,6 +1186,15 @@ templates:
   - x_axis_start_1
   - x_axis_end_1
   - source
+  repeat:
+  - group: lever
+    shapes:
+    - lever_{k}_rule
+    - lever_{k}_icon
+    - lever_{k}
+    - lever_{k}_text
+    axis: vertical
+    max: 6
 - id: promise_to_capability_funnel
   file: lotG
   slide: 3
@@ -1183,6 +1218,19 @@ templates:
   - capability_4_text
   - promise_4
   - source
+  repeat:
+  - group: promise
+    shapes:
+    - promise_{k}_icon
+    - promise_{k}
+    axis: vertical
+    max: 6
+  - group: capability
+    shapes:
+    - capability_{k}
+    - capability_{k}_text
+    axis: vertical
+    max: 6
 - id: architecture_columns
   file: lotG
   slide: 4
@@ -1339,6 +1387,15 @@ templates:
   - family_5_text
   - source
   data_shapes: bars
+  repeat:
+  - group: family
+    shapes:
+    - family_{k}_track
+    - family_{k}_bar
+    - family_{k}_range
+    - family_{k}_text
+    axis: vertical
+    max: 8
 - id: iceberg_layers
   file: lotH
   slide: 4
@@ -1404,6 +1461,18 @@ templates:
   - opportunity_10
   - axis_x_1
   - source
+  repeat:
+  - group: criterion
+    shapes:
+    - criterion_{k}
+    axis: vertical
+    max: 6
+  - group: opportunity
+    shapes:
+    - opportunity_{k}_number
+    - opportunity_{k}
+    axis: vertical
+    max: 14
 - id: connected_networks
   file: lotI
   slide: 2
@@ -1475,6 +1544,16 @@ templates:
   - cell_9_3
   - cell_9_4
   - source
+  repeat:
+  - group: row
+    shapes:
+    - cell_{k}_1
+    - cell_{k}_2
+    - cell_{k}_3
+    - cell_{k}_4
+    - rule_{k}
+    axis: vertical
+    max: 14
 - id: wheel_how_what_why
   file: lotI
   slide: 4

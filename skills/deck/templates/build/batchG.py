@@ -57,7 +57,7 @@ def d26():
     rows = [171, 291, 411, 532, 650]
     for k in range(4):
         y0, y1 = rows[k], rows[k + 1]
-        soft_line(s, X(440), Y(y0), X(1062), Y(y0), "grey200", lw=1)
+        soft_line(s, X(440), Y(y0), X(1062), Y(y0), "grey200", lw=1, name=f"lever_{k+1}_rule")
         icon(s, X(472), Y((y0 + y1) / 2), L(52), "accent700", fill="accent300", name=f"lever_{k+1}_icon")
         text(s, X(521), Y(y0 + 10), L(175), L(y1 - y0 - 20), [[("{Lever}", {"bold": True})]], size=F(18),
              color="accent700", anchor="m", margin=0, name=f"lever_{k+1}")

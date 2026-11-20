@@ -32,7 +32,7 @@ def d33():
     for k in range(10):
         y = 160 + k * 27.6
         text(s, X(602), Y(y), L(22), L(20), [[(str(k + 1), {"bold": True})]], size=F(12.5), color="accent700",
-             align="r", margin=0)
+             align="r", margin=0, name=f"opportunity_{k+1}_number")
         text(s, X(630), Y(y), L(188), L(20), "{Opportunity}", size=F(12.5), color="text", margin=0,
              name=f"opportunity_{k+1}")
 
@@ -100,7 +100,7 @@ def d35():
             col = "accent500" if k == 1 else ("text" if k == 4 else "grey600")
             text(s, X(x + (8 if k == 1 else 0)), Y(y0), W(w - 8), H(60), [[("{Category}" if k == 1 else "{value}", st)]],
                  size=F(17.5), color=col, align=al, anchor="m", margin=0, name=f"cell_{r+1}_{k}")
-        c = soft_line(s, X(18), Y(y0 + 61), X(1346), Y(y0 + 61), "accent300", lw=1)
+        c = soft_line(s, X(18), Y(y0 + 61), X(1346), Y(y0 + 61), "accent300", lw=1, name=f"rule_{r+1}")
         c.line.dash_style = MSO_LINE_DASH_STYLE.DASH
 
 

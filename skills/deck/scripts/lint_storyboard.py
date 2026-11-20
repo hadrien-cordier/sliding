@@ -37,7 +37,7 @@ SCQA = re.compile(r"\b(situation|complication|question|resolution)\s*:", re.IGNO
 DIGIT = re.compile(r"\d")
 DASHES = re.compile(r"[—–]")
 SUBTITLE_KEYS = {"subtitle", "sub_title", "kicker", "tagline", "overline"}
-SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end", "layout_rationale", "template", "drop", "bars"}
+SKIP_KEYS = {"layout", "accent", "font", "format", "unit", "type", "id", "start", "end", "layout_rationale", "template", "drop", "bars", "repeat"}
 
 
 def texts(obj, path=""):
@@ -88,7 +88,7 @@ def main(fp):
         if lay == "template":
             try:
                 from fill_template import slot_names
-                names = slot_names(s.get("template", ""))
+                names = slot_names(s.get("template", ""), s.get("repeat"))
                 for k in list(s.get("slots", {})) + list(s.get("drop", [])):
                     if k not in names:
                         err.append(f"{tag}: template '{s.get('template')}' has no slot '{k}'")

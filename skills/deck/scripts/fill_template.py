@@ -42,8 +42,85 @@ def template_slide(tid):
     return _CACHE[f].slides[t["slide"] - 1]
 
 
-def slot_names(tid):
-    return {sh.name for sh in template_slide(tid).shapes}
+def _group_count(names, pattern):
+    k = 0
+    while pattern.format(k=k + 1) in names:
+        k += 1
+    return k
+
+
+def slot_names(tid, repeat=None):
+    """Names a storyboard may fill: the template's shapes plus those of instances added by `repeat`."""
+    names = {sh.name for sh in template_slide(tid).shapes}
+    for g in catalog()[tid].get("repeat", []):
+        n = (repeat or {}).get(g["group"], 0)
+        for k in range(1, n + 1):
+            names |= {p.format(k=k) for p in g["shapes"]}
+    return names
+
+
+def apply_repeat(slide, groups, counts, warn=print):
+    """Resize repeatable groups to the requested count inside the template's area.
+    Fewer: extra instances are removed and the others keep their place. More: instances are re-spaced
+    and shrunk along the group's axis; added instances copy the last template instance (its colour role)."""
+    tree = slide.shapes._spTree
+    for g in groups:
+        n = counts.get(g["group"])
+        if n is None:
+            continue
+        if n > g.get("max", 99):
+            warn(f"repeat: {g['group']} capped at {g['max']}")
+            n = g["max"]
+        byname = {sh.name: sh for sh in slide.shapes}
+        N = _group_count(byname, g["shapes"][0])
+        if N == 0:
+            warn(f"repeat: group {g['group']} not found")
+            continue
+        inst = lambda k: [byname[p.format(k=k)] for p in g["shapes"] if p.format(k=k) in byname]
+        vert = g.get("axis", "vertical") == "vertical"
+        pos = (lambda sh: sh.top) if vert else (lambda sh: sh.left)
+        size = (lambda sh: sh.height) if vert else (lambda sh: sh.width)
+        first, last = inst(1), inst(N)
+        start = min(pos(sh) for sh in first)
+        end = max(pos(sh) + size(sh) for sh in last)
+        pitch = (min(pos(sh) for sh in inst(2)) - start) if N > 1 else (end - start)
+        if n <= N:
+            for k in range(n + 1, N + 1):
+                for sh in inst(k):
+                    tree.remove(sh._element)
+            continue
+        f = (end - start) / ((n - 1) * pitch + (end - start - (N - 1) * pitch))
+        geo = [(pos(sh) - start, size(sh)) for sh in first]
+        for k in range(1, n + 1):
+            if k <= N:
+                shapes = inst(k)
+            else:
+                shapes = []
+                for p, src in zip(g["shapes"], inst(N)):
+                    el = copy.deepcopy(src._element)
+                    tree.append(el)
+                    sh = slide.shapes[-1]
+                    sh.name = p.format(k=k)
+                    if sh.has_text_frame and sh.text_frame.text.strip() == str(N):
+                        sh.text_frame.paragraphs[0].runs[0].text = str(k)
+                    shapes.append(sh)
+            for sh, (off, sz) in zip(shapes, geo):
+                new_pos = int(start + (k - 1) * pitch * f + off * f)
+                square = abs(sh.width - sh.height) < 0.05 * max(sh.width, sh.height, 1)
+                if square:   # discs and icons keep their shape: shrink both sides around the centre
+                    cross = (sh.left + sh.width / 2) if vert else (sh.top + sh.height / 2)
+                    d = max(1, int(sz * f))
+                    sh.width = sh.height = d
+                    if vert:
+                        sh.top, sh.left = new_pos, int(cross - d / 2)
+                    else:
+                        sh.left, sh.top = new_pos, int(cross - d / 2)
+                elif vert:
+                    sh.top, sh.height = new_pos, max(1, int(sz * f))
+                else:
+                    sh.left, sh.width = new_pos, max(1, int(sz * f))
+        if f < 0.6:
+            warn(f"repeat: {g['group']} x{n} shrinks items to {int(f * 100)}% of their size; consider splitting the slide")
 
 
 def _copy_shapes(src_slide, dst_slide):
@@ -147,6 +224,8 @@ def add_template_slide(prs, s, warn=print):
     src = template_slide(tid)
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     _copy_shapes(src, slide)
+    if s.get("repeat"):
+        apply_repeat(slide, catalog()[tid].get("repeat", []), s["repeat"], warn)
     values = dict(s.get("slots", {}))
     values.setdefault("title", s.get("title", ""))
     if s.get("source"):

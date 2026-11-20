@@ -1,49 +1,461 @@
 {
-  "meta": {"title": "Template test", "mode": "argument"},
-  "slides": [
-    {"layout": "cover", "title": "Faster credit decisions with agents", "context": "Test deck, illustrative content"},
-    {"layout": "template", "template": "two_lanes_before_after",
-     "title": "Today the file waits for a person, while agents keep it current between requests",
-     "source": "Illustrative example",
-     "layout_rationale": {"relation": "before_after_process", "alternative": "before_after", "why": "two flows compared step by step"},
-     "slots": {
-       "lane_1_label": [[{"text": "TODAY: SEQUENTIAL", "bold": true}]],
-       "backward_flow_1": "File returned for rework", "backward_flow_2": "File returned for rework",
-       "current_step_1": ["Collect", "data"], "current_step_2": ["Spot gaps,", "chase documents"],
-       "current_step_3": ["Reassess", "against criteria"], "current_step_4": ["Draft the", "memo"],
-       "current_step_5": ["Write", "exceptions"], "current_step_6": ["Review and", "approve"],
-       "elapsed_time_to_1": "Elapsed time to a credit decision", "time_unit": [[{"text": "Weeks", "bold": true}]],
-       "lane_2_label": [[{"text": "WITH AGENTS: CONTINUOUS", "bold": true}]],
-       "lane_2_message": [[{"text": "The file stays current, so people focus on judgment", "bold": true}]],
-       "target_step_1": ["Signal", "new filing or alert"], "target_step_2": ["Orchestrator", "plans what runs"],
-       "target_step_3": ["Agents", "work and cite sources"], "target_step_4": ["Human decides", "above the loop"],
-       "value_box": ["Time released", "back to the client"],
-       "kpi_1": ["Shorter", "time to decision"], "kpi_2": ["Capacity", "released for analysts"], "kpi_3": ["Fewer", "reconciliation errors"]}},
-    {"layout": "template", "template": "paired_bars_chain",
-     "title": "Focused players trade at a premium because they generate more fee income",
-     "source": "Illustrative values",
-     "layout_rationale": {"relation": "paired_comparison_chain", "alternative": "chart_text", "why": "three comparisons chain into one argument"},
-     "slots": {"panel_1_title": "Focused players trade higher…", "panel_2_title": "…despite higher cost ratios…",
-               "panel_3_title": "…because they earn more fees",
-               "measure_unit_1": "PRICE TO BOOK", "measure_unit_2": "COST/INCOME (%)", "measure_unit_3": "FEES/ASSETS (%)",
-               "panel_1_multiplier": "2x", "panel_2_multiplier": "+29%", "panel_3_multiplier": "1.7x",
-               "panel_1_value_1": "0.9", "panel_1_value_2": "1.8", "panel_2_value_1": "47.8", "panel_2_value_2": "61.5",
-               "panel_3_value_1": "0.8", "panel_3_value_2": "1.3",
-               "group_1": "Universal", "group_2": "Focused", "group_3": "Universal", "group_4": "Focused",
-               "group_5": "Universal", "group_6": "Focused"},
-     "bars": [{"shapes": ["panel_1_bar_1", "panel_1_bar_2"], "values": [0.9, 1.8], "labels": ["panel_1_value_1", "panel_1_value_2"]},
-              {"shapes": ["panel_2_bar_1", "panel_2_bar_2"], "values": [47.8, 61.5], "labels": ["panel_2_value_1", "panel_2_value_2"]},
-              {"shapes": ["panel_3_bar_1", "panel_3_bar_2"], "values": [0.8, 1.3], "labels": ["panel_3_value_1", "panel_3_value_2"]}]},
-    {"layout": "template", "template": "from_to_shifts",
-     "title": "Front-to-back redesign replaces local fixes with shared capabilities",
-     "layout_rationale": {"relation": "from_to", "alternative": "before_after", "why": "numbered shifts read row by row"},
-     "slots": {"from_1_text": [[{"text": "Lean reengineering ", "bold": true}, {"text": "of current steps"}]],
-               "to_1_text": [[{"text": "Zero-based redesign ", "bold": true}, {"text": "working back from the client"}]],
-               "from_2_text": [[{"text": "Bespoke changes ", "bold": true}, {"text": "per product"}]],
-               "to_2_text": [[{"text": "Common capabilities ", "bold": true}, {"text": "across products and channels"}]],
-               "from_3_text": [[{"text": "Siloed priorities ", "bold": true}, {"text": "set by reporting lines"}]],
-               "to_3_text": [[{"text": "Shared priorities ", "bold": true}, {"text": "managed across the value stream"}]]},
-     "drop": ["row_4_number", "row_5_number", "row_6_number", "from_4", "to_4", "from_4_text", "to_4_text", "from_5", "to_5", "from_5_text", "to_5_text",
-              "from_6", "to_6", "from_6_text", "to_6_text"]}
-  ]
+ "meta": {
+  "title": "Template test",
+  "mode": "argument"
+ },
+ "slides": [
+  {
+   "layout": "cover",
+   "title": "Faster credit decisions with agents",
+   "context": "Test deck, illustrative content"
+  },
+  {
+   "layout": "template",
+   "template": "two_lanes_before_after",
+   "title": "Today the file waits for a person, while agents keep it current between requests",
+   "source": "Illustrative example",
+   "layout_rationale": {
+    "relation": "before_after_process",
+    "alternative": "before_after",
+    "why": "two flows compared step by step"
+   },
+   "slots": {
+    "lane_1_label": [
+     [
+      {
+       "text": "TODAY: SEQUENTIAL",
+       "bold": true
+      }
+     ]
+    ],
+    "backward_flow_1": "File returned for rework",
+    "backward_flow_2": "File returned for rework",
+    "current_step_1": [
+     "Collect",
+     "data"
+    ],
+    "current_step_2": [
+     "Spot gaps,",
+     "chase documents"
+    ],
+    "current_step_3": [
+     "Reassess",
+     "against criteria"
+    ],
+    "current_step_4": [
+     "Draft the",
+     "memo"
+    ],
+    "current_step_5": [
+     "Write",
+     "exceptions"
+    ],
+    "current_step_6": [
+     "Review and",
+     "approve"
+    ],
+    "elapsed_time_to_1": "Elapsed time to a credit decision",
+    "time_unit": [
+     [
+      {
+       "text": "Weeks",
+       "bold": true
+      }
+     ]
+    ],
+    "lane_2_label": [
+     [
+      {
+       "text": "WITH AGENTS: CONTINUOUS",
+       "bold": true
+      }
+     ]
+    ],
+    "lane_2_message": [
+     [
+      {
+       "text": "The file stays current, so people focus on judgment",
+       "bold": true
+      }
+     ]
+    ],
+    "target_step_1": [
+     "Signal",
+     "new filing or alert"
+    ],
+    "target_step_2": [
+     "Orchestrator",
+     "plans what runs"
+    ],
+    "target_step_3": [
+     "Agents",
+     "work and cite sources"
+    ],
+    "target_step_4": [
+     "Human decides",
+     "above the loop"
+    ],
+    "value_box": [
+     "Time released",
+     "back to the client"
+    ],
+    "kpi_1": [
+     "Shorter",
+     "time to decision"
+    ],
+    "kpi_2": [
+     "Capacity",
+     "released for analysts"
+    ],
+    "kpi_3": [
+     "Fewer",
+     "reconciliation errors"
+    ]
+   }
+  },
+  {
+   "layout": "template",
+   "template": "paired_bars_chain",
+   "title": "Focused players trade at a premium because they generate more fee income",
+   "source": "Illustrative values",
+   "layout_rationale": {
+    "relation": "paired_comparison_chain",
+    "alternative": "chart_text",
+    "why": "three comparisons chain into one argument"
+   },
+   "slots": {
+    "panel_1_title": "Focused players trade higher\u2026",
+    "panel_2_title": "\u2026despite higher cost ratios\u2026",
+    "panel_3_title": "\u2026because they earn more fees",
+    "measure_unit_1": "PRICE TO BOOK",
+    "measure_unit_2": "COST/INCOME (%)",
+    "measure_unit_3": "FEES/ASSETS (%)",
+    "panel_1_multiplier": "2x",
+    "panel_2_multiplier": "+29%",
+    "panel_3_multiplier": "1.7x",
+    "panel_1_value_1": "0.9",
+    "panel_1_value_2": "1.8",
+    "panel_2_value_1": "47.8",
+    "panel_2_value_2": "61.5",
+    "panel_3_value_1": "0.8",
+    "panel_3_value_2": "1.3",
+    "group_1": "Universal",
+    "group_2": "Focused",
+    "group_3": "Universal",
+    "group_4": "Focused",
+    "group_5": "Universal",
+    "group_6": "Focused"
+   },
+   "bars": [
+    {
+     "shapes": [
+      "panel_1_bar_1",
+      "panel_1_bar_2"
+     ],
+     "values": [
+      0.9,
+      1.8
+     ],
+     "labels": [
+      "panel_1_value_1",
+      "panel_1_value_2"
+     ]
+    },
+    {
+     "shapes": [
+      "panel_2_bar_1",
+      "panel_2_bar_2"
+     ],
+     "values": [
+      47.8,
+      61.5
+     ],
+     "labels": [
+      "panel_2_value_1",
+      "panel_2_value_2"
+     ]
+    },
+    {
+     "shapes": [
+      "panel_3_bar_1",
+      "panel_3_bar_2"
+     ],
+     "values": [
+      0.8,
+      1.3
+     ],
+     "labels": [
+      "panel_3_value_1",
+      "panel_3_value_2"
+     ]
+    }
+   ]
+  },
+  {
+   "layout": "template",
+   "template": "from_to_shifts",
+   "title": "Front-to-back redesign replaces local fixes with shared capabilities",
+   "layout_rationale": {
+    "relation": "from_to",
+    "alternative": "before_after",
+    "why": "numbered shifts read row by row"
+   },
+   "slots": {
+    "from_1_text": [
+     [
+      {
+       "text": "Lean reengineering ",
+       "bold": true
+      },
+      {
+       "text": "of current steps"
+      }
+     ]
+    ],
+    "to_1_text": [
+     [
+      {
+       "text": "Zero-based redesign ",
+       "bold": true
+      },
+      {
+       "text": "from the client backward"
+      }
+     ]
+    ],
+    "from_2_text": [
+     [
+      {
+       "text": "Bespoke changes ",
+       "bold": true
+      },
+      {
+       "text": "per product"
+      }
+     ]
+    ],
+    "to_2_text": [
+     [
+      {
+       "text": "Common capabilities ",
+       "bold": true
+      },
+      {
+       "text": "across products"
+      }
+     ]
+    ],
+    "from_3_text": [
+     [
+      {
+       "text": "Uncoordinated change ",
+       "bold": true
+      },
+      {
+       "text": "front to back"
+      }
+     ]
+    ],
+    "to_3_text": [
+     [
+      {
+       "text": "Integrated change ",
+       "bold": true
+      },
+      {
+       "text": "along each value stream"
+      }
+     ]
+    ],
+    "from_4_text": [
+     [
+      {
+       "text": "Diluted governance ",
+       "bold": true
+      },
+      {
+       "text": "in many cases"
+      }
+     ]
+    ],
+    "to_4_text": [
+     [
+      {
+       "text": "Governance ",
+       "bold": true
+      },
+      {
+       "text": "through a few megajourneys"
+      }
+     ]
+    ],
+    "from_5_text": [
+     [
+      {
+       "text": "No central vehicle ",
+       "bold": true
+      },
+      {
+       "text": "for change"
+      }
+     ]
+    ],
+    "to_5_text": [
+     [
+      {
+       "text": "Value streams ",
+       "bold": true
+      },
+      {
+       "text": "as the vehicle for change"
+      }
+     ]
+    ],
+    "from_6_text": [
+     [
+      {
+       "text": "Siloed priorities ",
+       "bold": true
+      },
+      {
+       "text": "by reporting line"
+      }
+     ]
+    ],
+    "to_6_text": [
+     [
+      {
+       "text": "Shared priorities ",
+       "bold": true
+      },
+      {
+       "text": "managed together"
+      }
+     ]
+    ],
+    "from_7_text": [
+     [
+      {
+       "text": "Manual hand-offs ",
+       "bold": true
+      },
+      {
+       "text": "between teams"
+      }
+     ]
+    ],
+    "to_7_text": [
+     [
+      {
+       "text": "Straight-through flows ",
+       "bold": true
+      },
+      {
+       "text": "by default"
+      }
+     ]
+    ],
+    "from_8_text": [
+     [
+      {
+       "text": "Annual planning ",
+       "bold": true
+      },
+      {
+       "text": "in silos"
+      }
+     ]
+    ],
+    "to_8_text": [
+     [
+      {
+       "text": "Quarterly reviews ",
+       "bold": true
+      },
+      {
+       "text": "across the stream"
+      }
+     ]
+    ]
+   },
+   "repeat": {
+    "row": 8
+   }
+  },
+  {
+   "layout": "template",
+   "template": "maturity_curve_with_levers",
+   "title": "Offshore hubs moved from cost arbitrage to platform capabilities",
+   "layout_rationale": {
+    "relation": "evolution_with_levers",
+    "alternative": "timeline",
+    "why": "phases on a curve with their levers"
+   },
+   "repeat": {
+    "lever": 3
+   },
+   "slots": {
+    "lever_1": [
+     [
+      {
+       "text": "Lever 1",
+       "bold": true
+      }
+     ]
+    ],
+    "lever_2": [
+     [
+      {
+       "text": "Lever 2",
+       "bold": true
+      }
+     ]
+    ],
+    "lever_3": [
+     [
+      {
+       "text": "Lever 3",
+       "bold": true
+      }
+     ]
+    ]
+   }
+  },
+  {
+   "layout": "template",
+   "template": "data_table_dashed",
+   "title": "Demand comes from ten sectors with growth up to thirty percent",
+   "source": "Illustrative values",
+   "layout_rationale": {
+    "relation": "table_of_segments",
+    "alternative": "table",
+    "why": "many rows, one highlighted column"
+   },
+   "repeat": {
+    "row": 10
+   },
+   "slots": {
+    "cell_1_1": "Sector 1",
+    "cell_2_1": "Sector 2",
+    "cell_3_1": "Sector 3",
+    "cell_4_1": "Sector 4",
+    "cell_5_1": "Sector 5",
+    "cell_6_1": "Sector 6",
+    "cell_7_1": "Sector 7",
+    "cell_8_1": "Sector 8",
+    "cell_9_1": "Sector 9",
+    "cell_10_1": "Sector 10",
+    "cell_1_4": "up to 30",
+    "cell_2_4": "up to 28",
+    "cell_3_4": "up to 26",
+    "cell_4_4": "up to 24",
+    "cell_5_4": "up to 22",
+    "cell_6_4": "up to 20",
+    "cell_7_4": "up to 18",
+    "cell_8_4": "up to 16",
+    "cell_9_4": "up to 14",
+    "cell_10_4": "up to 12"
+   }
+  }
+ ]
 }
