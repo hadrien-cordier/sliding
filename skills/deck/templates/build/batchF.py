@@ -55,8 +55,8 @@ def d21():
 def d22():
     s = slide(prs)
     header(s, "{Value migration} to {focused models} is set to accelerate", "{source}")
-    f = Frame((0, 118, 1196, 835)); X, Y, L, F = f.X, f.Y, f.L, f.F
-    text(s, X(5), Y(118), L(500), L(24), [[("{MEASURE (UNIT), YEAR}", {"bold": True})]], size=11, color="grey800", margin=0,
+    f = Frame((0, 165, 1196, 835), body=(0.5, 1.3, 12.3, 5.65)); f.ox = 0.5; X, Y, L, F = f.X, f.Y, f.L, f.F
+    text(s, 0.5, 1.0, 6.0, 0.28, [[("{MEASURE (UNIT), YEAR}", {"bold": True})]], size=11, color="grey800", margin=0,
          name="measure_label")
     cx, cy, R = 0, 1080, 650
     arc = [(X(cx + R * math.cos(math.radians(a))), Y(cy - R * math.sin(math.radians(a)))) for a in

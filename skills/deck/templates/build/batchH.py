@@ -47,7 +47,7 @@ def d30():
             text(s, X(x - 65), Y(y + 18), W(130), H(32), "{(e.g., how)}", size=F(12), color="text", align="c", margin=0)
         if i < 5:
             nx, ny = steps[i + 1]
-            elbow(s, [(X(x - 40), Y(y - 25)), (X(x - 40), Y(ny + 3)), (X(nx - 45), Y(ny + 3))], "accent500", lw=1.5,
+            elbow(s, [(X(x), Y(y - 16)), (X(x), Y(ny - 2)), (X(nx - 40), Y(ny - 2))], "accent500", lw=1.5,
                   r=0.0, arrow="tail", aw="med", al="med")
     # wave visuals
     dot(s, X(30), Y(436), D(12), "accent500"); box(s, *f.R(50, 427, 40, 18), line="accent500", lw=1)
@@ -97,17 +97,22 @@ def d31():
     s = slide(prs)
     header(s, "{Leading institutions} are setting big ambitions for {change}", "{source}")
     f = Frame2((15, 120, 820, 545), body=(0.5, 1.1, 12.3, 5.65)); X, Y, W, H, D, F = f.X, f.Y, f.W, f.H, f.D, f.F
-    polyline(s, [(X(22), Y(253)), (X(259), Y(128)), (X(463), Y(253))], None, fill="grey100", close=True, name="roof")
-    cx, cy, r = X(244), Y(192), D(44)
-    c = box(s, cx - r, cy - r, 2 * r, 2 * r, line="grey200", lw=6, shape=MSO_SHAPE.OVAL)
-    arc = [(cx + r * math.cos(math.radians(90 - a)), cy - r * math.sin(math.radians(90 - a))) for a in range(0, 64, 3)]
-    a = polyline(s, arc, "accent500", lw=6, name="roof_ring"); round_caps(a)
-    text(s, cx - 0.55, cy - 0.2, 1.1, 0.4, "{Top family}", size=F(13), color="text", align="c", anchor="m", margin=0,
+    base_y, xl, xr = Y(253), X(22), X(463)
+    r = 0.56
+    cx = (xl + xr) / 2
+    cy = base_y - r - 0.14
+    apex = cy - r - 0.4
+    polyline(s, [(xl, base_y), (cx, apex), (xr, base_y)], None, fill="grey100", close=True, name="roof")
+    box(s, cx - r, cy - r, 2 * r, 2 * r, fill="grey100", line="grey200", lw=6, shape=MSO_SHAPE.OVAL)
+    arc = [(cx + r * math.sin(math.radians(a)), cy - r * math.cos(math.radians(a))) for a in range(0, 64, 3)]
+    a_ = polyline(s, arc, "accent500", lw=6, name="roof_ring"); round_caps(a_)
+    text(s, cx - 0.5, cy - 0.22, 1.0, 0.44, "{Top family}", size=11, color="text", align="c", anchor="m", margin=0,
          name="roof_label")
-    soft_line(s, X(282), Y(163), X(465), Y(163), "grey400", lw=0.75)
+    ex, ey = arc[-1]
+    soft_line(s, ex + 0.08, ey, X(465), ey, "grey400", lw=0.75)
     box(s, X(722), Y(114), W(90), H(26), fill="grey100", parts=[[("{Case example}", {"italic": True})]], size=11,
         color="text", margin=0, name="case_tag")
-    text(s, X(473), Y(155), W(270), H(80), [[("{v}%–{v}%", {"bold": True})], "{What changes for this family}"],
+    text(s, X(473), ey - 0.12, W(270), H(80), [[("{v}% to {v}%", {"bold": True})], "{What changes for this family}"],
          size=F(12.5), color="text", margin=0, name="roof_text")
     bars = [(262, 242, "accent700", "white"), (319, 340, "accent500", "white"), (376, 222, "accent900", "white"),
             (432, 299, "grey400", "white"), (489, 207, "grey600", "white")]

@@ -56,7 +56,7 @@ def d09():
 def d11():
     s = slide(prs)
     header(s, "{Target journey}: {technology} and {people} combine at every step", "{source}")
-    f = Frame((35, 180, 1095, 880)); X, Y, L, F = f.X, f.Y, f.L, f.F
+    f = Frame2((35, 180, 1095, 880), body=(0.45, 1.1, 12.45, 5.7)); X, Y, W, H, D, F = f.X, f.Y, f.W, f.H, f.D, f.F
     xs = [(75, 250), (280, 455), (485, 660), (690, 862), (893, 1065)]
     for row in range(2):
         dy = row * 372
@@ -65,32 +65,33 @@ def d11():
             soft_line(s, X(1066), Y(216), X(1092), Y(216), "accent700", lw=1.75, arrow="tail", aw="sm", al="sm")
         for c, (x0, x1) in enumerate(xs):
             k = row * 5 + c + 1
-            rrect(s, X(x0), Y(225 + dy), L(x1 - x0), L(265), L(12), fill="accent100", name=f"card_{k}")
+            rrect(s, X(x0), Y(225 + dy), W(x1 - x0), H(265), 0.1, fill="accent100", name=f"card_{k}")
             if c < 4:
                 soft_line(s, X(x1), Y(216 + dy), X(xs[c + 1][0]), Y(216 + dy), "accent700", lw=1.75)
-            rrect(s, X(x0 + 8), Y(188 + dy), L(x1 - x0 - 8), L(55), L(27), fill="accent900" if k == 10 else "accent700",
-                  parts=[[("{Step name}", {"bold": True})]], size=F(15), color="white", margin=0.05, name=f"card_{k}_title")
-            box(s, X(x0 - 10), Y(203 + dy), L(26), L(26), fill="accent900" if k == 10 else "white", line="accent700",
-                lw=1.5, shape=MSO_SHAPE.OVAL, parts=[[(str(k), {"bold": True})]], size=F(13),
+            rrect(s, X(x0 + 8), Y(188 + dy), W(x1 - x0 - 8), H(55), 0.5, fill="accent900" if k == 10 else "accent700",
+                  parts=[[("{Step name}", {"bold": True})]], size=12, color="white", margin=0.05, name=f"card_{k}_title")
+            d = 0.28
+            box(s, X(x0) - d / 2 + 0.02, Y(216 + dy) - d / 2, d, d, fill="accent900" if k == 10 else "white",
+                line="accent700", lw=1.5, shape=MSO_SHAPE.OVAL, parts=[[(str(k), {"bold": True})]], size=10,
                 color="white" if k == 10 else "accent700", margin=0)
-            rrect(s, X(x0 + 12), Y(254 + dy), L(x1 - x0 - 24), L(92), L(8), fill="white", line="grey200", dash=True,
-                  parts="{illustration}", size=F(10), color="grey400", name=f"card_{k}_visual")
-            text(s, X(x0 + 12), Y(355 + dy), L(x1 - x0 - 22), L(110),
+            rrect(s, X(x0 + 30), Y(254 + dy), W(x1 - x0 - 60), H(88), 0.06, fill="white", line="grey200", dash=True,
+                  parts="{illustration}", size=8, color="grey400", name=f"card_{k}_visual")
+            text(s, X(x0 + 12), Y(352 + dy), W(x1 - x0 - 22), H(118),
                  [[("• {Action} ", {}), ("{key phrase}", {"bold": True, "color": "accent500"}), (" {detail}", {})],
                   [("• {Action} ", {}), ("{key phrase}", {"bold": True, "color": "accent500"}), (" {detail}", {})]],
-                 size=F(14), color="grey600", margin=0, name=f"card_{k}_text")
+                 size=10, color="grey600", margin=0, name=f"card_{k}_text")
             for para in s.shapes[-1].text_frame.paragraphs:
                 pPr = para._p.get_or_add_pPr(); pPr.set("marL", str(int(I(0.1)))); pPr.set("indent", str(-int(I(0.1))))
             if k not in (1, 3):
-                rrect(s, X(x0 + 10), Y(480 + dy), L(x1 - x0 - 20), L(24), L(12), fill="accent500")
-                rrect(s, X(x0 + 10), Y(480 + dy), L(45), L(24), L(12), fill="accent300",
-                      parts=[[("AI", {"bold": True})]], size=F(12), color="accent900", margin=0)
-                text(s, X(x0 + 58), Y(480 + dy), L(x1 - x0 - 72), L(24), "{Agent name}", size=F(12), color="white",
+                rrect(s, X(x0 + 10), Y(477 + dy), W(x1 - x0 - 20), H(26), 0.5, fill="accent500")
+                rrect(s, X(x0 + 10), Y(477 + dy), W(45), H(26), 0.5, fill="accent300",
+                      parts=[[("AI", {"bold": True})]], size=9, color="accent900", margin=0)
+                text(s, X(x0 + 58), Y(477 + dy), W(x1 - x0 - 72), H(26), "{Agent name}", size=9, color="white",
                      align="c", anchor="m", margin=0, name=f"card_{k}_badge")
-    rrect(s, X(377), Y(523), L(175), L(24), L(12), fill="negative", parts="{Exception path}", size=F(12.5),
+    rrect(s, X(377), Y(521), W(175), H(26), 0.5, fill="negative", parts="{Exception path}", size=9.5,
           color="white", margin=0, name="exception_callout")
     soft_line(s, X(465), Y(547), X(465), Y(588), "negative", lw=1.75)
-    dot(s, X(465), Y(588), L(9), "negative")
+    dot(s, X(465), Y(588), 0.09, "negative")
 
 
 # d12 swimlanes ---------------------------------------------------------------------------------------

@@ -25,7 +25,7 @@ def d17():
              [[("{Stage}", {"bold": True})], [("{Up to n% capacity unlock}", {"size": F(12)})]], size=F(13),
              color="text", margin=0, name=f"stage_{c+1}_label")
         for r, (y0, y1) in enumerate(((226, 288), (292, 354), (358, 419), (423, 485))):
-            box(s, X(x0), Y(y0), W(x1 - x0 - 4), H(y1 - y0), fill=cat[grid[r][c]], parts="{Activity}", size=F(12),
+            rrect(s, X(x0), Y(y0), W(x1 - x0 - 4), H(y1 - y0), 0.06, fill=cat[grid[r][c]], parts="{Activity}", size=F(12),
                 color="white", align="l", anchor="t", margin=0.1, name=f"cell_{r+1}_{c+1}")
     rrect(s, *f.R(15, 489, 821, 66), H(6), fill="grey100", name="support_band")
     text(s, X(23), Y(493), W(105), H(60), [[("{Support}", {"bold": True})], "{Up to n%", "capacity unlock}"], size=F(11.5),
@@ -137,20 +137,21 @@ def d20():
     s = slide(prs)
     header(s, "{Actors} lag in {scaling capability}", "{survey source}",
            "{Stages and current distribution}; illustrative")
-    f = Frame2((10, 140, 1345, 830)); X, Y, W, H, D, F = f.X, f.Y, f.W, f.H, f.D, f.F
-    cur = bez((X(12), Y(420)), (X(600), Y(415)), (X(1000), Y(390)), (X(1133), Y(182)), 60)
+    f = Frame((10, 165, 1345, 830), body=(0.5, 1.05, 12.3, 5.75)); X, Y, F = f.X, f.Y, f.F
+    W = H = f.L; D = lambda p: f.L(p) * 0.95
+    cur = bez((X(12), Y(446)), (X(700), Y(440)), (X(1010), Y(400)), (X(1133), Y(205)), 60)
     c = polyline(s, cur, "grey400", lw=1, name="maturity_curve"); round_caps(c)
-    stages = [(179, 247, 340, "accent300", "text"), (511, 228, 320, "accent500", "accent500"),
-              (845, 192, 282, "accent700", "accent700"), (1175, 136, 226, "accent900", "accent900")]
+    stages = [(179, 292, 387, "accent300", "text"), (511, 274, 367, "accent500", "accent500"),
+              (845, 243, 335, "accent700", "accent700"), (1175, 192, 281, "accent900", "accent900")]
     for k, (cx, ny, dy, fill, tc) in enumerate(stages, 1):
         text(s, X(cx - 110), Y(ny - 14), W(220), H(26), [[("{Stage}", {"bold": True})]], size=F(19),
              color="grey600" if k == 1 else tc, align="c", margin=0, name=f"stage_{k}")
         text(s, X(cx - 110), Y(ny + 12), W(220), H(24), "({share})", size=F(16), color="grey600", align="c", margin=0,
              name=f"stage_{k}_share")
-        icon(s, X(cx), Y(dy), D(90), "white" if k > 1 else fill, fill=fill, name=f"stage_{k}_icon")
-    for (x, y, col) in ((352, 258, "accent300"), (672, 236, "accent500"), (1010, 190, "accent700")):
+        icon(s, X(cx), Y(dy), D(86), "white" if k > 1 else fill, fill=fill, name=f"stage_{k}_icon")
+    for (x, y, col) in ((354, 283, "accent300"), (672, 262, "accent500"), (1008, 213, "accent700")):
         b = chevron(s, X(x) - 0.125, Y(y) - 0.225, 0.25, 0.45, 0.14, fill=col)
-    for k, (x, y, n) in enumerate(((50, 455, 2), (389, 440, 4), (703, 424, 2), (1047, 345, 2)), 1):
+    for k, (x, y, n) in enumerate(((50, 476, 2), (389, 462, 4), (703, 446, 2), (1047, 370, 2)), 1):
         paras = []
         for i in range(n):
             paras += ([""] if i else []) + ["{Criterion for this stage}"]

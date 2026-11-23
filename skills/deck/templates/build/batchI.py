@@ -91,7 +91,7 @@ def d35():
     cols = [(18, 344, "{Category}", "l"), (367, 503, "{Key segments}", "c"), (875, 230, "{Measure (unit)}", "c"),
             (1110, 236, "{Growth (unit)}", "c")]
     for k, (x, w, lab, al) in enumerate(cols, 1):
-        top_round(s, X(x), Y(91), W(w), H(60), 0.025, fill="accent500", parts=[[(lab, {"bold": True})]], size=F(19),
+        rrect(s, X(x), Y(91), W(w), H(58), 0.1, fill="accent500", parts=[[(lab, {"bold": True})]], size=F(19),
                   color="white", align=al, margin=0.1, name=f"head_{k}")
     for r in range(9):
         y0 = 152 + r * 62
