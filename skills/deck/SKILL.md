@@ -40,6 +40,7 @@ All outputs are in English unless the user asks otherwise.
 4. **Only displayed figures are fact-checked**, once, after gate 1.
 5. **The pyramid and logical writing apply at every level** (`references/rules-card.md`); the SCQA stays implicit; the executive summary comes last.
 6. **Every rule-based check runs as code.**
+7. **The engine learns from validated feedback only.** Every deck is scored and its critiques are logged; recurring critiques become proposals; the user validates before anything changes.
 
 ## Pipeline
 
@@ -66,6 +67,12 @@ All outputs are in English unless the user asks otherwise.
 **10. Visual QA.** Spawn `visual-qa`; resume the visual director with the flagged slides; rebuild once.
 
 **11. Delivery.** Send the .pptx to the user, with the titles, residual uncertainties and what the deck does not claim, figures struck by the fact-check, open points, and the spawn count from the run log.
+
+**12. Self-evaluation and feedback (every deck).**
+- Run `scorecard.py 04-storyboard.json deck.pptx` and show the four scores (storyline, writing, design, data) with the deck. Log its findings: `feedback.py add --from-scorecard scorecard.json --deck <deck-id>`.
+- Ask the user for critiques of the delivered deck. Log each one with `feedback.py add`, written as a reusable pattern (axis, short kebab-case key, no client name, no figure, the template id when a template is at fault). Reviewer findings that the user confirms are logged the same way with `--source reviewer`.
+- Fix the deck in hand as usual. Then run `curate_feedback.py`: a critique that recurs on two decks, or one high-severity user critique, becomes a proposal in `feedback/proposals.md`. Show the new proposals to the user.
+- When the user validates proposals, spawn `curator` (`roles/curator.md`): it turns them into linter checks, reference lines or template changes on a branch, tests them on the demos and closes the log entries. The engine never changes without that validation.
 
 ## Without the Agent tool
 If you cannot spawn subagents, play each role yourself in this order, rereading `roles/<role>.md` before each step. Your own context then plays the engagement manager's role; for the challenger and the slide review, judge only the written deliverables against the brief.

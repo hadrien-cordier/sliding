@@ -27,6 +27,14 @@ Pick the layout from the relation between the blocks of the slide, never from a 
 | Reference card for one unit of a grid (one country, one bank, one vendor) | `fact_sheet` | The slide must compare units: use `band_matrix` |
 | Title page | `cover` | |
 
+## Exhibit templates come first when their relation fits
+`templates/catalog.yaml` holds 41 exhibit templates rebuilt from reference exhibits (process lanes, maturity curves, funnels, flywheels, from/to shifts, wheels, iceberg...). They carry more craft than the built-in layouts.
+1. Read the `index` of the catalog only (one line per template), and match the slide's logical relation.
+2. When a template fits, read its fiche (`message_pattern`, `visual_vectors`, `slots`, `slots_named`) and write a `template` slide. Fill every name in `slots_named` that the content needs and `drop` the shapes it does not need (a fourth KPI, rows 4 to 6).
+3. A template's count of rows, columns or items is a default, not a limit. When its fiche lists `repeat` groups, set `repeat: {group: n}` to the number the content needs (8 shifts, 3 levers); the filler adds or removes instances and re-spaces them. Above about 1.6 times the default, split the slide instead.
+4. `data_shapes: bars` means shape sizes encode figures: pass `bars` with the real values; the linter blocks the slide otherwise. `data_shapes: redraw` means curves, arcs or bubbles encode figures: use a built-in chart layout instead, or state "Illustrative" in the source.
+5. When no template fits, use the built-in layouts below.
+
 ## Choosing and varying layouts
 - Name the logical relation first, then compare at least two candidate layouts for it, and record the choice in `layout_rationale` (relation, alternative, why).
 - In argument decks, never use the same layout more than twice in a row; the linter blocks it. Benchmark decks (`meta.mode: "benchmark"`) repeat one exhibit per unit of the grid by design.

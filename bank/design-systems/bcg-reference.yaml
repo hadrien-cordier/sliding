@@ -1,0 +1,37 @@
+# Design system observed in two reference articles from the same issuer (2026).
+# Reference only: the roles and rules transfer, the colours do not. Decks use the user's own theme.
+id: bcg-reference
+observed_in: [bcg-wholesale-credit-2026, bcg-openai-retail-agentic-2026, bcg-genai-compliance-2025]
+status: validated
+
+palette_by_role:   # approximate hex, sampled from JPEG screenshots
+  established_foundation_decision: "#0E4A2A"   # darkest green: foundation bands, decision nodes, header rows, value end-point
+  mid: "#1A7856"
+  new_agentic: "#20C060"                       # bright green: the new or agentic element
+  context_secondary: "#D8F6DE"                 # pale mint: tiles, panels, manual or secondary steps
+  current_state_neutral: "#DBD5CB"             # beige: the existing process, a neutral foundation
+  negative: "#F07F5F"                          # coral, background "#FEF1EA": used for "don't" only, never decorative
+rules:
+  - one hue as a ramp; darkness and saturation carry meaning, never decoration
+  - one contrast colour, reserved for a negative
+  - fills carry meaning; thin outlines mark secondary elements (KPI boxes, oversight box)
+  - no shadows, small corner radius
+  - thin dark-green connectors; chevrons for sequences; dashed arcs for backward flows (rework)
+
+anatomy:
+  - 'optional small caps label: EXHIBIT n'
+  - action title in serif, title case, one or two lines: the message
+  - scope line in bold sans (illustrative representation, achievable share...)   # filtered for decks: move to the note line
+  - body in sans
+  - 'Sources and Note lines, small, bottom left, bold prefix; footnotes define jargon'
+
+typography:
+  - serif carries the message, sans carries labels and data
+  - box labels in bold, often all caps in process diagrams; one regular line of detail below
+  - value labels bold at the end of bars
+
+components:
+  - {id: icon_disc, rule: white line icon in a solid disc; disc colour follows the ramp}
+  - {id: kpi_disc, rule: dark green disc with a white bold number, small label below; marks a result}
+  - {id: arrow_container, rule: large outlined container shaped as a chevron pointing to the impact it produces}
+  - {id: maturity_curve, rule: thin grey convex curve, stages placed at rising heights, player-type tags below in the stage colour}

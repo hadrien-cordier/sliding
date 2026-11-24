@@ -1,0 +1,87 @@
+# Extraction of a reference article, anonymised. Patterns and paraphrases only; no verbatim text, no figures.
+id: bcg-genai-compliance-2025
+reference: https://www.bcg.com/publications/2025/a-faster-path-to-scaling-genai-in-banking-compliance
+format: short web article (sections + 2 exhibits + 1 expandable side box)
+extracted: 2026-11-19
+status: validated   # validated by the user on 2026-11-19, except where an element says otherwise
+design_system: bcg-reference
+
+context:
+  issuer: strategy consulting firm
+  reader: heads of compliance and risk in banks
+  intention: create urgency, then offer a method to scale that the firm can support (our reading)
+  why_now: control demands rise, manual methods reach their limit, the gap with early movers widens
+  genre: {primary: technology_transformation, secondary: market_evolution (sector maturity)}
+  arc_variant: cost_of_delay_proof_first_steps   # pending
+  evidence_regime: maturity survey, then five anonymous cases, all quantified; strongest of the three references per word
+
+skeleton:
+  - {section: intro, move: frame, zoom: 1, role: "literal SCQA; the question is written out as a sentence"}
+  - {section: banks_too_slow, move: diagnose, zoom: 1, scqa: complication, title_pattern: "{actors} move too slowly, and it costs them"}
+  - {section: pilots_to_progress, move: bridge, zoom: 1, title_pattern: "From {current state} to {target state}", role: "announces two applications"}
+  - {section: case_1, move: zoom_in, zoom: 2, scqa: answer, title_pattern: "{verb-ing} {process} at scale"}
+  - {section: case_2, move: zoom_in, zoom: 2, scqa: answer}
+  - {section: getting_started, move: decide, zoom: 1, role: "bucket of five imperative steps"}
+  - {section: conclusion, move: decide, zoom: 1, role: "verdict, then the leadership task in three verbs, then the payoff"}
+zoom_signature: [1, 1, 1, 2, 2, 1]
+thread: pilots that never scale (intro, diagnosis) are resolved by case 2 (one enterprise engine instead of isolated pilots), then by the steps and the conclusion
+
+paragraph_shapes:
+  - id: literal_scqa_intro
+    pattern: short verdict, cause, limit of current methods, answer; then status, concession, reversal (hesitating is also a risk); then the question as a sentence and the leaders' answer
+  - id: cases_then_outliers
+    where: [banks_too_slow]
+    pattern: two success cases, the second going further than the first, then requalified as outliers with a figure; the same cases prove the potential and the widening gap
+  - id: case_as_mini_timeline
+    pattern: first use, extension once targets are met, result within a stated period
+  - id: problem_solution_figures
+    where: [case_1, case_2]
+    pattern: problem, solution (bucket of bold-labelled capabilities or a decision), quantified result; case 2 adds a value ladder from local fix to enterprise engine
+  - id: name_the_hidden_problem
+    where: [case_2]
+    pattern: an image names a problem nobody sees, then one sentence traces every symptom back to one cause   # pending
+  - id: imperative_steps
+    where: [getting_started]
+    pattern: short imperative heading, then instruction, selection criterion, reason
+  - id: side_box_case
+    pattern: an expandable box adds a third case without breaking the main line (deck equivalent - appendix slide)
+
+exhibits:
+  - id: ex1_maturity_curve_with_crowd
+    called_by: survey figure on how many institutions are still experimenting
+    serves: banks_too_slow
+    relation: maturity stages with distribution (conceptual curve plus frequency)
+    title_pattern: "{actors} lag in {scaling capability}"   # verdict, about seven words
+    visual_vectors:
+      - convex value curve, flat on the left and steep on the right - value accelerates with maturity
+      - four stages placed on the curve at rising heights; name bold, share of the sector in brackets, icon in a disc
+      - discs ramp from pale to darkest green with maturity
+      - the crowd sits at stage 2, low on the curve, nobody at the top - the gap is visible without axis or bars
+      - stage criteria below the baseline in grey, no bullets
+      - bottom row of player-type tags coloured like their stage - the reader finds their own institution and locates themselves
+      - stage 2 stacks three tags - the crowd shows a second time
+      - an italic grey tag states the curve is illustrative
+    slots: {stages: 4, criteria_per_stage: 2-4, tags_per_stage: 1-3}
+    verdict: keep; the self-location row is what creates urgency
+  - id: ex2_process_container_to_impact
+    called_by: case result sentence
+    serves: case_1
+    relation: process to result (causality)
+    title_pattern: "{verb-ing} {process} cuts {cost} and {effort}"   # no figure in the title; the KPIs carry them
+    visual_vectors:
+      - a large outlined container shaped as a chevron points to an impact column - the shape states causality
+      - pale band at the top of the container holds the architecture in one line
+      - three steps named by one verb each, white icon in a bright green disc, dashed connectors with chevrons, short description and bullets under each
+      - two KPIs in dark green discs, white bold number, label below
+    slots: {steps: 3, kpis: 2}
+    verdict: keep; title says what improves, KPIs say by how much
+
+threads:
+  - house_framework: the 10-20-70 split of AI effort, also used in bcg-wholesale-credit-2026
+  - scale: every section returns to moving from pilots to scale
+
+house_rule_tensions:
+  - {item: em dash in the first section title, handling: adapt_for_slides}
+  - {item: "not just X / does not just X, it Y", handling: use_sparingly}
+  - {item: "intensifiers (dramatically, significantly, sharply)", handling: use_sparingly}
+  - {item: figures repeated between the paragraph and exhibit 2, handling: adapt_for_slides, note: no repetition between title, KPIs and body}
